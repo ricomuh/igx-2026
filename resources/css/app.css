@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
+    --color-primary: #25c5db;
+    --color-primary-light: #71d9e8;
+    --color-primary-dark: #1a98a6;
+
+    --color-secondary: #ffe600;
+    --color-secondary-light: #fff27a;
+    --color-secondary-dark: #ccb800;
+
+    --color-neutral-white: #ffffff;
+    --color-neutral-white-light: #ffffff;
+    --color-neutral-white-dark: #f0f0f0;
+
+    --color-neutral-black: #1d1d1b;
+    --color-neutral-black-light: #3c3c3a;
+    --color-neutral-black-dark: #000000;
+
+    --color-danger: #ff3b30;
+    --color-danger-light: #ff8a85;
+    --color-danger-dark: #c12822;
+
+    --color-warning: #ffe600;
+    --color-warning-light: #fff27a;
+    --color-warning-dark: #ccb800;
+
+    --color-success: #4caf50;
+    --color-success-light: #81c784;
+    --color-success-dark: #388e3c;
+
+    --color-background-light: #25c5db;
+    --color-background-light-light: #71d9e8;
+    --color-background-light-dark: #1a98a6;
+
+    --color-background-dark: #1d1d1b;
+    --color-background-dark-light: #3c3c3a;
+    --color-background-dark-dark: #000000;
+}
