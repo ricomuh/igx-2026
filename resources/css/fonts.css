@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "MoonGet";
+    src: url("/fonts/moon_get-Heavy.woff2") format("woff2"),
+        url("/fonts/moon_get-Heavy.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    font-family: "MoonGet", sans-serif !important;
+}
