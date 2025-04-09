@@ -4,4 +4,7 @@
 @section('content')
     {{-- Banner --}}
     @include('components.home.banner')
+    
+    {{-- Countdown --}}
+    @include('components.home.countdown')
 @endsection

@@ -1,0 +1,58 @@
+<div class="container py-20 mx-auto">
+    <div class="flex gap-3 items-center justify-center mb-12">
+        <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12" alt="Logo">
+        <h1 class="font-bold text-5xl">COMING SOON</h1>
+    </div>
+    
+    {{-- begin:countdown --}}
+    <div class="flex gap-10 item-center justify-center text-center">
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-[10rem] font-extrabold countdown days" data-countdown="2025-10-04T00:00:00Z">00</span>
+            <span class="text-4xl font-bold -mt-8 lowercase">Days</span>
+        </div>
+        <span class="text-[10rem] font-bold">:</span>
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-[10rem] font-extrabold countdown hours" data-countdown="2025-10-04T00:00:00Z">00</span>
+            <span class="text-4xl font-bold -mt-8 lowercase">Hours</span>
+        </div>
+        <span class="text-[10rem] font-bold">:</span>
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-[10rem] font-extrabold countdown minutes" data-countdown="2025-10-04T00:00:00Z">00</span>
+            <span class="text-4xl font-bold -mt-8 lowercase">Minutes</span>
+        </div>
+        <span class="text-[10rem] font-bold">:</span>
+        <div class="flex flex-col items-center justify-center">
+            <span class="text-[10rem] font-extrabold countdown seconds" data-countdown="2025-10-04T00:00:00Z">00</span>
+            <span class="text-4xl font-bold -mt-8 lowercase">Seconds</span>
+        </div>
+    </div>
+    {{-- end:countdown --}}
+
+    {{-- begin:location --}}
+    <h2 class="text-6xl font-bold text-center my-20">04-05 October 2025 at</h2>
+    <div class="grid grid-cols-2 items-center gap-8 w-3/4 mx-auto">
+        <div class="col-span-1">
+            <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.720459553029!2d106.6338767751508!3d-6.300414861662221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fb535f152305%3A0x34406ed8b098f478!2sIndonesia%20Convention%20Exhibition%20(ICE)%20BSD%20City!5e0!3m2!1sen!2sid!4v1724163747000!5m2!1sen!2sid"
+            class="h-64 w-full rounded-xl"
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Indonesia Convention Exhibition Map"
+            ></iframe>
+        </div>
+        <div class="col-span-1">
+            <div class="flex flex-col gap-4">
+                <h1 class="text-6xl font-bold">IGX Venue</h1>
+                <p class="text-2xl">Indonesia Convention Exhibition (ICE) Jl. BSD Grand Boulevard Raya No.1, BSD City, Tangerang, 15339</p>
+                <a target="_blank"
+                rel="noreferrer"
+                href="https://ice-indonesia.com/en/visitice/getting_here" class="text-2xl btn-primary py-2 px-4 font-semibold rounded-lg block w-max">How To Get Here?</a>
+            </div>
+        </div>
+    </div>
+    {{-- end:location --}}
+</div>
+
+{{-- Load external JS --}}
+@vite('resources/js/countdown.js')

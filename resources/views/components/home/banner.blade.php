@@ -1,4 +1,4 @@
-<div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center">
+<div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-20">
     <div class="container mx-auto">
         <div class="flex w-full justify-center items-center">
             <div class="text-white p-10 text-justify">
