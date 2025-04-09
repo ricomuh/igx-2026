@@ -9,13 +9,15 @@
 @theme {
     --font-moon: "MOON GET!", sans-serif;
 
-    --color-primary: #25c5db;
+    --color-primary: #53bfc9;
     --color-primary-light: #71d9e8;
     --color-primary-dark: #1a98a6;
 
-    --color-secondary: #ffe600;
+    --color-secondary: #fef02e;
     --color-secondary-light: #fff27a;
     --color-secondary-dark: #ccb800;
+
+    --color-info: #3587c9;
 
     --color-neutral-white: #ffffff;
     --color-neutral-white-light: #ffffff;
@@ -44,4 +46,10 @@
     --color-background-dark: #1d1d1b;
     --color-background-dark-light: #3c3c3a;
     --color-background-dark-dark: #000000;
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-secondary text-info hover:bg-secondary-dark transition duration-200 ease-in-out;
+    }
 }

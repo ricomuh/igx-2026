@@ -11,13 +11,11 @@
     @include('layouts.partials.navbar')
     <!--begin::Content-->
     <main id="content">
-        <div class="container">
-            <div>
-                @yield('content')
-            </div>
-
-            @include('layouts.partials.footer')
+        <div>
+            @yield('content')
         </div>
+
+        @include('layouts.partials.footer')
     </main>
 </body>
 
