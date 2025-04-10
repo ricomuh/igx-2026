@@ -1,11 +1,20 @@
 <nav class="bg-info fixed w-full top-0 z-20">
-    <div class="container mx-auto px-12 py-2 flex items-center justify-between">
-        <div class="navbar-brand">
+    <div class="container mx-auto px-4 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
+        {{-- Brand --}}
+        <div class="navbar-brand flex items-center">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12" alt="Logo" class="logo">
+                <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-10 lg:h-12" alt="Logo">
             </a>
         </div>
-        <ul class="flex gap-5">
+
+        {{-- Hamburger Button --}}
+        <button id="menu-toggle" class="text-white focus:outline-none lg:hidden cursor-pointer">
+            <img id="menu-icon" src="{{ asset('media/images/icons/hamburger.svg') }}" class="w-6" alt="Menu Icon">
+        </button>
+
+        {{-- Menu List --}}
+        <ul id="menu"
+            class="hidden flex-col gap-5 absolute top-full left-0 w-full bg-info pt-2 p-4 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-5 lg:p-0">
             @foreach ([
                 'Home' => route("home"),
                 'IGX Pals' => '#',
@@ -16,9 +25,59 @@
                 'Promo' => '#',
                 'Gallery' => '#',
                 'News' => '#'
-                ] as $name => $link)
-                <li><a href="{{ $link }}" class="text-white font-extrabold uppercase">{{ $name }}</a></li>
+            ] as $name => $link)
+                <li>
+                    <a href="{{ $link }}" class="text-white font-extrabold uppercase block mb-2">{{ $name }}</a>
+                </li>
             @endforeach
         </ul>
     </div>
 </nav>
+
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+            const menuIcon = document.getElementById('menu-icon');
+
+            const hamburgerIcon = '/media/images/icons/hamburger.svg';
+            const xmarkIcon = '/media/images/icons/xmark.svg';
+
+            const closeMenu = () => {
+                menu.classList.add('hidden');
+                menuIcon.src = hamburgerIcon;
+            }
+
+            const openMenu = () => {
+                menu.classList.remove('hidden');
+                menuIcon.src = xmarkIcon;
+            }
+
+            menuToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (menu.classList.contains('hidden')) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (e) {
+                const target = e.target;
+                if (!menu.contains(target) && !menuToggle.contains(target)) {
+                    closeMenu();
+                }
+            });
+
+            // Close menu when clicking on a menu link
+            const menuLinks = menu.querySelectorAll('a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    closeMenu();
+                });
+            });
+        });
+    </script>
+@endsection
