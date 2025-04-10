@@ -28,7 +28,7 @@
             {{-- Logo and Social Media --}}
             <div class="absolute left-0 -transform-x-1/2 w-full">
                 <div class="flex flex-col gap-6">
-                    <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12" alt="Logo">
+                    <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-20" alt="Logo">
                     <div class="flex gap-8 justify-center">
                         @foreach ([
                             'whatsapp' => 'https://api.whatsapp.com/message/U3XML62HR7O2C1',
