@@ -7,7 +7,7 @@
         </div>
         <ul class="flex gap-5">
             @foreach ([
-                'Home' => '{{ route("home") }}',
+                'Home' => route("home"),
                 'IGX Pals' => '#',
                 'Experience' => '#',
                 'Guests' => '#',

@@ -24,11 +24,11 @@
                 </div>
             </div>
 
-            <img src="{{ asset('media/images/illustrations/banner.png') }}" class="w-1/2" alt="">
+            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-1/2" alt="">
         </div>
 
-        <div class="flex justify-center items-center">
-            <a href="#" class="btn-primary font-extrabold text-2xl px-8 py-4 rounded-lg">GET YOUR TICKET</a>
+        <div class="flex justify-center">
+            <a href="#" class="btn-primary font-bold text-2xl px-7 py-4 rounded-lg uppercase">Get Your Ticket!</a>
         </div>
     </div>
 </div>

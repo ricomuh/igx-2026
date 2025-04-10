@@ -7,4 +7,7 @@
     
     {{-- Countdown --}}
     @include('components.home.countdown')
+
+    {{-- Gallery --}}
+    @include('components.home.gallery')
 @endsection
