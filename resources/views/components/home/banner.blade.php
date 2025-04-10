@@ -28,7 +28,7 @@
         </div>
 
         <div class="flex justify-center">
-            <a href="#" class="btn-primary font-bold text-2xl px-7 py-4 rounded-lg uppercase">Get Your Ticket!</a>
+            <a href="#" class="btn-primary font-extrabold text-2xl px-7 py-4 rounded-lg uppercase">Get Your Ticket!</a>
         </div>
     </div>
 </div>

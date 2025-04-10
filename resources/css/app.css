@@ -46,6 +46,8 @@
     --color-background-dark: #1d1d1b;
     --color-background-dark-light: #3c3c3a;
     --color-background-dark-dark: #000000;
+
+    --color-background-footer: #1e3135;
 }
 
 @layer components {

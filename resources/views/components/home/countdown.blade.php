@@ -42,12 +42,12 @@
             ></iframe>
         </div>
         <div class="col-span-1">
-            <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-8">
                 <h1 class="font-bold text-5xl">IGX Venue</h1>
                 <p class="text-2xl">Indonesia Convention Exhibition (ICE) Jl. BSD Grand Boulevard Raya No.1, BSD City, Tangerang, 15339</p>
                 <a target="_blank"
                 rel="noreferrer"
-                href="https://ice-indonesia.com/en/visitice/getting_here" class="text-2xl btn-primary py-3 px-4 font-bold rounded-lg block uppercase w-max">How To Get Here?</a>
+                href="https://ice-indonesia.com/en/visitice/getting_here" class="text-2xl btn-primary py-3 px-4 font-extrabold rounded-lg block uppercase w-max">How To Get Here?</a>
             </div>
         </div>
     </div>

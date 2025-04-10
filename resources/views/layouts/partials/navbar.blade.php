@@ -1,5 +1,5 @@
-<nav class="bg-info fixed w-full top-0">
-    <div class="container px-12 py-2 flex items-center justify-between">
+<nav class="bg-info fixed w-full top-0 z-20">
+    <div class="container mx-auto px-12 py-2 flex items-center justify-between">
         <div class="navbar-brand">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12" alt="Logo" class="logo">
