@@ -1,4 +1,5 @@
-<div class="bg-background-footer py-20 text-white">
+<img src="{{ asset('media/images/illustrations/wave.svg')}}" class="w-full -mt-32" alt="">
+<div class="bg-background-footer -mt-6 pb-8 text-white">
     <div class="container mx-auto px-12">
         {{-- Header Section --}}
         <div class="flex gap-4 justify-between items-center mb-20">
@@ -25,7 +26,7 @@
             </ul>
 
             {{-- Logo and Social Media --}}
-            <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-6">
                 <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12" alt="Logo">
                 <div class="flex gap-8">
                     @foreach ([
@@ -44,9 +45,9 @@
             {{-- Additional Links --}}
             <ul class="flex flex-col gap-1 text-end">
                 @foreach (['Contact Us' => '#', 'Terms of Service' => '#', 'Privacy Policy' => '#'] as $name => $link)
-                    <li class="hover:text-primary">
-                        <a href="{{ $link }}" class="text-lg">{{ $name }}</a>
-                    </li>
+                <li class="hover:text-primary">
+                    <a href="{{ $link }}" class="text-lg">{{ $name }}</a>
+                </li>
                 @endforeach
             </ul>
         </div>

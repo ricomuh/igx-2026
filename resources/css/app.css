@@ -55,3 +55,9 @@
         @apply bg-secondary text-info hover:bg-secondary-dark transition duration-200 ease-in-out;
     }
 }
+
+@layer base {
+    body {
+        @apply bg-primary font-moon;
+    }
+}
