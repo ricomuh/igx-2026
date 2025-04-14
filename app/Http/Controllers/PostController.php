@@ -11,11 +11,14 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $latest_posts = Post::query()
-            ->when(function ($query) use ($request) {
-                if ($request->has('search')) {
-                    $query->where('title', 'like', '%' . $request->input('search') . '%');
+            ->when(
+                $request->has('search'),
+                function ($query) use ($request) {
+                    if ($request->has('search')) {
+                        $query->where('title', 'like', '%' . $request->input('search') . '%');
+                    }
                 }
-            })
+            )
             ->latest()
             ->paginate(10);
 
@@ -25,11 +28,11 @@ class PostController extends Controller
         $popular_posts = collect();
 
         foreach ($days as $day) {
-            $posts = Post::with('views')
-                ->whereHas('views', function ($query) use ($day) {
-                    $query->whereBetween('date', now()->subDays($day), now());
-                })
-                ->orderByDesc('views.views')
+            // Get the posts with the most views in the last X days
+            $posts = Post::withSum(['views as total_views' => function ($query) use ($day) {
+                $query->whereBetween('date', [now()->subDays($day), now()]);
+            }], 'views') // Sum the 'views' column
+                ->orderByDesc('total_views') // Order by the summed views
                 ->take(5)
                 ->get();
 
@@ -38,12 +41,18 @@ class PostController extends Controller
                 break;
             }
         }
-        if ($popular_posts->count() < 5) {
-            $popular_posts = Post::with('views')
-                ->orderByDesc('views.views')
-                ->take(5)
-                ->get();
-        }
+        // if ($popular_posts->count() < 5) {
+        //     $popular_posts = Post::with('views')
+        //         ->orderByDesc('views.views')
+        //         ->take(5)
+        //         ->get();
+        // }
+
+        // dd($popular_posts, $latest_posts);
+        return response()->json([
+            'latest_posts' => $latest_posts,
+            'popular_posts' => $popular_posts,
+        ]);
 
         return view('posts.index', [
             'latest_posts' => $latest_posts,
@@ -53,11 +62,24 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post->load('views');
-        $post->views()->updateOrCreate(
-            ['date' => now()->format('Y-m-d')],
-            ['views' => DB::raw('views + 1')]
-        );
+        $postView = $post->views()
+            ->whereDate('date', now())
+            ->first();
+        if (!$postView) {
+            $postView = $post->views()->create([
+                'views' => 1,
+                'date' => now(),
+            ]);
+        } else {
+            $postView->increment('views');
+        }
+
+        // $postView->increment('views');
+
+        return response()->json([
+            'post' => $post,
+            'views' => $postView->views,
+        ]);
 
         return view('posts.show', [
             'post' => $post,
