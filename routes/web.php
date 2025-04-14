@@ -11,4 +11,4 @@ Route::get('/rundown', fn() => view('coming-soon'))->name('rundown');
 Route::get('/exhibitors', fn() => view('coming-soon'))->name('exhibitors');
 Route::get('/promo', fn() => view('coming-soon'))->name('promo');
 Route::get('/gallery', fn() => view('coming-soon'))->name('gallery');
-Route::get('/news', fn() => view('coming-soon'))->name('news');
+Route::get('/news', fn() => view('news.index'))->name('news');
