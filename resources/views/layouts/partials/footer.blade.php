@@ -3,7 +3,7 @@
     <div class="container mx-auto px-12">
         {{-- Header Section --}}
         <div class="flex gap-4 justify-between items-center mb-20">
-            <h1 class="text-6xl font-extrabold">
+            <h1 class="text-6xl font-extrabold tracking-[-0.25rem]">
                 Be part of <br />
                 Indonesia Game Expo <br />
                 2025
