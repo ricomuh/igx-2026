@@ -49,12 +49,12 @@ class PostController extends Controller
         // }
 
         // dd($popular_posts, $latest_posts);
-        return response()->json([
-            'latest_posts' => $latest_posts,
-            'popular_posts' => $popular_posts,
-        ]);
+        // return response()->json([
+        //     'latest_posts' => $latest_posts,
+        //     'popular_posts' => $popular_posts,
+        // ]);
 
-        return view('posts.index', [
+        return view('news.index', [
             'latest_posts' => $latest_posts,
             'popular_posts' => $popular_posts,
         ]);
@@ -81,7 +81,7 @@ class PostController extends Controller
             'views' => $postView->views,
         ]);
 
-        return view('posts.show', [
+        return view('news.show', [
             'post' => $post,
         ]);
     }

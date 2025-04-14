@@ -24,7 +24,7 @@
                 'Exhibitors' => '#',
                 'Promo' => '#',
                 'Gallery' => '#',
-                'News' => route("news")
+                'News' => route("news.index")
             ] as $name => $link)
                 <li>
                     <a href="{{ $link }}" class="text-white font-extrabold uppercase block mb-2">{{ $name }}</a>
