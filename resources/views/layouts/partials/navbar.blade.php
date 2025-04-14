@@ -17,13 +17,13 @@
             class="hidden flex-col gap-5 absolute top-full left-0 w-full bg-info pt-2 p-4 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-5 lg:p-0">
             @foreach ([
                 'Home' => route("home"),
-                'IGX Pals' => '#',
-                'Experience' => '#',
-                'Guests' => '#',
-                'Rundown' => '#',
-                'Exhibitors' => '#',
-                'Promo' => '#',
-                'Gallery' => '#',
+                'IGX Pals' =>  route("pals"),
+                'Experience' =>  route("experiences"),
+                'Guests' =>  route("guests"),
+                'Rundown' =>  route("rundown"),
+                'Exhibitors' =>  route("exhibitors"),
+                'Promo' =>  route("promo"),
+                'Gallery' =>  route("gallery"),
                 'News' => route("news.index")
             ] as $name => $link)
                 <li>
