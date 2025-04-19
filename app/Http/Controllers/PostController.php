@@ -74,6 +74,13 @@ class PostController extends Controller
             $postView->increment('views');
         }
 
+        // 2 random posts
+        $recommended_posts = Post::query()
+            ->where('id', '!=', $post->id)
+            ->inRandomOrder()
+            ->take(2)
+            ->get();
+
         // $postView->increment('views');
 
         // return response()->json([
@@ -83,6 +90,7 @@ class PostController extends Controller
 
         return view('news.show', [
             'post' => $post,
+            'recommended_posts' => $recommended_posts,
         ]);
     }
 }
