@@ -76,10 +76,10 @@ class PostController extends Controller
 
         // $postView->increment('views');
 
-        return response()->json([
-            'post' => $post,
-            'views' => $postView->views,
-        ]);
+        // return response()->json([
+        //     'post' => $post,
+        //     'views' => $postView->views,
+        // ]);
 
         return view('news.show', [
             'post' => $post,
