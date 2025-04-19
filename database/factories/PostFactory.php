@@ -16,11 +16,12 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $this->faker->addProvider(new \Mmo\Faker\PicsumProvider($this->faker));
         return [
             'title' => $this->faker->sentence,
             'body' => $this->generateHtmlBody(),
             'slug' => fn($table) => str($table['title'])->slug(),
-            'image_url' => $this->faker->imageUrl(640, 480, 'cats', true),
+            'image_url' => $this->faker->picsumUrl(800, 600),
             'user_id' => 1,
         ];
     }
