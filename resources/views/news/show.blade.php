@@ -27,7 +27,9 @@
         </div>
 
         {{-- Article Body --}}
-        <p class="text-lg">{{ $post->body }}</p>
+        <div class="prose max-w-none text-lg">
+            {!! $post->body !!}
+        </div>
 
         {{-- Share Section --}}
         <div class="mt-12 flex gap-5 items-center">
@@ -76,7 +78,6 @@
         {{-- Read More --}}
         <div class="mt-8">
             <h1 class="font-extrabold text-3xl mb-8">Read More</h1>
-            {{-- List News --}}
             <div class="grid grid-cols-2 gap-8">
                 @forelse ($recommended_posts as $news)
                     <a href="{{ route('news.show', ['post' => $news->slug]) }}" class="block">
@@ -84,7 +85,7 @@
                             <img src="{{ $news->image_url }}" alt="{{ $news->title }}" class="aspect-video h-40 object-cover rounded-2xl m-4 group-hover:scale-105 transition duration-300" />
                             <div class="p-4">
                                 <h2 class="text-2xl font-extrabold mb-2 transition group-hover:text-background-footer duration-300">{{ Str::limit($news->title, 35, '...') }}</h2>
-                                <p class="group-hover:text-background-footer mb-2 opacity-90 text-lg transition duration-300">{{ Str::limit($news->body, 70, '...') }}</p>
+                                <p class="group-hover:text-background-footer mb-2 opacity-90 text-lg transition duration-300">{!! Str::limit(strip_tags($news->body), 70, '...') !!}</p>
                                 <div class="flex gap-2 items-center opacity-90">
                                     <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-4" alt="">
                                     <p class="font-medium">{{ \Carbon\Carbon::parse($news->created_at)->format('d M Y') }}</p>
