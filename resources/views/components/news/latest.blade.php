@@ -19,46 +19,8 @@
     </div>
     
     {{-- List News --}}
-    <div class="grid grid-cols-2 gap-8">
-        @forelse ($latest_posts as $news)
-            <a href="{{ route('news.show', ['post' => $news->slug]) }}" class="block">
-                <div class="flex items-center hover:bg-white/20 rounded-2xl overflow-hidden group hover:shadow-lg transition duration-300">
-                    <img src="{{ $news->image_url }}" alt="{{ $news->title }}" class="aspect-video h-40 object-cover rounded-2xl m-4 group-hover:scale-105 transition duration-300" />
-                    <div class="p-4">
-                        <h2 class="text-2xl font-extrabold mb-2 transition group-hover:text-background-footer duration-300">{{ Str::limit($news->title, 35, '...') }}</h2>
-                        <p class="group-hover:text-background-footer mb-2 opacity-90 text-lg transition duration-300">{!! Str::limit(strip_tags($news->body), 70, '...') !!}</p>
-                        <div class="flex gap-2 items-center opacity-90">
-                            <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-4" alt="">
-                            <p class="font-medium">{{ \Carbon\Carbon::parse($news->created_at)->format('d M Y') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        @empty
-            <p class="text-center col-span-2 text-lg font-medium text-gray-500">No news found.</p>
-        @endforelse
-    </div>
+    <x-news.card-news :posts="$latest_posts" />
 
     {{-- Pagination --}}
-    <div class="flex justify-center mt-12 space-x-2 mb-24">
-        @if ($latest_posts->onFirstPage())
-            <button class="px-4 py-1 border border-gray-300 rounded text-gray-400 cursor-not-allowed">&laquo;</button>
-        @else
-            <a href="{{ $latest_posts->previousPageUrl() }}" class="px-4 py-1 border border-primary rounded hover:bg-gray-200 text-primary cursor-pointer text-lg">&laquo;</a>
-        @endif
-
-        @foreach ($latest_posts->getUrlRange(1, $latest_posts->lastPage()) as $page => $url)
-            @if ($page == $latest_posts->currentPage())
-                <button class="px-4 py-1 border border-primary rounded bg-primary text-white font-bold">{{ $page }}</button>
-            @else
-                <a href="{{ $url }}" class="px-4 py-1 border border-primary rounded hover:bg-gray-200 text-primary cursor-pointer text-lg">{{ $page }}</a>
-            @endif
-        @endforeach
-
-        @if ($latest_posts->hasMorePages())
-            <a href="{{ $latest_posts->nextPageUrl() }}" class="px-4 py-1 border border-primary rounded hover:bg-gray-200 text-primary cursor-pointer text-lg">&raquo;</a>
-        @else
-            <button class="px-4 py-1 border border-gray-300 rounded text-gray-400 cursor-not-allowed">&raquo;</button>
-        @endif
-    </div>
+    <x-news.pagination :paginator="$latest_posts" />
 </section>
