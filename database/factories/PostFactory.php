@@ -35,11 +35,11 @@ class PostFactory extends Factory
     {
         $html = '';
         for ($i = 1; $i <= 3; $i++) {
-            $html .= "<section>";
+            // $html .= "<section>";
             $html .= "<h2>Section {$i}</h2>";
             $html .= "<p>" . $this->faker->paragraph . "</p>";
             $html .= "<p>" . $this->faker->paragraph . "</p>";
-            $html .= "</section>";
+            // $html .= "</section>";
         }
         return $html;
     }
