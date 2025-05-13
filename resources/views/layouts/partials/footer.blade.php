@@ -1,8 +1,7 @@
-<img src="{{ asset('media/images/illustrations/wave.svg')}}" class="w-full -mt-40" alt="">
-<div class="bg-background-footer pb-8 text-white">
+<div class="relative wave-bg bg-background-footer pb-8 text-white">
     <div class="container mx-auto px-12">
         {{-- Header Section --}}
-        <div class="flex gap-4 justify-between items-center mb-20">
+        <div class="flex flex-col md:flex-row gap-4 justify-between items-center mb-20">
             <h1 class="text-6xl font-extrabold tracking-[-0.25rem]">
                 Be part of <br />
                 Indonesia Game Expo <br />
