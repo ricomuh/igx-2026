@@ -34,7 +34,7 @@
     </div>
 </nav>
 
-@section('scripts')
+@push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById('menu-toggle');
@@ -80,4 +80,4 @@
             });
         });
     </script>
-@endsection
+@endpush
