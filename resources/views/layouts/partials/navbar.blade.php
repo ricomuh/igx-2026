@@ -1,5 +1,5 @@
 <nav class="bg-info fixed w-full top-0 z-20">
-    <div class="container mx-auto px-4 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
+    <div class="mx-auto px-5 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">
             <a href="{{ route('home') }}">

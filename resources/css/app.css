@@ -61,85 +61,6 @@
         @apply font-moon z-20;
     }
 
-    #article-body h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body h2 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body h4 {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body h5 {
-        font-size: 1.125rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body h6 {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body p {
-        margin-bottom: 0.5rem;
-    }
-
-    #article-body ul {
-        margin-bottom: 0.5rem;
-        padding-left: 1.5rem;
-    }
-
-    #article-body ul li {
-        margin-bottom: 0.5rem;
-        list-style-type: disc;
-    }
-
-    #article-body ol {
-        margin-bottom: 0.5rem;
-        padding-left: 1.5rem;
-    }
-
-    #article-body ol li {
-        margin-bottom: 0.5rem;
-        list-style-type: decimal;
-    }
-
-    #article-body blockquote {
-        margin: 1rem 0;
-        padding: 1rem;
-        border-left: 4px solid #ccc;
-        background-color: #f9f9f9;
-    }
-
-    #article-body img {
-        max-width: 100%;
-        height: auto;
-        margin: 1rem 0;
-    }
-
-    #article-body table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-    }
-
     .wave-bg {
         margin-top: 22rem;
     }
@@ -160,5 +81,15 @@
     .wave-bg > * {
         position: relative;
         z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+        .wave-bg::before {
+            top: -10rem;
+            height: 10rem;
+        }
+        .wave-bg {
+            margin-top: 10rem;
+        }
     }
 }
