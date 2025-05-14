@@ -40,6 +40,7 @@
             const menuToggle = document.getElementById('menu-toggle');
             const menu = document.getElementById('menu');
             const menuIcon = document.getElementById('menu-icon');
+            const navbar = document.querySelector('nav');
 
             const hamburgerIcon = '/media/images/icons/hamburger.svg';
             const xmarkIcon = '/media/images/icons/xmark.svg';
@@ -77,6 +78,15 @@
                 link.addEventListener('click', () => {
                     closeMenu();
                 });
+            });
+
+            // Add shadow class on scroll with animation
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 0) {
+                    navbar.classList.add('shadow-lg', 'transition-shadow', 'duration-300');
+                } else {
+                    navbar.classList.remove('shadow-lg', 'transition-shadow', 'duration-300');
+                }
             });
         });
     </script>

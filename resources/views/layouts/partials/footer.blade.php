@@ -8,8 +8,8 @@
                 2025
             </h1>
             <div class="flex flex-col gap-4 w-full sm:w-80">
-                <a href="#" class="btn-primary text-center font-extrabold text-base sm:text-xl px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Join Us</a>
-                <a href="#" class="btn-primary text-center font-extrabold text-base sm:text-xl px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Get Ticket</a>
+                <a href="{{ route('promo') }}" class="btn-primary text-center font-extrabold text-base sm:text-xl px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Join Us</a>
+                <a href="{{ route('promo') }}" class="btn-primary text-center font-extrabold text-base sm:text-xl px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Get Ticket</a>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
         <div class="flex flex-col lg:flex-row justify-between items-center gap-10 relative text-center lg:text-left">
             {{-- Left Nav --}}
             <ul class="flex flex-col gap-2 md:text-lg order-2 lg:order-1">
-                @foreach (['Home' => route('home'), 'Guests' => '#', 'Rundown' => '#', 'Exhibitors' => '#', 'News' => '#'] as $name => $link)
+                @foreach (['Home' => route('home'), 'Guests' => route("guests"), 'Rundown' => route("rundown"), 'Exhibitors' => route("exhibitors"), 'News' => route("news.index")] as $name => $link)
                     <li class="hover:text-primary">
                         <a href="{{ $link }}">{{ $name }}</a>
                     </li>
