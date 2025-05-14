@@ -1,5 +1,5 @@
 @if ($paginator->lastPage() > 1)
-    <div class="flex justify-center my-6 lg:mt-12 space-x-2 lg:mb-24">
+    <div class="flex justify-center mt-6 lg:mt-12 space-x-2">
         {{-- Tombol Sebelumnya --}}
         @if ($paginator->onFirstPage())
             <button

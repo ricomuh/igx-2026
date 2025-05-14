@@ -129,7 +129,7 @@
 
 @section('content')
 <section id="detail-article">
-    <div class="container px-5 xl:px-12 mx-auto mt-24 pb-10">
+    <div class="container px-5 xl:px-12 mx-auto mt-24">
         {{-- Article Image --}}
         <div class="relative mb-6 overflow-hidden rounded-lg md:mb-8 md:max-h-96 lg:mb-10 lg:max-h-[30rem] xl:mb-12">
             <img
