@@ -20,7 +20,7 @@
         </div>
 
         <div class="flex justify-center">
-            <a href="#" class="btn-primary font-extrabold text-lg xl:text-2xl px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase flex gap-2 sm:gap-3">See Our 2024 Gallery
+            <a href="{{ route("gallery") }}" class="btn-primary font-extrabold text-lg xl:text-2xl px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase flex gap-2 sm:gap-3">See Our 2024 Gallery
                 <img src="{{ asset('media/images/icons/angles-right-solid.svg')}}" class="w-4 sm:w-5 md:w-6" alt="">
             </a>
         </div>
