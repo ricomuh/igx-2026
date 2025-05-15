@@ -1,10 +1,10 @@
-@section('style')
+@push('style')
 <style>
     body {
         background-color: var(--color-primary) !important;
     }
 </style>
-@endsection
+@endpush
 
 @extends('layouts.main', [
     'title' => 'Home',

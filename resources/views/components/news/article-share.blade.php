@@ -1,5 +1,5 @@
-<div class="mt-12 flex gap-5 items-center">
-    <p class="text-lg">Share on:</p>
+<div class="mt-6 md:mt-12 flex gap-5 items-center">
+    <p class="md:text-lg">Share on:</p>
 
     {{-- Facebook Share --}}
     <a

@@ -1,5 +1,5 @@
 <nav class="bg-info fixed w-full top-0 z-20">
-    <div class="container mx-auto px-4 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
+    <div class="mx-auto px-5 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">
             <a href="{{ route('home') }}">
@@ -34,12 +34,13 @@
     </div>
 </nav>
 
-@section('scripts')
+@push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById('menu-toggle');
             const menu = document.getElementById('menu');
             const menuIcon = document.getElementById('menu-icon');
+            const navbar = document.querySelector('nav');
 
             const hamburgerIcon = '/media/images/icons/hamburger.svg';
             const xmarkIcon = '/media/images/icons/xmark.svg';
@@ -78,6 +79,15 @@
                     closeMenu();
                 });
             });
+
+            // Add shadow class on scroll with animation
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 0) {
+                    navbar.classList.add('shadow-lg', 'transition-shadow', 'duration-300');
+                } else {
+                    navbar.classList.remove('shadow-lg', 'transition-shadow', 'duration-300');
+                }
+            });
         });
     </script>
-@endsection
+@endpush
