@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 
 @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-    @vite(['resources/css/app.css'])
+    @vite('resources/css/app.css')
 @endif
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 

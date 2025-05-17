@@ -3,6 +3,7 @@ import laravel from "laravel-vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+    assetsInclude: ["**/*.woff", "**/*.woff2"],
     plugins: [
         laravel({
             input: [
@@ -14,5 +15,4 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    assetsInclude: ["**/*.woff", "**/*.woff2"],
 });
