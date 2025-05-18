@@ -27,7 +27,7 @@
                 'News' => route("news.index")
             ] as $name => $link)
                 <li>
-                    <a href="{{ $link }}" class="text-white font-extrabold uppercase block mb-2">{{ $name }}</a>
+                    <a href="{{ $link }}" class="text-white font-extrabold uppercase block mb-4 md:mb-5 lg:mb-0 lg:text-sm xl:text-base">{{ $name }}</a>
                 </li>
             @endforeach
         </ul>
