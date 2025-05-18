@@ -1,5 +1,5 @@
-<section id="popular" class="mb-10 xl:mb-12 overflow-hidden">
-    <h1 class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-extrabold mb-5 lg:mb-8 xl:mb-12 tracking-tight">Popular News</h1>
+<section id="popular" class="mb-12 md:mb-16 overflow-hidden">
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-extrabold mb-8 md:mb-10 xl:mb-12">Popular News</h1>
 
     <!-- Wrapper Swiper -->
     <div id="popular-carousel-wrapper">
@@ -11,7 +11,7 @@
             @foreach ($popular_posts as $index => $post)
                 @php
                     $colSpan = in_array($index, [0, 1]) ? 'col-span-3' : 'col-span-2';
-                    $sizeTitle = in_array($index, [0, 1]) ? 'text-xl sm:text-3xl xl:text-4xl' : 'text-xl sm:text-3xl lg:text-2xl xl:text-3xl';
+                    $sizeTitle = in_array($index, [0, 1]) ? 'text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl' : 'text-xl xl:text-xl 2xl:text-2xl';
                 @endphp
 
                 <div class="{{ $colSpan }} px-2"> {{-- px-2 untuk beri ruang saat mobile swiper --}}
@@ -27,9 +27,9 @@
                                 <h1 class="{{ $sizeTitle }} font-extrabold leading-snug">
                                     {{ Str::limit($post['title'], 20, '...') }}
                                 </h1>
-                                <div class="flex items-center gap-2 opacity-90 mt-1 lg:mt-2">
-                                    <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-3 sm:w-4 invert brightness-0" alt="Calendar">
-                                    <p class="font-medium text-white/90 text-sm sm:text-base">{{ \Carbon\Carbon::parse($post['created_at'])->format('d M Y') }}</p>
+                                <div class="flex items-center gap-2 opacity-90 mt-2">
+                                    <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-3 md:w-4 invert brightness-0" alt="Calendar">
+                                    <p class="font-medium text-white text-sm md:text-base">{{ \Carbon\Carbon::parse($post['created_at'])->format('d M Y') }}</p>
                                 </div>
                             </div>
                         </div>

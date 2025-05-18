@@ -152,7 +152,7 @@
         </div>
 
         {{-- Article Body --}}
-        <div id="article-body" class="prose max-w-none text-sm sm:text-base md:text-lg">
+        <div id="article-body" class="prose max-w-none text-sm sm:text-base md:text-lg text-gray-700">
             {!! $post->body !!}
         </div>
 
@@ -160,7 +160,7 @@
         <x-news.article-share :url="route('news.show', ['post' => $post->slug])" :title="$post->title" />
 
         {{-- Read More --}}
-        <div class="mt-8">
+        <div class="mt-12 xl:mt-20">
             <h1 class="font-extrabold text-2xl sm:text-3xl lg:text-4xl mb-8">Read More</h1>
             <x-news.card-news :posts="$recommended_posts" />
         </div>

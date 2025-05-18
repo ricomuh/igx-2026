@@ -1,7 +1,7 @@
 <section>
     {{-- Header --}}
-    <div class="flex flex-col md:flex-row md:justify-between gap-3 md:items-center mb-5 lg:mb-8 xl:mb-12">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-extrabold">Latest News</h1>
+    <div class="flex flex-col md:flex-row md:justify-between gap-4 md:items-center mb-8 md:mb-10 xl:mb-12">
+        <h1 class="text-3xl md:text-4xl xl:text-5xl font-extrabold">Latest News</h1>
 
         <form method="GET" action="{{ route('news.index') }}" class="flex w-full md:w-auto gap-2">
             {{-- Input Wrapper --}}

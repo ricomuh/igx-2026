@@ -9,7 +9,7 @@
             <h1 class="font-extrabold text-8xl">
                 WE ARE
             </h1>
-            <h1 class="font-extrabold text-8xl text-background-footer ">
+            <h1 class="font-extrabold text-8xl text-background-footer">
                 COMING
             </h1>
             <h1 class="font-extrabold text-9xl leading-none text-background-footer">

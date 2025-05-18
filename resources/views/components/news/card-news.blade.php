@@ -1,7 +1,7 @@
 @push('style')
     <style>
         .filter-gray {
-            filter: invert(73%) sepia(11%) saturate(249%) hue-rotate(202deg) brightness(88%) contrast(90%);
+            filter: invert(21%) sepia(11%) saturate(1463%) hue-rotate(178deg) brightness(96%) contrast(86%);
         }
 
         @media (max-width: 639px) {
@@ -27,17 +27,17 @@
 
                 {{-- Content --}}
                 <div class="py-2 md:p-4">
-                    <h2 class="text-xl md:text-2xl font-extrabold mb-2 transition duration-300 group-hover:text-background-footer">
+                    <h2 class="text-lg sm:text-xl md:text-2xl font-extrabold mb-2 sm:mb-3 transition duration-300 group-hover:text-background-footer">
                         {{ Str::limit($news->title, 35, '...') }}
                     </h2>
 
-                    <p class="mb-2 opacity-90 text-base md:text-lg text-gray-600 transition duration-300">
+                    <p class="mb-2 sm:mb-3 opacity-90 text-sm md:text-base text-gray-700 transition duration-300">
                         {!! Str::limit(strip_tags($news->body), 70, '...') !!}
                     </p>
 
                     <div class="flex gap-2 items-center opacity-90">
-                        <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-4 filter-gray" alt="">
-                        <p class="font-medium text-gray-600 text-sm sm:text-base">
+                        <img src="{{ asset('media/images/icons/calendar.svg') }}" class="w-3 filter-gray" alt="">
+                        <p class="font-medium text-gray-700 text-xs sm:text-sm">
                             {{ \Carbon\Carbon::parse($news->created_at)->format('d M Y') }}
                         </p>
                     </div>
@@ -45,6 +45,6 @@
             </div>
         </a>
     @empty
-        <p class="text-center col-span-1 sm:col-span-2 lg:col-span-3 text-lg font-medium text-gray-500">No news found.</p>
+        <p class="text-center col-span-1 sm:col-span-2 lg:col-span-3 text-lg font-medium text-gray-700">No news found.</p>
     @endforelse
 </div>
