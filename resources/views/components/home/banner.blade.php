@@ -1,30 +1,30 @@
 <div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-20">
     <div class="container mx-auto overflow-hidden">
-        <div class="flex flex-col lg:flex-row w-full justify-center items-center">
-            <div class="text-white p-5 sm:p-10 text-center lg:text-justify">
+        <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center">
+            <div class="text-white sm:p-10 text-center lg:text-justify">
                 <!-- Left Section -->
                 <div class="flex flex-col">
-                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-8xl font-extrabold mb-2 tracking-[-0.375rem] xl:tracking-[-0.75rem]">STAGE 02</span>
-                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] xl:text-8xl -mt-4 sm:-mt-6.5 md:-mt-8 lg:-mt-7.5 font-extrabold tracking-[-0.375rem] xl:tracking-[-0.75rem]">FUSION !</span>
-                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] text-center lg:text-justify tracking-[-0.25rem] md:tracking-[-0.5rem] font-extrabold -mt-3 sm:-mt-4 md:-mt-5 lg:-mt-4.5 xl:-mt-5">Let's Team Up</span>
+                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-extrabold">STAGE 02</span>
+                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl leading-[1] font-extrabold">FUSION !</span>
+                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-5xl text-center lg:text-justify font-extrabold leading-[1]">Let's Team Up</span>
                 </div>
 
                 <!-- Right Section -->
-                <div class="flex flex-col mt-2 md:mt-4 xl:mt-8">
-                    <div class="flex gap-2 sm:gap-3 items-center justify-between">
-                        <span class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.125rem] sm:tracking-[-0.35rem]">HALL</span>
-                        <span class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-[-0.125rem] sm:tracking-[-0.35rem]">09-10</span>
+                <div class="flex flex-col mt-2 lg:mt-4 xl:mt-8">
+                    <div class="flex gap-2 sm:gap-3 items-center justify-center lg:justify-between md:gap-8 xl:gap-2">
+                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1]">HALL</span>
+                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1]">09-10</span>
                     </div>
-                    <div class="flex gap-2 sm:gap-3 items-center justify-center md:justify-between -mt-4.5 sm:-mt-6 md:-mt-6.75">
-                        <span class="text-7xl sm:text-8xl md:text-[7rem] font-extrabold tracking-[-0.5rem] sm:tracking-[-0.75rem]">ICE</span>
-                        <span class="text-7xl sm:text-8xl md:text-[7rem] font-extrabold tracking-[-0.5rem] sm:tracking-[-0.75rem]">BSD</span>
+                    <div class="flex gap-2 sm:gap-3 items-center justify-center lg:justify-between md:gap-8 xl:gap-2">
+                        <span class="text-6xl sm:text-[4rem] md:text-7xl xl:text-8xl font-extrabold">ICE</span>
+                        <span class="text-6xl sm:text-[4rem] md:text-7xl xl:text-8xl font-extrabold">BSD</span>
                     </div>
-                    <span class="text-4xl sm:text-5xl md:text-[3.3rem] lg:text-[3.65rem] -mt-4 sm:-mt-4.5 md:-mt-5 lg:-mt-5.25 font-extrabold tracking-[-0.25rem] sm:tracking-[-0.5rem]">04-05 OCTOBER</span>
-                    <span class="text-9xl sm:text-[9rem] md:text-[10rem] lg:text-[11rem] tracking-[-1rem] sm:tracking-[-1rem] md:tracking-[-1rem] font-extrabold -mt-6.5 sm:-mt-7.5 md:-mt-8 lg:-mt-9 xl:-mt-9">2025</span>
+                    <span class="text-2xl sm:text-4xl xl:text-[2.75rem] font-extrabold leading-[1]">04-05 OCTOBER</span>
+                    <span class="text-8xl sm:text-9xl xl:text-[10rem] tracking-[-0.5rem] font-extrabold leading-[1]">2025</span>
                 </div>
             </div>
 
-            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full max-w-96 md:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2" alt="">
+            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2" alt="">
         </div>
 
         <div class="flex justify-center mt-8 xl:mt-12">
