@@ -48,7 +48,7 @@
                     <p class="lg:text-lg xl:text-2xl">Indonesia Convention Exhibition (ICE) Jl. BSD Grand Boulevard Raya No.1, BSD City, Tangerang, 15339</p>
                     <a target="_blank"
                     rel="noreferrer"
-                    href="https://ice-indonesia.com/en/visitice/getting_here" class="lg:text-lg xl:text-2xl btn-primary py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-5 font-extrabold rounded-lg block uppercase w-max">How To Get Here?</a>
+                    href="https://ice-indonesia.com/en/visitice/getting_here" class="lg:text-lg xl:text-xl btn-primary py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-5 font-extrabold rounded-lg block uppercase w-max">How To Get Here?</a>
                 </div>
             </div>
         </div>
