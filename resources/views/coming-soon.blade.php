@@ -12,10 +12,10 @@
             <h1 class="font-extrabold text-8xl text-background-footer ">
                 COMING
             </h1>
-            <h1 class="font-extrabold text-9xl leading-[1] text-background-footer">
+            <h1 class="font-extrabold text-9xl leading-none text-background-footer">
                 SOON
             </h1>
-            <h1 class="font-extrabold text-[12rem] leading-[1] tracking-[-1.5rem]">
+            <h1 class="font-extrabold text-[11rem] leading-none tracking-[-0.5rem]">
                 2025
             </h1>
         </div>

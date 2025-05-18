@@ -5,22 +5,22 @@
                 <!-- Left Section -->
                 <div class="flex flex-col">
                     <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-extrabold">STAGE 02</span>
-                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl leading-[1] font-extrabold">FUSION !</span>
-                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-5xl text-center lg:text-justify font-extrabold leading-[1]">Let's Team Up</span>
+                    <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl leading-none font-extrabold">FUSION !</span>
+                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.5rem] xl:text-5xl text-center lg:text-justify font-extrabold leading-none">Let's Team Up</span>
                 </div>
 
                 <!-- Right Section -->
                 <div class="flex flex-col mt-2 lg:mt-4 xl:mt-8">
                     <div class="flex gap-2 sm:gap-3 items-center justify-center lg:justify-between md:gap-8 xl:gap-2">
-                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1]">HALL</span>
-                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-[1]">09-10</span>
+                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-none">HALL</span>
+                        <span class="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-none">09-10</span>
                     </div>
                     <div class="flex gap-2 sm:gap-3 items-center justify-center lg:justify-between md:gap-8 xl:gap-2">
                         <span class="text-6xl sm:text-[4rem] md:text-7xl xl:text-8xl font-extrabold">ICE</span>
                         <span class="text-6xl sm:text-[4rem] md:text-7xl xl:text-8xl font-extrabold">BSD</span>
                     </div>
-                    <span class="text-2xl sm:text-4xl xl:text-[2.75rem] font-extrabold leading-[1]">04-05 OCTOBER</span>
-                    <span class="text-8xl sm:text-9xl xl:text-[10rem] tracking-[-0.5rem] font-extrabold leading-[1]">2025</span>
+                    <span class="text-2xl sm:text-4xl xl:text-[2.75rem] font-extrabold leading-none">04-05 OCTOBER</span>
+                    <span class="text-8xl sm:text-9xl xl:text-[10rem] tracking-[-0.5rem] font-extrabold leading-none">2025</span>
                 </div>
             </div>
 
