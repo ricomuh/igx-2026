@@ -34,5 +34,10 @@ class DatabaseSeeder extends Seeder
                 }
             }
         );
+
+        $this->call([
+            GuestSeeder::class,
+            ExhibitorSeeder::class,
+        ]);
     }
 }

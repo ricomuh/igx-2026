@@ -1,0 +1,26 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Exhibitor>
+ */
+class ExhibitorFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->company(),
+            // 'slug' => fake()->unique()->slug(),
+            'image_url' => asset('dummies/Cover (' . fake()->numberBetween(1, 27) . ').webp'),
+            'url' => fake()->optional()->url(),
+        ];
+    }
+}
