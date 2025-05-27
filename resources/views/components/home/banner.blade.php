@@ -1,7 +1,10 @@
 <div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-20">
-    <div class="container mx-auto overflow-hidden">
+    <video class="absolute inset-0 opacity-20" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%;">
+        Your browser does not support the video tag.
+    </video>
+    <div class="container mx-auto overflow-hidden relative">
         <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center">
-            <div class="text-white sm:p-10 text-center lg:text-justify">
+            <div class="text-white sm:p-10 text-center lg:text-justify drop-shadow-2xl">
                 <!-- Left Section -->
                 <div class="flex flex-col">
                     <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-extrabold">STAGE 02</span>
@@ -24,7 +27,7 @@
                 </div>
             </div>
 
-            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2" alt="">
+            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2 drop-shadow-2xl" alt="">
         </div>
 
         <div class="flex justify-center mt-8 xl:mt-12">
