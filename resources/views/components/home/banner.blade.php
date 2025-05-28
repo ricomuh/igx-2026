@@ -1,6 +1,5 @@
 <div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-20">
-    <video class="absolute inset-0 opacity-20" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%;">
-        Your browser does not support the video tag.
+    <video class="absolute inset-0 opacity-15" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%;">
     </video>
     <div class="container mx-auto overflow-hidden relative">
         <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center">
