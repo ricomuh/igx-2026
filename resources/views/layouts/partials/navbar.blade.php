@@ -26,8 +26,14 @@
                 'Gallery' =>  route("gallery"),
                 'News' => route("news.index")
             ] as $name => $link)
+                @php
+                    $isActive = url()->current() === $link || (request()->routeIs('news.*') && $name === 'News');
+                @endphp
                 <li>
-                    <a href="{{ $link }}" class="text-white font-extrabold uppercase block mb-4 md:mb-5 lg:mb-0 lg:text-sm xl:text-base">{{ $name }}</a>
+                    <a href="{{ $link }}"
+                       class="font-extrabold uppercase block mb-4 md:mb-5 lg:mb-0 lg:text-sm xl:text-base {{ $isActive ? 'text-secondary' : 'text-white' }}">
+                        {{ $name }}
+                    </a>
                 </li>
             @endforeach
         </ul>
