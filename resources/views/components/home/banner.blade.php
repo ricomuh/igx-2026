@@ -1,9 +1,8 @@
-<div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-20">
-    <video class="absolute inset-0 opacity-15" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%;">
-    </video>
-    <div class="container mx-auto overflow-hidden relative">
-        <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center">
-            <div class="text-white sm:p-10 text-center lg:text-justify drop-shadow-2xl">
+<div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-0 relative overflow-hidden">
+    <video class="absolute inset-0 w-full h-full object-cover opacity-20 z-0" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline aria-label="IGX Banner Animation" title="IGX Banner Animation"></video>
+    <div class="container mx-auto relative z-10 flex flex-col justify-center md:scale-95">
+        <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center flex-1 pt-16 sm:pt-24 xl:pt-32 pb-8 sm:pb-12">
+            <div class="text-white text-center lg:text-justify" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">
                 <!-- Left Section -->
                 <div class="flex flex-col">
                     <span class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-extrabold">STAGE 02</span>
@@ -26,10 +25,22 @@
                 </div>
             </div>
 
-            <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2 drop-shadow-2xl" alt="">
+            <div class="relative w-full max-w-72 sm:max-w-80 md:max-w-96 lg:max-w-none sm:w-3/4 order-first lg:order-last md:w-2/3 lg:w-1/2 flex items-center justify-center">
+                <img src="{{ asset('media/images/illustrations/banner.webp') }}" class="w-full drop-shadow-2xl floating-igx" alt="IGX Characters">
+                <style>
+                    @keyframes float-igx {
+                        0% { transform: translateY(0); }
+                        50% { transform: translateY(-32px); }
+                        100% { transform: translateY(0); }
+                    }
+                    .floating-igx {
+                        animation: float-igx 3.5s ease-in-out infinite;
+                    }
+                </style>
+            </div>
         </div>
 
-        <div class="flex justify-center mt-8 xl:mt-12">
+        <div class="flex justify-center mt-4 xl:mt-8 mb-8 sm:mb-12 md:mb-16 flex-shrink-0">
             <a href="{{ route('promo') }}" class="btn-primary font-extrabold text-lg xl:text-2xl px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase">Get Your Ticket!</a>
         </div>
     </div>
