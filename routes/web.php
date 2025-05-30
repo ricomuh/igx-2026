@@ -22,3 +22,4 @@ Route::as('news.')->prefix('news')->group(function () {
 });
 Route::get('/privacy-policy', fn() => view('privacy-policy.index'))->name('privacy-policy');
 Route::get('/terms-of-service', fn() => view('terms-of-service.index'))->name('terms-of-service');
+Route::get('/contact-us', fn() => view('contact-us.index'))->name('contact-us');
