@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
         ]);
 
-        Post::factory(30)->create([
+        Post::factory(200)->create([
             'user_id' => 1,
             'created_at' => now()->subDays(rand(1, 30)),
         ])->each(
