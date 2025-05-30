@@ -26,11 +26,13 @@
 
             <div class="flex flex-col gap-4 w-full max-w-xs">
                 <a href="https://api.whatsapp.com/message/U3XML62HR7O2C1" target="_blank"
-                   class="btn-primary text-center font-extrabold text-lg xl:text-2xl px-6 py-3 rounded-lg">
+                   class="btn-primary text-center flex gap-3 justify-center items-center font-extrabold text-lg xl:text-2xl px-6 py-3 rounded-lg">
+                   <img src="{{ asset("/media/images/icons/wa.svg") }}" class="size-9" alt="Whatsapp Logo">
                     WhatsApp
                 </a>
                 <a href="mailto:indonesiagameexpo23@gmail.com"
-                   class="btn-primary text-center font-extrabold text-lg xl:text-2xl px-6 py-3 rounded-lg">
+                   class="btn-primary text-center flex gap-3 justify-center items-center font-extrabold text-lg xl:text-2xl px-6 py-3 rounded-lg">
+                   <img src="{{ asset("/media/images/icons/email.svg") }}" class="size-9" alt="Whatsapp Logo">
                     E-Mail
                 </a>
             </div>
