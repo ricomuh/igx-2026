@@ -16,7 +16,7 @@
         
         {{-- Gambar --}}
         <div class="flex justify-center md:justify-end">
-            <img src="{{ asset('media/images/chars/Nitari.png') }}" class="w-full max-w-56 md:max-w-none" alt="Character illustration - Nitari">
+            <img src="{{ asset('media/images/chars/Nitari.webp') }}" class="w-full max-w-56 md:max-w-none" alt="Character illustration - Nitari">
         </div>
 
         {{-- Konten --}}
