@@ -15,15 +15,13 @@ class ExhibitorController extends Controller
                 $query->where('name', 'like', '%' . $request->search . '%');
             })
             ->when($sortBy, function ($query) use ($sortBy) {
-                if ($sortBy === 'latest') {
-                    $query->latest();
-                } elseif ($sortBy === 'oldest') {
-                    $query->oldest();
-                } elseif ($sortBy === 'name_asc') {
-                    $query->orderBy('name', 'asc');
-                } elseif ($sortBy === 'name_desc') {
-                    $query->orderBy('name', 'desc');
-                }
+                return match($sortBy) {
+                    'latest' => $query->latest(),
+                    'oldest' => $query->oldest(),
+                    'name_asc' => $query->orderBy('name', 'asc'),
+                    'name_desc' => $query->orderBy('name', 'desc'),
+                    default => $query,
+                };
             })
             ->paginate(10)
             ->withQueryString();
