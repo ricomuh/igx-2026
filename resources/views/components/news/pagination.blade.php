@@ -19,17 +19,18 @@
             </a>
         @endif
 
-        {{-- Nomor Halaman dengan Ellipsis --}}
         @php
             $current = $paginator->currentPage();
             $last = $paginator->lastPage();
-            $range = 2;
+            $isMobile = request()->header('sec-ch-ua-mobile') === '?1' || (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Mobile|Android|iP(hone|od|ad)/i', $_SERVER['HTTP_USER_AGENT']));
+            $range = $isMobile ? 0 : 1; // 3 items on mobile (first, current, last), 5 on desktop (first, current±1, last)
             $showPages = [];
             $showPages[] = 1;
-            for ($i = max(2, $current - $range); $i <= min($last - 1, $current + $range); $i++) {
-                $showPages[] = $i;
-            }
+            if ($current - $range > 2) $showPages[] = $current - $range;
+            if ($current != 1 && $current != $last) $showPages[] = $current;
+            if ($current + $range < $last) $showPages[] = $current + $range;
             if ($last > 1) $showPages[] = $last;
+            $showPages = array_filter($showPages, function($v) use ($last) { return $v >= 1 && $v <= $last; });
             $showPages = array_unique($showPages);
             sort($showPages);
         @endphp
