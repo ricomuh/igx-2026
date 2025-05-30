@@ -7,7 +7,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/pals', fn() => view('coming-soon'))->name('pals');
+Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');
 Route::get('/experiences', fn() => view('coming-soon'))->name('experiences');
 Route::get('/guests', GuestController::class)->name('guests');
 Route::get('/rundown', fn() => view('coming-soon'))->name('rundown');
