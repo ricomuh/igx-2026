@@ -20,3 +20,5 @@ Route::as('news.')->prefix('news')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('show');
 });
+Route::get('/privacy-policy', fn() => view('privacy-policy.index'))->name('privacy-policy');
+Route::get('/terms-of-service', fn() => view('terms-of-service.index'))->name('terms-of-service');

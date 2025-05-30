@@ -43,7 +43,7 @@
 
             {{-- Right Nav --}}
             <ul class="flex flex-col gap-2 md:text-lg order-3 lg:order-3">
-                @foreach (['Contact Us' => '#', 'Terms of Service' => '#', 'Privacy Policy' => '#'] as $name => $link)
+                @foreach (['Contact Us' => '#', 'Terms of Service' => route('terms-of-service'), 'Privacy Policy' => route('privacy-policy')] as $name => $link)
                     <li class="hover:text-primary">
                         <a href="{{ $link }}">{{ $name }}</a>
                     </li>

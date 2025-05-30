@@ -1,6 +1,6 @@
 <div class="bg-primary bg-cover w-full min-h-screen flex items-center justify-center py-0 relative overflow-hidden">
     <video class="absolute inset-0 w-full h-full object-cover opacity-20 z-0" src="{{ asset('media/videos/banner.mp4') }}" autoplay loop muted playsinline aria-label="IGX Banner Animation" title="IGX Banner Animation"></video>
-    <div class="container mx-auto relative z-10 flex flex-col justify-center md:scale-95">
+    <div class="container mx-auto relative z-10 flex flex-col justify-center">
         <div class="flex flex-col lg:flex-row lg:gap-8 w-full justify-center items-center flex-1 pt-16 sm:pt-24 xl:pt-32 pb-8 sm:pb-12">
             <div class="text-white text-center lg:text-justify" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">
                 <!-- Left Section -->
