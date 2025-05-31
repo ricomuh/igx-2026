@@ -18,6 +18,22 @@ class Post extends Model
         'user_id',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            $post->slug = str($post->title)->slug();
+            $post->user_id = auth()->id();
+            $post->image_url = asset('storage/' . $post->image_url);
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
