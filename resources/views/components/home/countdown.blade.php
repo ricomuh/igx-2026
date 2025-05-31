@@ -2,35 +2,35 @@
     <div class="container px-5 py-20 xl:py-28 mx-auto">
         <div class="flex flex-col sm:flex-row gap-3 items-center justify-center mb-20 xl:mb-28">
             <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-12 xl:h-16" alt="Logo">
-            <h1 class="font-extrabold text-center text-3xl sm:text-4xl md:text-5xl xl:text-6xl">COMING SOON</h1>
+            <h1 class="font-extrabold text-center text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-gray-900">COMING SOON</h1>
         </div>
-        
+
         {{-- begin:countdown --}}
         <div class="flex flex-wrap gap-2 sm:gap-4 xl:gap-8 items-center justify-center text-center">
             <div class="flex flex-col items-center gap-2 lg:gap-4 justify-center">
-                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown days" data-countdown="2025-10-04T00:00:00Z">00</span>
-                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase">Days</span>
+                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown text-gray-900 days" data-countdown="2025-10-04T00:00:00Z">00</span>
+                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase text-gray-800">Days</span>
             </div>
             <span class="text-2xl sm:text-4xl md:text-5xl font-bold">:</span>
             <div class="flex flex-col items-center gap-2 lg:gap-4 justify-center">
-                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown hours" data-countdown="2025-10-04T00:00:00Z">00</span>
-                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase">Hours</span>
+                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown text-gray-900 hours" data-countdown="2025-10-04T00:00:00Z">00</span>
+                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase text-gray-800">Hours</span>
             </div>
             <span class="text-2xl sm:text-4xl md:text-5xl font-bold">:</span>
             <div class="flex flex-col items-center gap-2 lg:gap-4 justify-center">
-                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown minutes" data-countdown="2025-10-04T00:00:00Z">00</span>
-                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase">Minutes</span>
+                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown text-gray-900 minutes" data-countdown="2025-10-04T00:00:00Z">00</span>
+                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase text-gray-800">Minutes</span>
             </div>
             <span class="text-2xl sm:text-4xl md:text-5xl font-bold">:</span>
             <div class="flex flex-col items-center gap-2 lg:gap-4 justify-center">
-                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown seconds" data-countdown="2025-10-04T00:00:00Z">00</span>
-                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase">Seconds</span>
+                <span class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold countdown text-gray-900 seconds" data-countdown="2025-10-04T00:00:00Z">00</span>
+                <span class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold lowercase text-gray-800">Seconds</span>
             </div>
         </div>
         {{-- end:countdown --}}
-    
+
         {{-- begin:location --}}
-        <h2 class="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center my-8 sm:my-12 md:my-20 xl:my-28">04-05 October 2025 at</h2>
+        <h2 class="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center my-8 sm:my-12 md:my-20 xl:my-28 text-gray-900">04-05 October 2025 at</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-6 sm:gap-8 w-full xl:w-4/5 mx-auto">
             <div class="col-span-1 md:h-full">
                 <iframe
@@ -42,7 +42,7 @@
                 title="Indonesia Convention Exhibition Map"
                 ></iframe>
             </div>
-            <div class="col-span-1 md:h-full">
+            <div class="col-span-1 md:h-full text-gray-900">
                 <div class="flex flex-col gap-4 lg:gap-8">
                     <h1 class="font-bold text-2xl sm:text-3xl lg:text-4xl">IGX Venue</h1>
                     <p class="lg:text-lg xl:text-2xl">Indonesia Convention Exhibition (ICE) Jl. BSD Grand Boulevard Raya No.1, BSD City, Tangerang, 15339</p>

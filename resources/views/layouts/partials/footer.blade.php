@@ -8,7 +8,7 @@
                 2025
             </h1>
             <div class="flex flex-col gap-4 w-full sm:w-80">
-                <a href="{{ route('promo') }}" class="btn-primary text-center font-extrabold text-base xl:text-lg px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Join Us</a>
+                <a href="https://www.instagram.com/indonesiagameexpo/" target="_blank" class="btn-primary text-center font-extrabold text-base xl:text-lg px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Join Us</a>
                 <a href="{{ route('promo') }}" class="btn-primary text-center font-extrabold text-base xl:text-lg px-6 py-3 sm:px-12 sm:py-4 rounded-lg uppercase">Get Ticket</a>
             </div>
         </div>

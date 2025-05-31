@@ -30,17 +30,17 @@
       <div class="flex flex-col items-center w-full max-w-2xl xl:max-w-5xl">
         <div class="grid md:grid-cols-2 gap-4 xl:gap-8 w-full items-center justify-center">
           <img loading="lazy" :src="characters[current].image" alt="Karakter" class="h-56 md:h-auto w-full lg:h-96 mb-2 object-contain drop-shadow-lg mx-auto">
-          
+
           {{-- Desc --}}
           <div class="xl:text-left">
             <template x-if="characters[current].thumb">
               <img loading="lazy" :src="characters[current].thumb" alt="Banner" class="h-24 w-auto mx-auto md:mx-0 object-contain mb-2">
             </template>
-            <h2 class="text-xl md:text-2xl xl:text-3xl mb-1 font-bold text-black text-center md:text-left">
+            <h2 class="text-xl md:text-2xl xl:text-3xl mb-1 font-bold text-gray-800 text-center md:text-left">
               <span x-text="characters[current].name">Character Name</span>
             </h2>
             <p class="text-sm lg:text-base italic text-gray-700 mb-4 text-center md:text-left" x-text="characters[current].as"></p>
-            <p class="mt-2 text-gray-800 text-sm xl:text-base leading-relaxed" x-text="characters[current].description"></p>
+            <p class="mt-2 text-gray-700 text-sm xl:text-base leading-relaxed" x-text="characters[current].description"></p>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
       <div class="border-t border-white/20"></div>
       <span class="absolute -top-2 left-1/2 -translate-x-1/2 py-0.5 px-4 bg-white/10 text-white text-[10px] md:text-xs rounded-full backdrop-blur-sm text-nowrap">SELECT CHARACTER</span>
     </div>
-    
+
     {{-- Thumbnail Selector --}}
     <div class="grid grid-cols-5 gap-2 md:gap-4 mt-4 lg:mt-6 w-full">
       <template x-for="(char, index) in characters" :key="index">

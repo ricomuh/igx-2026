@@ -13,7 +13,7 @@
 @section('content')
 <div class="min-h-screen flex items-center justify-center px-5 py-10">
     <div class="grid grid-cols-1 md:grid-cols-2 max-w-5xl w-full items-center">
-        
+
         {{-- Gambar --}}
         <div class="flex justify-center md:justify-end">
             <img src="{{ asset('media/images/chars/Nitari.webp') }}" class="w-full max-w-56 md:max-w-none" alt="Character illustration - Nitari">
@@ -21,8 +21,8 @@
 
         {{-- Konten --}}
         <div class="text-center flex flex-col items-center">
-            <h1 class="font-extrabold text-3xl sm:text-4xl lg:text-5xl mb-2 md:mb-4">Need Help?</h1>
-            <p class="mb-6 md:mb-12 text-lg lg:text-xl font-medium">Contact Our Support Team</p>
+            <h1 class="font-extrabold text-3xl sm:text-4xl lg:text-5xl mb-2 md:mb-4 text-gray-800">Need Help?</h1>
+            <p class="mb-6 md:mb-12 text-lg lg:text-xl font-medium text-gray-700">Contact Our Support Team</p>
 
             <div class="flex flex-col gap-4 w-full max-w-xs">
                 <a href="https://api.whatsapp.com/message/U3XML62HR7O2C1" target="_blank"

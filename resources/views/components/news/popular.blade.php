@@ -1,5 +1,5 @@
 <section id="popular" class="mb-12 md:mb-16 overflow-hidden">
-    <h1 class="text-3xl md:text-4xl xl:text-5xl font-extrabold mb-8 md:mb-10 xl:mb-12">Popular News</h1>
+    <h1 class="text-3xl md:text-4xl xl:text-5xl font-extrabold mb-8 md:mb-10 xl:mb-12 text-gray-800">Popular News</h1>
 
     <!-- Wrapper Swiper -->
     <div id="popular-carousel-wrapper">

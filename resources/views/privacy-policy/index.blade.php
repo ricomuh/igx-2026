@@ -23,13 +23,13 @@
 <div class="terms-bg"></div>
 <div class="container mx-auto px-3 sm:px-5 xl:px-12 pt-24 sm:pt-32 relative z-10">
     <div class="p-5 sm:p-6 md:p-8 lg:p-7 xl:p-8 rounded-2xl shadow-lg mx-auto bg-white/60 overflow-hidden">
-        <div class="relative z-10">
+        <div class="relative z-10 text-gray-800">
             <h1 class="text-2xl lg:text-3xl xl:text-4xl font-extrabold mb-8 md:mb-10">Privacy Policy – IGX (Indonesia Game Expo)</h1>
             <p class="mb-4 lg:mb-6 leading-relaxed text-sm lg:text-base">This Privacy Policy outlines how IGX (Indonesia Game Expo) handles your personal data when you visit our website (igx.co.id) or participate in our events and games. We are committed to protecting your privacy and complying with Indonesia’s Personal Data Protection Law (PDPL – Law No. 27 of 2022).</p>
             <h2 class="md:text-lg lg:text-xl xl:text-2xl font-bold mt-6 lg:mt-8 mb-2 lg:mb-4">Information We Collect</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li><span class="font-bold">Website Visitors:</span> We do not collect or store any personal information when you visit igx.co.id. Basic technical information (such as IP address, browser type, or pages visited) may be processed automatically for security and functionality purposes, but this information is not linked to any personally identifiable data.</li>
-                <li><span class="font-bold">Game Participants:</span> If you play an IGX game and choose to enter your email and username after completing the game, this data will be collected voluntarily. It is used solely for: 
+                <li><span class="font-bold">Game Participants:</span> If you play an IGX game and choose to enter your email and username after completing the game, this data will be collected voluntarily. It is used solely for:
                     <ul class="list-disc pl-5 sm:pl-6 mt-2">
                         <li>Displaying your score on the leaderboard</li>
                         <li>Contacting you if you are selected as a prize winner</li>

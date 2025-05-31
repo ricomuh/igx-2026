@@ -23,7 +23,7 @@
 <div class="terms-bg"></div>
 <div class="container mx-auto px-3 sm:px-5 xl:px-12 pt-24 sm:pt-32 relative z-10">
   <div class="p-5 sm:p-6 md:p-8 lg:p-7 xl:p-8 rounded-2xl shadow-lg mx-auto bg-white/60 overflow-hidden">
-    <div class="relative z-10">
+    <div class="relative z-10 text-gray-800">
         <h1 class="text-2xl lg:text-3xl xl:text-4xl font-extrabold mb-8 md:mb-10">Terms of Service – IGX (Indonesia Game Expo)</h1>
         <p class="mb-6 leading-relaxed text-sm lg:text-base">Welcome to IGX (Indonesia Game Expo). These Terms of Service ("Terms") govern your use of our website <a href="https://igx.co.id" class="text-primary">https://igx.co.id</a>, games, and related services. By accessing or participating in any IGX-related content or activities, you agree to these Terms. If you do not agree, please do not use our services.</p>
         <h2 class="md:text-lg lg:text-xl xl:text-2xl font-bold mt-6 lg:mt-8 mb-2 lg:mb-4">1. Use of the Website and Services</h2>
