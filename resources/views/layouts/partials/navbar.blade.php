@@ -1,4 +1,4 @@
-<nav class="bg-info fixed w-full top-0 z-20">
+<nav class="bg-info/70 backdrop-blur-sm fixed w-full top-0 z-20">
     <div class="mx-auto px-5 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">
@@ -14,7 +14,7 @@
 
         {{-- Menu List --}}
         <ul id="menu"
-            class="hidden flex-col gap-5 absolute top-full left-0 w-full bg-info pt-2 p-4 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-5 lg:p-0">
+            class="hidden flex-col gap-5 absolute top-full left-0 w-full bg-info md:bg-transparent pt-2 p-4 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-5 lg:p-0">
             @foreach ([
                 'Home' => route("home"),
                 'IGX Pals' =>  route("pals"),
