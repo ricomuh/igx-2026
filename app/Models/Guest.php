@@ -36,6 +36,12 @@ class Guest extends Model
 
         static::creating(function ($model) {
             $model->slug = str($model->name)->slug();
+
+            if (static::where('slug', $model->slug)->exists()) {
+                $model->slug = $model->slug . '-' . static::where('slug', $model->slug)->count();
+            }
+
+            $model->image_url = asset('storage/' . $model->image_url);
         });
     }
 

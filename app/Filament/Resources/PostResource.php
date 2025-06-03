@@ -35,7 +35,7 @@ class PostResource extends Resource
                     ->disk('public')
                     ->directory('posts/images')
                     ->multiple(false)
-                    // ->required()
+                    ->required(fn($context) => $context === 'create')
                     ->label('Featured Image'),
                 Forms\Components\RichEditor::make('body')
                     ->required()

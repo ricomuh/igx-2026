@@ -24,6 +24,10 @@ class Post extends Model
 
         static::creating(function ($post) {
             $post->slug = str($post->title)->slug();
+            if (static::where('slug', $post->slug)->exists()) {
+                $post->slug = $post->slug . '-' . static::where('slug', $post->slug)->count();
+            }
+
             $post->user_id = auth()->id();
             $post->image_url = asset('storage/' . $post->image_url);
         });
