@@ -28,7 +28,7 @@ class Post extends Model
                 $post->slug = $post->slug . '-' . static::where('slug', $post->slug)->count();
             }
 
-            $post->user_id = auth()->id();
+            $post->user_id = auth()?->id() ?? 1; // Default to user ID 1 if not authenticated
             $post->image_url = asset('storage/' . $post->image_url);
         });
     }

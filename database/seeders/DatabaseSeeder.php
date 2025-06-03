@@ -16,14 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
         ]);
 
         Post::factory(200)->create([
-            'user_id' => 1,
-            'created_at' => now()->subDays(rand(1, 30)),
+            // 'user_id' => 1, // Assuming the first user is the admin
+            'user_id' => $admin->id,
+            // 'created_at' => now()->subDays(rand(1, 30)),
         ])->each(
             function ($post) {
                 for ($i = 0; $i < rand(1, 10); $i++) {
@@ -38,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GuestSeeder::class,
             ExhibitorSeeder::class,
+            ScoreSeeder::class,
         ]);
     }
 }
