@@ -37,10 +37,10 @@ class UserResource extends Resource
                     ->maxLength(255), // max char 255
 
                 Forms\Components\TextInput::make('password')
-                    ->required() // cannot empty
-                    ->password() //  password text input
-                    ->revealable() // hide show password
-                    ->maxLength(255), // max char 255
+                    ->password()
+                    ->revealable()
+                    ->maxLength(255)
+                    ->required(fn($livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord), // required only on create
             ]);
     }
 
