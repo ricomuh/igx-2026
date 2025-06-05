@@ -25,27 +25,41 @@
   <div class="flex flex-col items-center space-y-6 bg-white/20 backdrop-blur-sm p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 rounded-2xl xl:rounded-4xl shadow-lg mx-auto">
     {{-- Carousel --}}
     <div class="flex items-center w-full justify-center relative">
-      <button @click="prev" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -left-3 md:-left-6 max-w-sm:top-1/4 text-black hover:scale-125 transition min-w-[48px]">&#x276E;</button>
+      <button @click="prev" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -left-3 md:-left-6 max-w-sm:top-1/4 text-gray-700 hover:scale-125 transition min-w-[48px]">&#x276E;</button>
 
       <div class="flex flex-col items-center w-full max-w-2xl xl:max-w-5xl">
-        <div class="grid md:grid-cols-2 gap-4 xl:gap-8 w-full items-center justify-center">
-          <img loading="lazy" :src="characters[current].image" alt="Karakter" class="h-56 md:h-auto w-full lg:h-96 mb-2 object-contain drop-shadow-lg mx-auto">
+        {{-- Character Cards --}}
+        <template x-for="character in characters" :key="character.name">
+            {{-- Character Info --}}
+            <div class="grid md:grid-cols-2 gap-4 xl:gap-8 w-full items-center justify-center" x-show="character === characters[current]"
 
-          {{-- Desc --}}
-          <div class="xl:text-left">
-            <template x-if="characters[current].thumb">
-              <img loading="lazy" :src="characters[current].thumb" alt="Banner" class="h-24 w-auto mx-auto md:mx-0 object-contain mb-2">
-            </template>
-            <h2 class="text-xl md:text-2xl xl:text-3xl mb-1 font-bold text-gray-800 text-center md:text-left">
-              <span x-text="characters[current].name">Character Name</span>
-            </h2>
-            <p class="text-sm lg:text-base italic text-gray-700 mb-4 text-center md:text-left" x-text="characters[current].as"></p>
-            <p class="mt-2 text-gray-700 text-sm xl:text-base leading-relaxed" x-text="characters[current].description"></p>
-          </div>
-        </div>
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-50"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-200 absolute"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-50"
+
+            >
+              {{-- Image --}}
+              <img loading="lazy" :src="character.image" alt="Karakter" class="h-56 md:h-auto w-full lg:h-96 mb-2 object-contain drop-shadow-lg mx-auto">
+              {{-- Desc --}}
+              <div class="xl:text-left">
+                {{-- <template x-if="characters[current].thumb"> --}}
+                  <img loading="lazy" :src="character.thumb"
+                   alt="Banner" class="h-24 w-auto mx-auto md:mx-0 object-contain mb-2">
+                {{-- </template> --}}
+                <h2 class="text-xl md:text-2xl xl:text-3xl mb-1 font-bold text-gray-800 text-center md:text-left">
+                  <span x-text="character.name">Character Name</span>
+                </h2>
+                <p class="text-sm lg:text-base italic text-gray-700 mb-4 text-center md:text-left" x-text="character.as"></p>
+                <p class="mt-2 text-gray-700 text-sm xl:text-base leading-relaxed" x-text="character.description"></p>
+              </div>
+            </div>
+        </template>
       </div>
 
-      <button @click="next" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -right-3 md:-right-6 max-w-sm:top-1/4 text-black hover:scale-125 transition min-w-[48px]">&#x276F;</button>
+      <button @click="next" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -right-3 md:-right-6 max-w-sm:top-1/4 text-gray-700 hover:scale-125 transition min-w-[48px]">&#x276F;</button>
     </div>
     <div class="relative w-full my-6 text-center">
       <div class="border-t border-white/20"></div>

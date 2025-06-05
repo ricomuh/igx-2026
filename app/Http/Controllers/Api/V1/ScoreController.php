@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Score;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class ScoreController extends Controller
 {
@@ -42,10 +44,24 @@ class ScoreController extends Controller
                 'score' => $request->input('score'),
             ]);
 
+            // send a notification to the user via email
+            Notification::route('mail', $score->email)
+                ->notify(new \App\Notifications\NewScoreNotification($score));
+
+            // get leaderbord scores
+            $leaderboardScores = Score::orderBy('score', 'desc')
+                ->take(10)
+                ->get(['username', 'score']);
+
+            // get the user's position in the leaderboard
+            $userPosition = Score::where('score', '>', $score->score)->count() + 1;
+
             // Return a response with the created score
             return response()->json([
                 'message' => 'Score created successfully',
                 'data' => $score,
+                'leaderboard' => $leaderboardScores,
+                'position' => $userPosition,
             ], 201);
         } catch (\Exception $e) {
             // Handle any exceptions that occur
