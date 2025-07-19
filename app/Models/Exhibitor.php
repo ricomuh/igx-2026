@@ -62,8 +62,13 @@ class Exhibitor extends Model
      *
      * @return string
      */
-    public function getImageUrlAttribute(): string
+    public function getFullImageUrlAttribute(): string
     {
+        // check if image_url is already a full URL
+        if (filter_var($this->attributes['image_url'], FILTER_VALIDATE_URL)) {
+            return $this->attributes['image_url'];
+        }
+
         return asset('storage/' . $this->attributes['image_url']);
     }
 }
