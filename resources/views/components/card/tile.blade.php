@@ -11,7 +11,7 @@
 @endpush
 
 
-<div class="relative overflow-hidden rounded-xl w-full aspect-square transition-transform duration-200 hover:scale-105 group/item">
+<div class="relative overflow-hidden rounded-xl w-full aspect-4/5 transition-transform duration-200 hover:scale-105 group/item">
   <img
     src="{{ $data->image_url }}"
     alt="{{ $data->name }}"
