@@ -41,7 +41,7 @@ class Guest extends Model
                 $model->slug = $model->slug . '-' . static::where('slug', $model->slug)->count();
             }
 
-            $model->image_url = asset('storage/' . $model->image_url);
+            // $model->image_url = asset('storage/' . $model->image_url);
         });
     }
 
@@ -53,5 +53,15 @@ class Guest extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Get the image URL for the guest.
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
+    {
+        return asset('storage/' . $this->attributes['image_url']);
     }
 }
