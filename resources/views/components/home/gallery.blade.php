@@ -1,4 +1,4 @@
-<div class="bg-primary pt-20 xl:pt-28">
+<div class="bg-primary py-20 xl:py-28">
     <div class="container text-white mx-auto px-5">
         <h1 class="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-center  mb-20 sm:mb-24 md:mb-32">IGX STAGE 01: <br />Gaming Unites Us</h1>
         <div class="flex justify-center gap-4 sm:gap-6 flex-wrap mb-12 sm:mb-16 md:mb-20">

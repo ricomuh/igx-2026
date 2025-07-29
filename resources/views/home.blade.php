@@ -1,11 +1,3 @@
-@push('style')
-<style>
-    body {
-        background-color: var(--color-primary) !important;
-    }
-</style>
-@endpush
-
 @extends('layouts.main', [
     'title' => 'Home',
 ])
@@ -19,5 +11,8 @@
 
     {{-- Gallery --}}
     @include('components.home.gallery')
+
+    {{-- Sponsor --}}
+    @include('components.home.sponsor')
 </div>
 @endsection
