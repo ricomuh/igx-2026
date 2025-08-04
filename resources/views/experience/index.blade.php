@@ -98,7 +98,7 @@
         
         const iframe = mainDiv.querySelector('iframe');
         if (iframe) {
-          fullscreenMain.innerHTML = iframe.outerHTML;
+          fullscreenMain.appendChild(iframe);
         } else {
           createIframe(fullscreenMain);
         }
@@ -121,6 +121,13 @@
       // exit fullscreen
       const exitFullscreen = () => {
         const fullscreenContainer = document.getElementById("fullscreenContainer");
+        const fullscreenMain = document.getElementById("fullscreenMain");
+        const mainDiv = document.getElementById("main");
+        
+        const iframe = fullscreenMain.querySelector('iframe');
+        if (iframe) {
+          mainDiv.appendChild(iframe);
+        }
         
         fullscreenContainer.style.display = "none";
         document.body.style.overflow = "auto";
