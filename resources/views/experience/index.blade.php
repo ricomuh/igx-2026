@@ -20,11 +20,22 @@
         width: 100vw;
         height: 100vh;
         z-index: 9999;
+        background-color: var(--color-primary);
     }
     
     .fullscreen-mode iframe {
         height: 100vh !important;
         width: 100vw !important;
+    }
+    
+    .iframe-fullscreen {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 10000 !important;
+        border: none !important;
     }
 </style>
 @endpush
@@ -53,11 +64,6 @@
         <span>Fullscreen</span>
       </button>
     </div>
-</div>
-
-<!-- Fullscreen -->
-<div id="fullscreenContainer" class="fullscreen-mode" style="display: none;">
-    <div id="fullscreenMain"></div>
 </div>
 @endsection
 
@@ -92,46 +98,38 @@
 
       // enter fullscreen
       const enterFullscreen = () => {
-        const fullscreenContainer = document.getElementById("fullscreenContainer");
-        const fullscreenMain = document.getElementById("fullscreenMain");
         const mainDiv = document.getElementById("main");
-        
         const iframe = mainDiv.querySelector('iframe');
+        
         if (iframe) {
-          fullscreenMain.appendChild(iframe);
-        } else {
-          createIframe(fullscreenMain);
-        }
-        
-        fullscreenContainer.style.display = "block";
-        document.body.style.overflow = "hidden";
-        isFullscreen = true;
-        
-        if (fullscreenContainer.requestFullscreen) {
-          fullscreenContainer.requestFullscreen().catch(err => {
-            console.log("Fullscreen API not supported or blocked");
-          });
-        } else if (fullscreenContainer.webkitRequestFullscreen) {
-          fullscreenContainer.webkitRequestFullscreen();
-        } else if (fullscreenContainer.msRequestFullscreen) {
-          fullscreenContainer.msRequestFullscreen();
+          iframe.classList.add('iframe-fullscreen');
+          document.body.style.overflow = "hidden";
+          isFullscreen = true;
+          
+          // Request browser fullscreen
+          if (iframe.requestFullscreen) {
+            iframe.requestFullscreen().catch(err => {
+              console.log("Fullscreen API not supported or blocked");
+            });
+          } else if (iframe.webkitRequestFullscreen) {
+            iframe.webkitRequestFullscreen();
+          } else if (iframe.msRequestFullscreen) {
+            iframe.msRequestFullscreen();
+          }
         }
       }
 
       // exit fullscreen
       const exitFullscreen = () => {
-        const fullscreenContainer = document.getElementById("fullscreenContainer");
-        const fullscreenMain = document.getElementById("fullscreenMain");
         const mainDiv = document.getElementById("main");
+        const iframe = mainDiv.querySelector('iframe');
         
-        const iframe = fullscreenMain.querySelector('iframe');
         if (iframe) {
-          mainDiv.appendChild(iframe);
+          // Hapus class fullscreen untuk mengembalikan iframe ke posisi normal
+          iframe.classList.remove('iframe-fullscreen');
+          document.body.style.overflow = "auto";
+          isFullscreen = false;
         }
-        
-        fullscreenContainer.style.display = "none";
-        document.body.style.overflow = "auto";
-        isFullscreen = false;
         
         // Exit browser's fullscreen if active
         if (document.exitFullscreen) {
