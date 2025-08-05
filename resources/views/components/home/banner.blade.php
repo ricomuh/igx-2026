@@ -41,7 +41,7 @@
         </div>
 
         <div class="flex justify-center mt-4 xl:mt-8 mb-8 sm:mb-12 md:mb-16 flex-shrink-0">
-            <a href="{{ route('promo') }}" class="btn-primary font-extrabold text-lg xl:text-2xl px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase">Get Your Ticket!</a>
+            <a href="http://blib.li/igx2025" target="_blank" class="btn-primary font-extrabold text-lg xl:text-2xl px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase">Get Your Ticket!</a>
         </div>
     </div>
 </div>
