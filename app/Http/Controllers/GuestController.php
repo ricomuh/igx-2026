@@ -16,7 +16,7 @@ class GuestController extends Controller
                 $query->where('name', 'like', '%' . $request->search . '%');
             })
             ->when($sortBy, function ($query) use ($sortBy) {
-                return match($sortBy) {
+                return match ($sortBy) {
                     'latest' => $query->latest(),
                     'oldest' => $query->oldest(),
                     'name_asc' => $query->orderBy('name', 'asc'),
@@ -24,9 +24,8 @@ class GuestController extends Controller
                     default => $query,
                 };
             })
-            ->paginate(9)
-            ->withQueryString();
+            ->get();
+
         return view('guests.index', compact('guests', 'sortBy'));
     }
-
 }

@@ -15,7 +15,7 @@ class ExhibitorController extends Controller
                 $query->where('name', 'like', '%' . $request->search . '%');
             })
             ->when($sortBy, function ($query) use ($sortBy) {
-                return match($sortBy) {
+                return match ($sortBy) {
                     'latest' => $query->latest(),
                     'oldest' => $query->oldest(),
                     'name_asc' => $query->orderBy('name', 'asc'),
@@ -23,8 +23,7 @@ class ExhibitorController extends Controller
                     default => $query,
                 };
             })
-            ->paginate(10)
-            ->withQueryString();
+            ->get();
 
         return view('exhibitors.index', [
             'exhibitors' => $exhibitors,
