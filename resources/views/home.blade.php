@@ -5,7 +5,10 @@
 <div class="bg-primary">
     {{-- Banner --}}
     @include('components.home.banner')
-    
+
+    {{-- Play game --}}
+    @include('components.home.play')
+
     {{-- Countdown --}}
     @include('components.home.countdown')
 
