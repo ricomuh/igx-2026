@@ -15,7 +15,7 @@
 
 @section('content')
 <div class="container mx-auto px-5 xl:px-12 pt-28">
-  @if ($exhibitors->total() === 0 && !request('search'))
+  @if ($exhibitors->count() === 0 && !request('search'))
     <p class="text-white text-shadow-lg text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center mt-10 w-full md:w-4/5 xl:w-4/5 mx-auto text-wrap">
         Exhibitors Announcements Are Coming Soon!
     </p>
@@ -55,11 +55,6 @@
       @empty
         <p class="text-white text-lg col-span-full">No exhibitors found.</p>
       @endforelse
-    </div>
-
-    {{-- Pagination --}}
-    <div class="mt-10 pagination">
-      {{ $exhibitors->links() }}
     </div>
   @endif
 </div>
