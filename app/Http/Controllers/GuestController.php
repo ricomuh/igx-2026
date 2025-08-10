@@ -24,7 +24,9 @@ class GuestController extends Controller
                     default => $query,
                 };
             })
-            ->get();
+            ->paginate(9)
+            ->withQueryString();
+        // ->get();
 
         return view('guests.index', compact('guests', 'sortBy'));
     }
