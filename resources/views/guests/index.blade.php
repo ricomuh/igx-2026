@@ -32,7 +32,7 @@
           name="search"
           :value="request('search')"
         />
-        
+
         {{-- Sorting --}}
         <x-shared.sort
           :route="route('guests')"

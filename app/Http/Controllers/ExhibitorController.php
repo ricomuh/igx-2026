@@ -23,7 +23,9 @@ class ExhibitorController extends Controller
                     default => $query,
                 };
             })
-            ->get();
+            ->paginate(9)
+            ->withQueryString();
+        // ->get();
 
         return view('exhibitors.index', [
             'exhibitors' => $exhibitors,
