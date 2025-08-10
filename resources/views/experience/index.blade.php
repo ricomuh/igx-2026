@@ -12,7 +12,7 @@
         aspect-ratio: 16 / 9;
         min-height: 250px;
     }
-    
+
     .fullscreen-mode {
         position: fixed;
         top: 0;
@@ -22,12 +22,12 @@
         z-index: 9999;
         background-color: var(--color-primary);
     }
-    
+
     .fullscreen-mode iframe {
         height: 100vh !important;
         width: 100vw !important;
     }
-    
+
     .iframe-fullscreen {
         position: fixed !important;
         top: 0 !important;
@@ -85,7 +85,7 @@
         return check;
       };
 
-      const version = "3.2";
+      const version = "3.3";
       let isFullscreen = false;
 
       //  create iframe
@@ -100,12 +100,12 @@
       const enterFullscreen = () => {
         const mainDiv = document.getElementById("main");
         const iframe = mainDiv.querySelector('iframe');
-        
+
         if (iframe) {
           iframe.classList.add('iframe-fullscreen');
           document.body.style.overflow = "hidden";
           isFullscreen = true;
-          
+
           // Request browser fullscreen
           if (iframe.requestFullscreen) {
             iframe.requestFullscreen().catch(err => {
@@ -123,14 +123,14 @@
       const exitFullscreen = () => {
         const mainDiv = document.getElementById("main");
         const iframe = mainDiv.querySelector('iframe');
-        
+
         if (iframe) {
           // Hapus class fullscreen untuk mengembalikan iframe ke posisi normal
           iframe.classList.remove('iframe-fullscreen');
           document.body.style.overflow = "auto";
           isFullscreen = false;
         }
-        
+
         // Exit browser's fullscreen if active
         if (document.exitFullscreen) {
           document.exitFullscreen().catch(err => {
@@ -147,29 +147,29 @@
         const mainDiv = document.getElementById("main");
         const fullscreenBtn = document.getElementById("fullscreenBtn");
         createIframe(mainDiv);
-        
+
         // Fullscreen button event
         fullscreenBtn.addEventListener("click", enterFullscreen);
-        
+
         // Handle ESC key to exit fullscreen
         document.addEventListener("keydown", function(event) {
           if (event.key === "Escape" && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("fullscreenchange", function() {
           if (!document.fullscreenElement && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("webkitfullscreenchange", function() {
           if (!document.webkitFullscreenElement && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("msfullscreenchange", function() {
           if (!document.msFullscreenElement && isFullscreen) {
             exitFullscreen();
