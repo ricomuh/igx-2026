@@ -6,13 +6,13 @@
   </div>
   <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
     <div class="col lg:h-full">
-      <img src="{{ asset('media/images/illustrations/game1.jpg')}}" class="w-full md:aspect-video lg:aspect-auto h-full object-cover rounded-2xl ring-5 ring-background-footer" alt="">
+      <img src="{{ asset('media/images/illustrations/game1.jpg')}}" class="w-full md:aspect-video lg:aspect-auto h-full object-cover rounded-2xl ring-5 ring-info-dark" alt="">
     </div>
     <div class="col space-y-5">
       <ul class="list-disc pl-5 text-lg md:text-xl leading-9">
-        <li><span class="text-info">Free ticket every Monday at 10:00 AM WIB</span> for the top winners on the leaderboard.</li>
-        <li><span class="text-info">Terms & Conditions</span>: Previous winners are not eligible to win again.</li>
-        <li><span class="text-info">3 winners every Monday</span> - will you be next?</li>
+        <li><span class="text-info-dark">Free ticket every Monday at 10:00 AM WIB</span> for the top winners on the leaderboard.</li>
+        <li><span class="text-info-dark">Terms & Conditions</span>: Previous winners are not eligible to win again.</li>
+        <li><span class="text-info-dark">3 winners every Monday</span> - will you be next?</li>
       </ul>
       <a href="{{ route("experiences") }}" class="btn-primary font-extrabold lg:text-lg w-max px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase flex gap-2 sm:gap-3">START
           <img src="{{ asset('media/images/icons/angles-right-solid.svg')}}" class="w-4 sm:w-5 md:w-6" alt="">
