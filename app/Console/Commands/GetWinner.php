@@ -28,40 +28,26 @@ class GetWinner extends Command
     public function handle()
     {
         $currentDate = now();
-        $sevenDaysAgo = $currentDate->subDays(7);
-        // get the highest score from the last 7 days then add to Winner, but if the winner already exists, get the next highest score
-        $highestScores = Score::where('created_at', '>=', $sevenDaysAgo)
+        $sevenDaysAgoAt10AM = $currentDate->subDays(7)->setTime(10, 0, 0);
+
+        // Get emails of existing winners
+        $existingWinnerEmails = Winner::with('score')
+            ->get()
+            ->pluck('score.email')
+            ->filter() // Remove null values
+            ->toArray();
+
+        $newWinners = Score::where('created_at', '>=', $sevenDaysAgoAt10AM)
             ->orderBy('score', 'desc')
-            ->take(1)
+            ->whereNotIn('email', $existingWinnerEmails)
+            ->take(3)
             ->get();
 
-        if ($highestScores->isEmpty()) {
-            $this->info('No scores found for the last 7 days.');
-            return;
-        }
-
-        while (true) {
-            $highestScore = $highestScores->first();
-            if (!$highestScore) {
-                $this->info('No more scores available.');
-                break;
-            }
-
-            // Check if a winner already exists for this score
-            if (Winner::where('score_id', $highestScore->id)->exists()) {
-                // If a winner exists, get the next highest score
-                $highestScores = Score::where('created_at', '>=', $sevenDaysAgo)
-                    ->where('id', '!=', $highestScore->id)
-                    ->orderBy('score', 'desc')
-                    ->take(1)
-                    ->get();
-            } else {
-                // Create a new winner
-                Winner::create(['score_id' => $highestScore->id]);
-                $this->info("Winner created with score: {$highestScore->score}");
-                break;
-            }
-        }
+        $newWinners->each(function ($score) {
+            Winner::create([
+                'score_id' => $score->id
+            ]);
+        });
 
         $this->info('Winner selection process completed.');
     }
