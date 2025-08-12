@@ -43,7 +43,46 @@
 @section('content')
 <div class="container mx-auto px-5 xl:px-12 pt-28">
     <h1 class="text-3xl md:text-4xl xl:text-5xl text-white text-center font-extrabold text-shadow-lg">IGX Fusion Celebration</h1>
+
+    {{-- leaderboard table contains: number, username, score--}}
+    <div class="mt-20">
+        <h2 class="text-xl font-bold text-white mb-4 text-shadow-lg">Leaderboard This Week</h2>
+        <table class="min-w-full divide-y divide-gray-200 rounded-2xl overflow-hidden ring-2 ring-info/50 shadow-2xl">
+            {{-- leaderboard header --}}
+            {{-- leaderboard title --}}
+            <thead class="bg-info text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Username</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Score</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-700">
+                @foreach ($leaderboard as $index => $entry)
+                    <tr
+                    @php
+                        $rowClass = '';
+                        if ($index == 0) {
+                            $rowClass = 'bg-gradient-to-r from-info to-primary text-white hover:to-info';
+                        } elseif ($index == 1) {
+                            $rowClass = 'bg-gradient-to-r from-secondary to-primary text-white hover:to-info';
+                        } elseif ($index == 2) {
+                            $rowClass = 'bg-gradient-to-r from-tertiary to-primary hover:to-info';
+                        }
+                    @endphp
+                    class="{{ $rowClass }} text-gray-800 hover:bg-info hover:text-white duration-200"
+                    >
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $index + 1 }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $entry->username }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $entry->score }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
     <div id="main" class="my-8 md:my-10 xl:my-12"></div>
+
 
     <div class="flex justify-center">
       <button id="fullscreenBtn" class="btn-primary font-extrabold text-lg px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase cursor-pointer flex items-center gap-2">
