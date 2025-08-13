@@ -15,8 +15,8 @@ class ScoreController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'username' => 'required|string|max:255|unique:scores,username',
-                'email' => 'required|email|max:255|unique:scores,email',
+                'username' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
                 'score' => 'required|integer|min:0',
             ]);
 
@@ -30,12 +30,12 @@ class ScoreController extends Controller
                 ], 400);
             }
 
-            // Check if the username already exists
-            if (Score::where('username', $username)->exists()) {
-                return response()->json([
-                    'message' => 'Username already exists',
-                ], 400);
-            }
+            // // Check if the username already exists
+            // if (Score::where('username', $username)->exists()) {
+            //     return response()->json([
+            //         'message' => 'Username already exists',
+            //     ], 400);
+            // }
 
             // Create a new score entry
             $score = Score::create([
@@ -54,8 +54,10 @@ class ScoreController extends Controller
                 ->take(10)
                 ->get(['username', 'score']);
 
-            // get the user's position in the leaderboard
-            $userPosition = Score::where('score', '>', $score->score)->count() + 1;
+            // get the user's position in the leaderboard in this week
+            $userPosition = Score::where('created_at', '>=', now()->startOfWeek()->addHours(10))
+                ->where('score', '>', $score->score)
+                ->count() + 1;
 
             // Return a response with the created score
             return response()->json([

@@ -57,7 +57,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Score</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-700">
+            <tbody class="bg-white divide-y divide-info">
                 @foreach ($leaderboard as $index => $entry)
                     <tr
                     @php
