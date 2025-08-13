@@ -48,8 +48,9 @@ class ScoreController extends Controller
             Notification::route('mail', $score->email)
                 ->notify(new \App\Notifications\NewScoreNotification($score));
 
-            // get leaderbord scores
+            // get leaderbord scores in this week starting on monday at 10am
             $leaderboardScores = Score::orderBy('score', 'desc')
+                ->where('created_at', '>=', now()->startOfWeek()->addHours(10))
                 ->take(10)
                 ->get(['username', 'score']);
 
