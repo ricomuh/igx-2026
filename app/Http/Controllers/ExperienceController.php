@@ -15,6 +15,8 @@ class ExperienceController extends Controller
             ->take(10)
             ->get();
 
-        return view('experience.index', compact('leaderboard'));
+        $gameVersion = "3.4";
+
+        return view('experience.index', compact('leaderboard', 'gameVersion'));
     }
 }
