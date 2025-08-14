@@ -17,9 +17,10 @@ class WinnerResource extends Resource
 {
     protected static ?string $model = Winner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trophy';
-    protected static ?string $navigationLabel = 'Winners';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
     protected static ?string $navigationGroup = 'Analytics';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'Winners';
 
     public static function form(Form $form): Form
     {
@@ -34,27 +35,25 @@ class WinnerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('score.username')
-                    ->label('Username')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('score.email')
-                    ->label('Email')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('score.score')
-                    ->label('Score')
+                    ->searchable()
                     ->sortable()
                     ->formatStateUsing(fn($state) => number_format($state, 0, '.', ',')),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Week')
+                    ->dateTime()
                     ->sortable()
-                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('Y \WW'))
+                    ->label('Created At'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -74,8 +73,8 @@ class WinnerResource extends Resource
     {
         return [
             'index' => Pages\ListWinners::route('/'),
-            'create' => Pages\CreateWinner::route('/create'),
-            'edit' => Pages\EditWinner::route('/{record}/edit'),
+            // 'create' => Pages\CreateWinner::route('/create'),
+            // 'edit' => Pages\EditWinner::route('/{record}/edit'),
         ];
     }
 }
