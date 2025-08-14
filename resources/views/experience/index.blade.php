@@ -124,7 +124,7 @@
         return check;
       };
 
-      const version = "3.3";
+      const version = "{{ $gameVersion }}";
       let isFullscreen = false;
 
       //  create iframe
