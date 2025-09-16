@@ -12,7 +12,7 @@
         aspect-ratio: 16 / 9;
         min-height: 250px;
     }
-    
+
     .fullscreen-mode {
         position: fixed;
         top: 0;
@@ -22,12 +22,12 @@
         z-index: 9999;
         background-color: var(--color-primary);
     }
-    
+
     .fullscreen-mode iframe {
         height: 100vh !important;
         width: 100vw !important;
     }
-    
+
     .iframe-fullscreen {
         position: fixed !important;
         top: 0 !important;
@@ -43,7 +43,46 @@
 @section('content')
 <div class="container mx-auto px-5 xl:px-12 pt-28">
     <h1 class="text-3xl md:text-4xl xl:text-5xl text-white text-center font-extrabold text-shadow-lg">IGX Fusion Celebration</h1>
+
+    {{-- leaderboard table contains: number, username, score--}}
+    <div class="mt-20">
+        <h2 class="text-xl font-bold text-white mb-4 text-shadow-lg">Leaderboard This Week</h2>
+        <table class="min-w-full divide-y divide-gray-200 rounded-2xl overflow-hidden ring-2 ring-info/50 shadow-2xl">
+            {{-- leaderboard header --}}
+            {{-- leaderboard title --}}
+            <thead class="bg-info text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Username</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Score</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-info">
+                @foreach ($leaderboard as $index => $entry)
+                    <tr
+                    @php
+                        $rowClass = '';
+                        if ($index == 0) {
+                            $rowClass = 'bg-gradient-to-r from-info to-primary text-white hover:to-info';
+                        } elseif ($index == 1) {
+                            $rowClass = 'bg-gradient-to-r from-secondary to-primary text-white hover:to-info';
+                        } elseif ($index == 2) {
+                            $rowClass = 'bg-gradient-to-r from-tertiary to-primary hover:to-info';
+                        }
+                    @endphp
+                    class="{{ $rowClass }} text-gray-800 hover:bg-info hover:text-white duration-200"
+                    >
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $index + 1 }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $entry->username }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $entry->score }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
     <div id="main" class="my-8 md:my-10 xl:my-12"></div>
+
 
     <div class="flex justify-center">
       <button id="fullscreenBtn" class="btn-primary font-extrabold text-lg px-5 sm:px-6 md:px-7 py-3 sm:py-4 rounded-lg uppercase cursor-pointer flex items-center gap-2">
@@ -85,7 +124,7 @@
         return check;
       };
 
-      const version = "3.2";
+      const version = "{{ $gameVersion }}";
       let isFullscreen = false;
 
       //  create iframe
@@ -100,12 +139,12 @@
       const enterFullscreen = () => {
         const mainDiv = document.getElementById("main");
         const iframe = mainDiv.querySelector('iframe');
-        
+
         if (iframe) {
           iframe.classList.add('iframe-fullscreen');
           document.body.style.overflow = "hidden";
           isFullscreen = true;
-          
+
           // Request browser fullscreen
           if (iframe.requestFullscreen) {
             iframe.requestFullscreen().catch(err => {
@@ -123,14 +162,14 @@
       const exitFullscreen = () => {
         const mainDiv = document.getElementById("main");
         const iframe = mainDiv.querySelector('iframe');
-        
+
         if (iframe) {
           // Hapus class fullscreen untuk mengembalikan iframe ke posisi normal
           iframe.classList.remove('iframe-fullscreen');
           document.body.style.overflow = "auto";
           isFullscreen = false;
         }
-        
+
         // Exit browser's fullscreen if active
         if (document.exitFullscreen) {
           document.exitFullscreen().catch(err => {
@@ -147,29 +186,29 @@
         const mainDiv = document.getElementById("main");
         const fullscreenBtn = document.getElementById("fullscreenBtn");
         createIframe(mainDiv);
-        
+
         // Fullscreen button event
         fullscreenBtn.addEventListener("click", enterFullscreen);
-        
+
         // Handle ESC key to exit fullscreen
         document.addEventListener("keydown", function(event) {
           if (event.key === "Escape" && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("fullscreenchange", function() {
           if (!document.fullscreenElement && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("webkitfullscreenchange", function() {
           if (!document.webkitFullscreenElement && isFullscreen) {
             exitFullscreen();
           }
         });
-        
+
         document.addEventListener("msfullscreenchange", function() {
           if (!document.msFullscreenElement && isFullscreen) {
             exitFullscreen();

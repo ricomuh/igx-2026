@@ -41,7 +41,27 @@ class ScoreResource extends Resource
                     ->label('Created At'),
             ])
             ->defaultSort('score', 'desc') // default sort by score descending
-            ->filters([])
+            ->filters([
+                Tables\Filters\SelectFilter::make('time_period')
+                    ->label('Time Period')
+                    ->options([
+                        'this_week' => 'This Week (Mon 10am)',
+                        'last_week' => 'Last Week',
+                        'all_time' => 'All Time',
+                    ])
+                    ->default('this_week') // Set default to this week
+                    ->query(function (Builder $query, array $data): Builder {
+                        return match ($data['value'] ?? 'this_week') { // Change default from null to 'this_week'
+                            'this_week' => $query->where('created_at', '>=', now()->startOfWeek()->addHours(10)),
+                            'last_week' => $query->whereBetween('created_at', [
+                                now()->subWeek()->startOfWeek()->addHours(10),
+                                now()->startOfWeek()->addHours(10)
+                            ]),
+                            'all_time' => $query, // Show all records
+                            default => $query->where('created_at', '>=', now()->startOfWeek()->addHours(10)), // Default fallback
+                        };
+                    }),
+            ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])

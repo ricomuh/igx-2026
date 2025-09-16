@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExhibitorController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');
-Route::get('/experiences', fn() => view('experience.index'))->name('experiences');
+Route::get('/experiences', ExperienceController::class)->name('experiences');
 Route::get('/guests', GuestController::class)->name('guests');
 Route::get('/rundown', fn() => view('rundown.index'))->name('rundown');
 Route::get('/exhibitors', ExhibitorController::class)->name('exhibitors');
