@@ -1,9 +1,9 @@
 @php
     $sponsors = [
-        [
-            'name' => 'Ciracle Indonesia',
-            'logo' => 'ciracle.webp',
-        ],
+        // [
+        //     'name' => 'Ciracle Indonesia',
+        //     'logo' => 'ciracle.webp',
+        // ],
         [
             'name' => 'Langgeng Pariwara',
             'logo' => 'langgeng.webp',
