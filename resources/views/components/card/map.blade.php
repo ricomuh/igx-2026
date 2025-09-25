@@ -7,8 +7,8 @@
     </button>
 
     <!-- Map Image with Link -->
-    <a href="{{ asset('media/images/gallery/full_map.webp') }}" target="_blank" class="block relative overflow-hidden rounded-xl">
-      <img src="{{ asset('media/images/gallery/full_map.webp') }}" alt="IGX Event Map" class="w-56 h-auto rounded-xl" />
+    <a href="{{ asset('media/images/gallery/map.webp') }}" target="_blank" class="block relative overflow-hidden rounded-xl">
+      <img src="{{ asset('media/images/gallery/mini_map.webp') }}" alt="IGX Event Map" class="w-56 h-auto rounded-xl" />
 
       <!-- Hover Overlay -->
       <div class="hidden absolute inset-0 bg-black/50 group-hover:bg-opacity-40 transition-all duration-300 group-hover:flex items-center justify-center">
