@@ -19,6 +19,7 @@ body {
     
     @php
         $rundownImages = [
+            'rundown0.jpg',
             'rundown1.jpg',
             'rundown2.jpg',
             'rundown3.jpg',
