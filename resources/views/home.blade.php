@@ -72,12 +72,12 @@
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
                             <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">G.I.X Squad</h3>
-                            <p class="text-xs font-bold text-black/60 uppercase leading-relaxed mb-3">Choose your fighter from 5 unique characters — each with their own stats & backstory.</p>
+                            <p class="text-xs font-bold text-black/60 uppercase leading-relaxed mb-3">Choose your fighter from 7 unique characters — each with their own stats & backstory.</p>
                             {{-- Mini character preview --}}
                             <div class="flex gap-1">
-                                @foreach(['N','D','C','O','P'] as $init)
-                                    <div class="w-8 h-8 border-2 border-black bg-surface-dark flex items-center justify-center {{ $loop->first ? 'bg-highlight' : '' }}">
-                                        <span class="text-[10px] font-extrabold text-black">{{ $init }}</span>
+                                @foreach(['N','D','C','O','P','S','X'] as $init)
+                                    <div class="w-7 h-7 border-2 border-black bg-surface-dark flex items-center justify-center {{ $loop->first ? 'bg-highlight' : '' }}">
+                                        <span class="text-[8px] font-extrabold text-black">{{ $init }}</span>
                                     </div>
                                 @endforeach
                             </div>

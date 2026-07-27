@@ -139,9 +139,9 @@
         </div>
 
         {{-- Thumbnail Roster — fighting game style --}}
-        <div class="grid grid-cols-5 gap-2 sm:gap-4 md:gap-6 max-w-2xl xl:max-w-4xl mx-auto">
+        <div class="flex justify-center gap-2 sm:gap-4 md:gap-6 max-w-4xl xl:max-w-6xl mx-auto flex-wrap">
             <template x-for="(char, index) in characters" :key="index">
-                <div class="flex flex-col items-center gap-1 cursor-pointer group"
+                <div class="flex flex-col items-center gap-1 cursor-pointer group w-16 sm:w-20 md:w-24"
                      @click="select(index)">
                     {{-- Thumbnail frame --}}
                     <div class="relative border-3 border-black transition-all duration-200 overflow-hidden w-full aspect-square"
@@ -170,7 +170,7 @@
         {{-- Player count / hint --}}
         <div class="text-center mt-8">
             <span class="text-surface/60 text-xs font-bold uppercase tracking-widest">
-                &#x25C0; &#x25B6; Navigate &nbsp;|&nbsp; 5 Characters Available
+                &#x25C0; &#x25B6; Navigate &nbsp;|&nbsp; 7 Characters Available
             </span>
         </div>
     </div>
@@ -219,6 +219,20 @@ function characterCarousel() {
         description: `Pitari is AI version of Nitari, Appears whenever Nitari falls asleep...`,
         image: '/media/images/chars/Pitari.webp',
         thumb: '/media/images/chars/Pitari2.webp',
+      },
+      {
+        name: 'Suga',
+        as: 'Mysterious Hacker',
+        description: `A shadowy figure in the digital underworld, Suga operates from the dark corners of cyberspace. No firewall can keep them out, no encryption can hide secrets from their gaze. Their motives are unknown — ally or threat?`,
+        image: '/media/images/chars/Suga.webp',
+        thumb: '/media/images/chars/Suga.webp',
+      },
+      {
+        name: 'Lord Xcape',
+        as: 'The Final Boss',
+        description: `The ultimate antagonist of IGX 2026. Lord Xcape rules over the digital realm with an iron fist, challenging every fighter who dares to enter the arena. Only the bravest can face this legendary opponent.`,
+        image: '/media/images/chars/Xcape.webp',
+        thumb: '/media/images/chars/Xcape.webp',
       },
     ],
     next() {
