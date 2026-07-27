@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html class="h-full" data-theme="true" data-theme-mode="light" lang="en">
-    <!--begin::Head-->
+<html data-theme="true" data-theme-mode="light" lang="en">
     <head>
-        {{-- Meta tag --}}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{{ @$title ? $title . ' | ' : '' }}{{ env('APP_NAME') }}</title>
@@ -29,10 +27,9 @@
         @stack('style')
     </head>
 
-    <body class="h-full">
+    <body class="bg-bg">
         @include('layouts.partials.navbar')
-        <!--begin::Content-->
-        <main id="content">
+        <main id="content" class="pt-[72px] lg:pt-[76px]">
             <div>
                 @yield('content')
             </div>
@@ -43,5 +40,4 @@
 
         @stack('scripts')
     </body>
-
 </html>

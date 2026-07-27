@@ -1,20 +1,21 @@
-<nav class="bg-info/70 backdrop-blur-sm fixed w-full top-0 z-20">
-    <div class="mx-auto px-5 xl:px-12 py-4 lg:py-2 flex items-center justify-between">
+{{-- Navbar — Neo-Brutalism --}}
+<nav class="bg-bg fixed w-full top-0 z-20 border-b-3 border-black">
+    <div class="mx-auto px-5 xl:px-12 py-4 lg:py-3 flex items-center justify-between">
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-10 lg:h-12" alt="Logo">
+                <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-10 lg:h-12" alt="IGX Logo">
             </a>
         </div>
 
         {{-- Hamburger Button --}}
-        <button id="menu-toggle" class="text-white focus:outline-none lg:hidden cursor-pointer">
-            <img id="menu-icon" src="{{ asset('media/images/icons/hamburger.svg') }}" class="w-6" alt="Menu Icon">
+        <button id="menu-toggle" class="text-surface focus:outline-none lg:hidden cursor-pointer bg-secondary border-3 border-black p-2 shadow-brutal-sm">
+            <img id="menu-icon" src="{{ asset('media/images/icons/hamburger.svg') }}" class="w-5 brightness-0 invert" alt="Menu">
         </button>
 
         {{-- Menu List --}}
         <ul id="menu"
-            class="hidden flex-col gap-5 absolute top-full left-0 w-full bg-info md:bg-transparent pt-2 p-4 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-5 lg:p-0">
+            class="hidden flex-col gap-4 absolute top-full left-0 w-full bg-bg border-b-3 border-black pt-4 p-5 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-3 lg:p-0 lg:border-b-0">
             @foreach ([
                 'Home' => route("home"),
                 'IGX Pals' =>  route("pals"),
@@ -31,7 +32,10 @@
                 @endphp
                 <li>
                     <a href="{{ $link }}"
-                       class="font-extrabold uppercase block mb-4 md:mb-5 lg:mb-0 lg:text-sm xl:text-base {{ $isActive ? 'text-secondary' : 'text-white' }}">
+                       class="font-extrabold uppercase block text-sm xl:text-base px-3 py-2 border-3 border-black transition-all duration-150
+                              {{ $isActive
+                                  ? 'bg-highlight text-black shadow-brutal-sm'
+                                  : 'bg-surface text-black hover:bg-highlight hover:shadow-brutal-sm' }}">
                         {{ $name }}
                     </a>
                 </li>
@@ -70,7 +74,6 @@
                 }
             });
 
-            // Close menu when clicking outside
             document.addEventListener('click', function (e) {
                 const target = e.target;
                 if (!menu.contains(target) && !menuToggle.contains(target)) {
@@ -78,21 +81,11 @@
                 }
             });
 
-            // Close menu when clicking on a menu link
             const menuLinks = menu.querySelectorAll('a');
             menuLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     closeMenu();
                 });
-            });
-
-            // Add shadow class on scroll with animation
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 0) {
-                    navbar.classList.add('shadow-lg', 'transition-shadow', 'duration-300');
-                } else {
-                    navbar.classList.remove('shadow-lg', 'transition-shadow', 'duration-300');
-                }
             });
         });
     </script>

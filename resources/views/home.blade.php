@@ -2,7 +2,7 @@
     'title' => 'Home',
 ])
 @section('content')
-<div class="bg-primary">
+<div class="bg-bg">
     {{-- Banner --}}
     @include('components.home.banner')
 
