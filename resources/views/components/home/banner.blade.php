@@ -147,9 +147,9 @@
     }
     @keyframes float-front {
         0% { transform: translateY(0); }
-        50% { transform: translateY(-28px); }
+        50% { transform: translateY(-12px); }
         100% { transform: translateY(0); }
     }
-    .floating-bg { animation: float-bg 4s ease-in-out infinite; }
-    .floating-front { animation: float-front 3s ease-in-out infinite; }
+    .floating-bg { animation: float-bg 5s ease-in-out infinite; }
+    .floating-front { animation: float-front 4s ease-in-out infinite; }
 </style>
