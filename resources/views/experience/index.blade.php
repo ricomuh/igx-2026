@@ -24,10 +24,25 @@
         background-size: 16px 16px;
     }
 
+    /* Sidebar transition */
     .lb-sidebar { transition: width 0.3s ease; }
     .lb-sidebar.collapsed .lb-content { display: none; }
     .lb-sidebar.collapsed .lb-collapsed-view { display: flex; }
     .lb-sidebar.expanded .lb-collapsed-view { display: none; }
+
+    /* Hide sidebar on mobile by default */
+    @media (max-width: 767px) {
+        .lb-sidebar { width: 0 !important; border: none !important; box-shadow: none !important; }
+        .lb-sidebar .lb-collapsed-view { display: none !important; }
+        .lb-sidebar .lb-content { display: none !important; }
+        .lb-sidebar.mobile-open { width: 72vw !important; max-width: 280px !important; border-right: 4px solid black !important; box-shadow: 4px 0 0 rgba(242,83,182,0.3) !important; }
+        .lb-sidebar.mobile-open .lb-content { display: flex !important; }
+        .lb-sidebar.mobile-open .lb-collapsed-view { display: none !important; }
+
+        /* Mobile overlay */
+        .lb-overlay { display: none; }
+        .lb-overlay.active { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 15; }
+    }
 
     .lb-scroll::-webkit-scrollbar { width: 6px; }
     .lb-scroll::-webkit-scrollbar-track { background: #1A1040; }
@@ -36,16 +51,30 @@
 @endpush
 
 @section('content')
-<div class="game-bg flex relative" style="min-height: calc(100vh - 72px);" x-data="{ sidebarOpen: true }">
+<div class="game-bg flex flex-col md:flex-row relative" style="min-height: calc(100vh - 72px);" x-data="{ sidebarOpen: window.innerWidth >= 768, mobileSidebar: false }" @resize.window="sidebarOpen = window.innerWidth >= 768">
+
+    {{-- Mobile leaderboard toggle button --}}
+    <button @click="mobileSidebar = !mobileSidebar"
+            class="md:hidden fixed bottom-20 left-3 z-40 bg-accent border-3 border-black shadow-brutal-sm w-12 h-12 flex items-center justify-center cursor-pointer"
+            aria-label="Toggle leaderboard">
+        <x-heroicon-o-trophy class="w-6 h-6 text-black" />
+    </button>
+
+    {{-- Mobile overlay --}}
+    <div class="lb-overlay md:hidden" :class="mobileSidebar ? 'active' : ''" @click="mobileSidebar = false"></div>
 
     {{-- ========== LEFT SIDEBAR LEADERBOARD ========== --}}
     <div class="lb-sidebar expanded shrink-0 relative z-20 border-r-4 border-black bg-black/90 overflow-hidden flex flex-col"
-         :class="sidebarOpen ? 'w-72 lg:w-80' : 'w-14'"
-         style="box-shadow: 4px 0 0 rgba(242,83,182,0.3); min-height: calc(100vh - 72px); max-height: calc(100vh - 72px);">
+         :class="{
+             'w-72 lg:w-80': sidebarOpen && window.innerWidth >= 768,
+             'w-14': !sidebarOpen && window.innerWidth >= 768,
+             'mobile-open': mobileSidebar
+         }"
+         style="min-height: calc(100vh - 72px); max-height: calc(100vh - 72px);">
 
-        {{-- Toggle button --}}
+        {{-- Toggle button (desktop only) --}}
         <button @click="sidebarOpen = !sidebarOpen"
-                class="absolute -right-0 top-1/2 -translate-y-1/2 translate-x-full bg-accent border-3 border-black border-l-0 shadow-brutal-sm px-1.5 py-4 z-30 cursor-pointer hover:bg-highlight transition-colors"
+                class="hidden md:flex absolute -right-0 top-1/2 -translate-y-1/2 translate-x-full bg-accent border-3 border-black border-l-0 shadow-brutal-sm px-1.5 py-4 z-30 cursor-pointer hover:bg-highlight transition-colors"
                 aria-label="Toggle leaderboard">
             <svg class="w-4 h-4 text-black transition-transform duration-300" :class="sidebarOpen ? '' : 'rotate-180'"
                  fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
@@ -53,7 +82,7 @@
             </svg>
         </button>
 
-        {{-- Collapsed view --}}
+        {{-- Collapsed view (desktop) --}}
         <div class="lb-collapsed-view hidden flex-col items-center gap-1 py-4 overflow-y-auto lb-scroll flex-1">
             <span class="text-[10px] font-extrabold text-highlight/60 uppercase mb-1">TOP</span>
             @foreach($leaderboard->take(10) as $index => $entry)
@@ -124,18 +153,19 @@
     {{-- ========== MAIN GAME AREA ========== --}}
     <div class="flex-1 flex flex-col min-w-0">
         {{-- Top bar --}}
-        <div class="flex items-center justify-between px-5 py-3 border-b-2 border-white/10 bg-black/40 shrink-0">
-            <div class="bg-primary border-2 border-black shadow-brutal-sm px-4 py-1 rotate-[-1deg]">
-                <h1 class="text-sm sm:text-base font-extrabold uppercase text-black flex items-center gap-2">
+        <div class="flex items-center justify-between px-3 sm:px-5 py-2 sm:py-3 border-b-2 border-white/10 bg-black/40 shrink-0">
+            <div class="bg-primary border-2 border-black shadow-brutal-sm px-3 sm:px-4 py-1 rotate-[-1deg]">
+                <h1 class="text-xs sm:text-sm lg:text-base font-extrabold uppercase text-black flex items-center gap-1.5 sm:gap-2">
                     <x-heroicon-o-play-circle class="w-4 h-4 sm:w-5 sm:h-5 text-black" />
-                    IGX Fusion Celebration
+                    <span class="hidden sm:inline">IGX Fusion Celebration</span>
+                    <span class="sm:hidden">IGX Game</span>
                 </h1>
             </div>
-            <div class="flex items-center gap-3">
-                <span class="text-[10px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ $gameVersion }}</span>
+            <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-[9px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ $gameVersion }}</span>
                 <button id="fullscreenBtn"
-                    class="bg-highlight border-2 border-black shadow-brutal-sm px-3 py-1.5 cursor-pointer hover:bg-accent transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 text-black">
+                    class="bg-highlight border-2 border-black shadow-brutal-sm px-2 sm:px-3 py-1.5 cursor-pointer hover:bg-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
                     </svg>
                 </button>
@@ -143,8 +173,8 @@
         </div>
 
         {{-- Game iframe --}}
-        <div class="flex-1 flex items-center justify-center p-2 sm:p-4">
-            <div id="main" class="w-full max-w-5xl border-3 border-black shadow-brutal-lg bg-black"></div>
+        <div class="flex-1 flex items-center justify-center p-1 sm:p-4">
+            <div id="main" class="w-full h-full max-w-5xl border-3 border-black shadow-brutal-lg bg-black" style="min-height: 400px;"></div>
         </div>
     </div>
 
@@ -168,10 +198,9 @@
     let isFullscreen = false;
 
     const createIframe = (container) => {
-        const src = mobileAndTabletCheck()
-          ? `https://experience.igx.co.id/${version}-mob`
-          : `https://experience.igx.co.id/${version}`;
-        container.innerHTML = `<iframe src="${src}" style="width: 100%; height: 100%; min-height: 500px; border: none;"></iframe>`;
+        const isMobile = mobileAndTabletCheck();
+        const src = `https://experience.igx.co.id/${version}`;
+        container.innerHTML = `<iframe src="${src}" style="width: 100%; height: 100%; min-height: 500px; border: none;" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     }
 
     const enterFullscreen = () => {
