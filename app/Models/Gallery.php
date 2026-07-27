@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ImageOptimizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +33,14 @@ class Gallery extends Model
 
             if (static::where('slug', $gallery->slug)->exists()) {
                 $gallery->slug = $gallery->slug . '-' . static::where('slug', $gallery->slug)->count();
+            }
+        });
+
+        static::saved(function (Gallery $gallery) {
+            if ($gallery->wasChanged('image') && $gallery->image) {
+                app(ImageOptimizer::class)->optimize('public', $gallery->image);
+                $gallery->image = ImageOptimizer::webpPath($gallery->image);
+                $gallery->saveQuietly();
             }
         });
     }

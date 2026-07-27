@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ImageOptimizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,8 +29,18 @@ class Post extends Model
                 $post->slug = $post->slug . '-' . static::where('slug', $post->slug)->count();
             }
 
-            $post->user_id = auth()?->id() ?? 1; // Default to user ID 1 if not authenticated
+            $post->user_id = auth()?->id() ?? 1;
             $post->image_url = asset('storage/' . $post->image_url);
+        });
+
+        static::saved(function ($post) {
+            if ($post->wasChanged('image_url') && $post->image_url) {
+                // Strip asset() prefix to get storage path
+                $storagePath = str_replace(asset('storage/'), '', $post->image_url);
+                app(ImageOptimizer::class)->optimize('public', $storagePath);
+                $post->image_url = asset('storage/' . ImageOptimizer::webpPath($storagePath));
+                $post->saveQuietly();
+            }
         });
     }
 

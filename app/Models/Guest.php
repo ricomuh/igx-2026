@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ImageOptimizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,8 +41,14 @@ class Guest extends Model
             if (static::where('slug', $model->slug)->exists()) {
                 $model->slug = $model->slug . '-' . static::where('slug', $model->slug)->count();
             }
+        });
 
-            // $model->image_url = asset('storage/' . $model->image_url);
+        static::saved(function ($model) {
+            if ($model->wasChanged('image_url') && $model->image_url) {
+                app(ImageOptimizer::class)->optimize('public', $model->image_url);
+                $model->image_url = ImageOptimizer::webpPath($model->image_url);
+                $model->saveQuietly();
+            }
         });
     }
 
