@@ -88,7 +88,7 @@
                                 <div class="border-t-2 border-black w-full mb-3 sm:mb-4"></div>
 
                                 {{-- Description --}}
-                                <div class="bg-secondary-lighter/10 border-2 border-black p-2 sm:p-4 mb-3 sm:mb-4 h-auto max-h-[60px] sm:h-[80px] overflow-hidden">
+                                <div class="bg-secondary-lighter/10 border-2 border-black p-2 sm:p-4 mb-3 sm:mb-4 h-auto max-h-[60px] sm:max-h-none sm:h-[80px] overflow-hidden">
                                     <p class="text-[11px] sm:text-sm lg:text-base text-black font-bold leading-relaxed"
                                        x-text="character.description"></p>
                                 </div>
