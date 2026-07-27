@@ -47,7 +47,7 @@
             </button>
 
             {{-- Character Card --}}
-            <div class="flex-1 max-w-3xl xl:max-w-5xl">
+            <div class="flex-1 max-w-3xl xl:max-w-5xl min-h-[420px] sm:min-h-[440px] md:min-h-[400px] lg:min-h-[420px]">
                 <template x-for="character in characters" :key="character.name">
                     <div class="card-brutal bg-surface overflow-hidden"
                          x-show="character === characters[current]"
@@ -88,7 +88,7 @@
                                 <div class="border-t-2 border-black w-full mb-4"></div>
 
                                 {{-- Stats-style description --}}
-                                <div class="bg-secondary-lighter/10 border-2 border-black p-3 sm:p-4 mb-4">
+                                <div class="bg-secondary-lighter/10 border-2 border-black p-3 sm:p-4 mb-4 min-h-[80px] sm:min-h-[100px]">
                                     <p class="text-xs sm:text-sm lg:text-base text-black font-bold leading-relaxed"
                                        x-text="character.description"></p>
                                 </div>
