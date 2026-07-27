@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExhibitorController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -15,7 +16,7 @@ Route::get('/guests', GuestController::class)->name('guests');
 Route::get('/rundown', fn() => view('rundown.index'))->name('rundown');
 Route::get('/exhibitors', ExhibitorController::class)->name('exhibitors');
 Route::get('/promo', fn() => view('coming-soon'))->name('promo');
-Route::get('/gallery', fn() => view('coming-soon'))->name('gallery');
+Route::get('/gallery', GalleryController::class)->name('gallery');
 Route::as('news.')->prefix('news')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('show');

@@ -99,17 +99,24 @@
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">Stage 02 Gallery</h3>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">Gallery</h3>
                             <div class="grid grid-cols-3 gap-1.5 mb-3">
-                                @foreach(range(1,3) as $i)
+                                @php $homeGalleries = \App\Models\Gallery::where('is_active', true)->orderBy('sort_order')->limit(3)->get(); @endphp
+                                @forelse($homeGalleries as $g)
                                     <div class="aspect-square border-2 border-black overflow-hidden bg-surface-dark">
-                                        <img src="{{ asset('media/images/gallery/' . $i . '.png') }}"
+                                        <img src="{{ Storage::disk('public')->url($g->image) }}"
                                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                             alt="Gallery {{ $i }}">
+                                             alt="{{ $g->title }}">
                                     </div>
-                                @endforeach
+                                @empty
+                                    @foreach(range(1,3) as $i)
+                                        <div class="aspect-square border-2 border-black overflow-hidden bg-surface-dark flex items-center justify-center">
+                                            <x-heroicon-o-photo class="w-6 h-6 text-black/20" />
+                                        </div>
+                                    @endforeach
+                                @endforelse
                             </div>
-                            <p class="text-[10px] font-bold text-black/40 uppercase">+ more from IGX Stage 02: Fusion!</p>
+                            <p class="text-[10px] font-bold text-black/40 uppercase">{{ \App\Models\Gallery::where('is_active', true)->count() }} photos in gallery</p>
                         </div>
                         <a href="{{ route('gallery') }}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-primary-dark hover:text-accent transition-colors group/link">
                             VIEW GALLERY
