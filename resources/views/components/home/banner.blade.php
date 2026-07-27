@@ -14,19 +14,20 @@
 
     {{-- Floating gallery images — neo brutalism --}}
     @php
-        $sideImages = \App\Models\Gallery::where('is_active', true)->inRandomOrder()->limit(6)->get();
+        $sideImages = \App\Models\Gallery::where('is_active', true)->inRandomOrder()->limit(8)->get();
     @endphp
     @foreach($sideImages as $idx => $img)
         @php
             $side = $idx % 2 === 0 ? 'left' : 'right';
             $offsets = [
-                ['top-[8%] left-[2%] -rotate-6', 'top-[8%] right-[2%] rotate-3'],
-                ['top-[40%] left-[3%] rotate-3', 'top-[35%] right-[3%] -rotate-6'],
-                ['bottom-[10%] left-[2%] rotate-6', 'bottom-[15%] right-[2%] -rotate-3'],
+                ['top-[5%] left-[2%] -rotate-6', 'top-[5%] right-[2%] rotate-3'],
+                ['top-[25%] left-[4%] rotate-3', 'top-[22%] right-[4%] -rotate-6'],
+                ['top-[48%] left-[1%] -rotate-3', 'top-[45%] right-[3%] rotate-6'],
+                ['bottom-[8%] left-[3%] rotate-6', 'bottom-[10%] right-[1%] -rotate-3'],
             ];
-            $pos = $offsets[$idx % 3][$idx % 2];
+            $pos = $offsets[$idx % 4][$idx % 2];
         @endphp
-        <div class="absolute {{ $pos }} z-0 w-24 sm:w-32 lg:w-36 border-3 border-black shadow-brutal-sm opacity-25 hover:opacity-60 transition-opacity duration-300 overflow-hidden">
+        <div class="absolute {{ $pos }} z-0 w-28 sm:w-36 md:w-40 lg:w-48 border-3 border-black shadow-brutal-sm opacity-40 hover:opacity-80 transition-opacity duration-300 overflow-hidden">
             <img src="{{ Storage::disk('public')->url($img->image) }}"
                  class="w-full aspect-square object-cover"
                  alt="{{ $img->title }}"
