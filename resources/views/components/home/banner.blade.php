@@ -14,48 +14,34 @@
 
     <div class="container mx-auto px-5 xl:px-12 relative z-10 flex-1 flex flex-col items-center justify-center text-center py-20 lg:py-0">
 
-        {{-- Glitch badge --}}
-        <div class="bg-black border-3 border-highlight px-3 py-1 shadow-brutal-sm rotate-[-2deg] z-20 mb-6">
-            <span class="text-[10px] sm:text-xs font-extrabold text-highlight uppercase tracking-[0.2em]">STAGE 03</span>
-        </div>
-
         {{-- ===== KEY ART — CENTERED ===== --}}
-        <div class="relative mb-8 lg:mb-10">
-            {{-- Layer 1: Background --}}
+        <div class="relative">
+            {{-- Layer 1: Background (smaller) --}}
             <div class="relative z-20 floating-bg">
                 <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
-                     class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[520px]"
+                     class="w-full max-w-[200px] sm:max-w-[260px] lg:max-w-[340px] xl:max-w-[400px]"
                      alt="IGX Background">
             </div>
-            {{-- Layer 2: Frontman --}}
-            <div class="absolute inset-0 z-30 floating-front">
+            {{-- Layer 2: Frontman (bigger) --}}
+            <div class="absolute inset-0 z-30 floating-front flex items-center justify-center">
                 <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
                      class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[520px]"
                      alt="IGX Characters">
             </div>
-
-            {{-- HUD labels --}}
-            <div class="absolute -top-4 -right-4 z-40 bg-highlight border-3 border-black px-3 py-1.5 shadow-brutal rotate-[3deg] animate-pulse">
-                <span class="text-xs sm:text-sm font-extrabold uppercase text-black">BOSS</span>
-            </div>
-            <div class="absolute -bottom-3 -left-3 z-40 bg-black border-2 border-crimson px-2 py-1">
-                <span class="text-[9px] font-extrabold text-crimson uppercase tracking-wider flex items-center gap-1">
-                    <x-heroicon-o-shield-check class="w-3 h-3" /> LV.99
-                </span>
-            </div>
         </div>
 
-        {{-- ===== TEXT BELOW ===== --}}
-        {{-- Main title --}}
-        <div class="mb-3">
-            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85]"
-                style="text-shadow:
-                    3px 3px 0px #F253B6,
-                    6px 6px 0px #F88832,
-                    9px 9px 0px #000000;">
-                BOSS FIGHT!
-            </h1>
-        </div>
+        {{-- ===== TEXT OVERLAPPING ===== --}}
+        <div class="relative z-40 -mt-12 sm:-mt-16 lg:-mt-20">
+            {{-- Main title --}}
+            <div class="mb-3">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85]"
+                    style="text-shadow:
+                        3px 3px 0px #F253B6,
+                        6px 6px 0px #F88832,
+                        9px 9px 0px #000000;">
+                    BOSS FIGHT!
+                </h1>
+            </div>
 
         {{-- Subtitle + date --}}
         <div class="inline-flex flex-col sm:flex-row gap-2 sm:gap-0 mb-6">
@@ -97,6 +83,8 @@
                 </span>
             </div>
         </div>
+
+        </div>{{-- end text overlap --}}
 
     </div>
 
