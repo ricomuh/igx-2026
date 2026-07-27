@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');
-Route::get('/experiences', ExperienceController::class)->name('experiences');
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences');
+Route::get('/experiences/leaderboard', [ExperienceController::class, 'leaderboard'])->name('experiences.leaderboard');
 Route::get('/guests', GuestController::class)->name('guests');
 Route::get('/rundown', fn() => view('rundown.index'))->name('rundown');
 Route::get('/exhibitors', ExhibitorController::class)->name('exhibitors');

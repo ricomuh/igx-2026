@@ -11,213 +11,149 @@
         display: block;
         aspect-ratio: 16 / 9;
         min-height: 250px;
+        border: none !important;
     }
     .iframe-fullscreen {
         position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        top: 0 !important; left: 0 !important;
+        width: 100vw !important; height: 100vh !important;
         z-index: 10000 !important;
-        border: none !important;
     }
 
-    @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(242, 83, 182, 0.4); }
-        50% { box-shadow: 0 0 0 12px rgba(242, 83, 182, 0); }
+    /* White halftone dots — more visible */
+    .game-bg {
+        background-color: #322366;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+        background-size: 16px 16px;
     }
-    .podium-1 { animation: pulse-glow 2s ease-in-out infinite; }
 
-    @keyframes float-trophy {
-        0%, 100% { transform: translateY(0) rotate(-5deg); }
-        50% { transform: translateY(-8px) rotate(-3deg); }
-    }
-    .trophy-float { animation: float-trophy 3s ease-in-out infinite; }
+    /* Leaderboard sidebar */
+    .lb-sidebar { transition: width 0.3s ease; }
+    .lb-sidebar.collapsed .lb-content { display: none; }
+    .lb-sidebar.collapsed .lb-collapsed-view { display: flex; }
+    .lb-sidebar.expanded .lb-collapsed-view { display: none; }
+
+    /* Scrollbar style */
+    .lb-scroll::-webkit-scrollbar { width: 6px; }
+    .lb-scroll::-webkit-scrollbar-track { background: #1A1040; }
+    .lb-scroll::-webkit-scrollbar-thumb { background: #F88832; border-radius: 3px; }
 </style>
 @endpush
 
 @section('content')
-<div class="bg-secondary min-h-screen relative overflow-hidden">
-    {{-- Halftone dots --}}
-    <div class="absolute inset-0 z-0 opacity-[0.05] pointer-events-none"
-         style="background-image: radial-gradient(circle, #9A94CC 1px, transparent 1px); background-size: 20px 20px;">
+<div class="game-bg min-h-screen flex relative" x-data="{ sidebarOpen: true }">
+
+    {{-- ========== LEFT SIDEBAR LEADERBOARD (HUD-style) ========== --}}
+    <div class="lb-sidebar expanded shrink-0 relative z-20 border-r-4 border-black bg-black/90 h-screen sticky top-0 overflow-hidden flex flex-col"
+         :class="sidebarOpen ? 'w-72 lg:w-80' : 'w-14'"
+         style="box-shadow: 4px 0 0 rgba(242,83,182,0.3);">
+
+        {{-- Toggle button --}}
+        <button @click="sidebarOpen = !sidebarOpen"
+                class="absolute -right-0 top-1/2 -translate-y-1/2 translate-x-full bg-accent border-3 border-black border-l-0 shadow-brutal-sm px-1.5 py-4 z-30 cursor-pointer hover:bg-highlight transition-colors"
+                aria-label="Toggle leaderboard">
+            <span class="text-lg font-extrabold text-black block transition-transform duration-300"
+                  :class="sidebarOpen ? '' : 'rotate-180'">&#x25C0;</span>
+        </button>
+
+        {{-- Collapsed view: rank icons only --}}
+        <div class="lb-collapsed-view hidden flex-col items-center gap-1 py-4 overflow-y-auto lb-scroll flex-1">
+            <span class="text-[10px] font-extrabold text-highlight/60 uppercase mb-1">TOP</span>
+            @foreach($leaderboard->take(10) as $index => $entry)
+                <span class="text-xs font-extrabold w-8 h-8 flex items-center justify-center border border-white/20 rounded
+                    {{ $index == 0 ? 'text-highlight bg-highlight/20' : 'text-white/50' }}">
+                    {{ $index + 1 }}
+                </span>
+            @endforeach
+        </div>
+
+        {{-- Expanded view: full sidebar leaderboard --}}
+        <div class="lb-content flex flex-col h-full">
+            {{-- Header --}}
+            <div class="bg-accent border-b-3 border-black px-4 py-3">
+                <h3 class="text-sm font-extrabold uppercase text-black flex items-center gap-2">
+                    <span>🏆</span> Leaderboard
+                </h3>
+                <p class="text-[10px] font-bold text-black/60 uppercase mt-0.5">Weekly Ranking</p>
+            </div>
+
+            {{-- Top 3 mini podium --}}
+            <div class="flex gap-1 px-3 py-3 border-b-2 border-white/10">
+                @foreach($leaderboard->take(3) as $index => $entry)
+                    <div class="flex-1 text-center {{ $index == 0 ? '-mt-1' : '' }}">
+                        <div class="text-lg mb-0.5">{{ ['🥇','🥈','🥉'][$index] }}</div>
+                        <div class="w-8 h-8 mx-auto mb-1 border-2 {{ ['border-highlight','border-white/30','border-primary'][$index] }} flex items-center justify-center"
+                             style="background: {{ ['#F2D62D','#322366','#F88832'][$index] }};">
+                            <span class="text-[10px] font-extrabold {{ $index == 0 ? 'text-black' : 'text-white' }}">
+                                {{ strtoupper(substr($entry->username, 0, 2)) }}
+                            </span>
+                        </div>
+                        <p class="text-[10px] font-bold text-white/70 truncate">{{ $entry->username }}</p>
+                        <p class="text-[9px] font-extrabold {{ ['text-highlight','text-white/50','text-primary'][$index] }}">
+                            {{ number_format($entry->score) }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- Rank 4-10 list --}}
+            <div class="flex-1 overflow-y-auto lb-scroll px-2 py-2">
+                @foreach($leaderboard->slice(3) as $index => $entry)
+                    @php $rank = $index + 4; @endphp
+                    <div class="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 transition-colors">
+                        <span class="text-[10px] font-extrabold w-5 text-white/30 text-right">#{{ $rank }}</span>
+                        <span class="flex-1 text-[11px] font-bold text-white/80 truncate">{{ $entry->username }}</span>
+                        <span class="text-[10px] font-extrabold text-primary">{{ number_format($entry->score) }}</span>
+                    </div>
+                @endforeach
+
+                @if($leaderboard->isEmpty())
+                    <p class="text-[11px] text-white/40 text-center py-8">No scores yet. Be the first!</p>
+                @endif
+            </div>
+
+            {{-- Footer: View Full Leaderboard --}}
+            <a href="{{ route('experiences.leaderboard') }}"
+               class="block bg-highlight border-t-3 border-black px-4 py-2.5 text-center hover:bg-accent transition-colors group">
+                <span class="text-xs font-extrabold uppercase text-black flex items-center justify-center gap-2">
+                    Full Leaderboard
+                    <span class="group-hover:translate-x-1 transition-transform">&#x25B6;</span>
+                </span>
+            </a>
+        </div>
     </div>
 
-    {{-- Diagonal accents --}}
-    <div class="absolute top-16 -left-16 w-64 h-6 bg-highlight rotate-[-8deg] border-2 border-black opacity-30 z-0"></div>
-    <div class="absolute bottom-32 -right-16 w-80 h-8 bg-accent rotate-[6deg] border-2 border-black opacity-30 z-0"></div>
-
-    <div class="container mx-auto px-5 xl:px-12 pt-28 pb-20 relative z-10">
-
-        {{-- HEADER --}}
-        <div class="flex flex-col items-center mb-10 lg:mb-14">
-            <div class="bg-primary border-3 border-black shadow-brutal px-6 py-3 sm:px-10 sm:py-4 rotate-[-1deg] mb-3">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-black text-center leading-none">
-                    IGX Fusion
+    {{-- ========== MAIN GAME AREA ========== --}}
+    <div class="flex-1 flex flex-col min-w-0">
+        {{-- Top bar --}}
+        <div class="flex items-center justify-between px-5 py-3 border-b-2 border-white/10 bg-black/40">
+            <div class="bg-primary border-2 border-black shadow-brutal-sm px-4 py-1 rotate-[-1deg]">
+                <h1 class="text-sm sm:text-base font-extrabold uppercase text-black flex items-center gap-2">
+                    🕹️ IGX Fusion Celebration
                 </h1>
             </div>
-            <div class="bg-accent border-3 border-black shadow-brutal px-6 py-3 sm:px-10 sm:py-4 rotate-[1deg]">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase text-black text-center leading-none"
-                    style="text-shadow: 3px 3px 0px #F2D62D;">
-                    Celebration!
-                </h1>
-            </div>
-        </div>
-
-        {{-- ==================== LEADERBOARD ==================== --}}
-        <div class="mb-16">
-            {{-- Leaderboard title badge --}}
-            <div class="flex justify-center mb-8">
-                <div class="relative">
-                    <div class="bg-highlight border-3 border-black shadow-brutal px-8 py-3 rotate-[-0.5deg]">
-                        <h2 class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black flex items-center gap-3">
-                            <span class="text-2xl">🏆</span>
-                            Weekly Ranking
-                            <span class="text-2xl">🏆</span>
-                        </h2>
-                    </div>
-                    {{-- COMBO badge --}}
-                    <div class="absolute -top-3 -right-4 bg-crimson border-2 border-black px-2 py-0.5 shadow-brutal-sm rotate-[6deg]">
-                        <span class="text-[10px] sm:text-xs font-extrabold text-white uppercase">TOP 10</span>
-                    </div>
-                </div>
-            </div>
-
-            @if($leaderboard->isNotEmpty())
-                {{-- TOP 3 PODIUM --}}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 max-w-4xl mx-auto">
-                    @php
-                        $medals = ['🥇', '🥈', '🥉'];
-                        $podiumColors = ['bg-highlight', 'bg-surface', 'bg-primary'];
-                        $tierColors = ['bg-highlight text-black', 'bg-surface text-black', 'bg-primary text-black'];
-                        $tiers = ['S', 'A', 'B'];
-                    @endphp
-
-                    {{-- Render in podium order: 2nd, 1st, 3rd --}}
-                    @foreach([1, 0, 2] as $podiumPos)
-                        @php $entry = $leaderboard[$podiumPos]; $index = $podiumPos; @endphp
-                        <div class="card-brutal {{ $podiumColors[$index] }} {{ $index == 0 ? 'podium-1 md:scale-110 z-10' : '' }} {{ $index == 0 ? 'md:-mt-4' : ($index == 1 ? 'md:mt-6' : 'md:mt-6') }} overflow-hidden">
-                            {{-- Tier badge --}}
-                            <div class="bg-black px-3 py-1.5 flex items-center justify-between">
-                                <span class="text-[10px] sm:text-xs font-extrabold {{ $tierColors[$index] }} px-2 py-0.5 border border-current">
-                                    TIER {{ $tiers[$index] }}
-                                </span>
-                                <span class="text-2xl">{{ $medals[$index] }}</span>
-                            </div>
-
-                            <div class="p-4 sm:p-5 text-center">
-                                {{-- Crown for #1 --}}
-                                @if($index == 0)
-                                    <div class="text-4xl trophy-float mb-1">👑</div>
-                                @endif
-
-                                {{-- Avatar placeholder --}}
-                                <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 border-3 border-black {{ $index == 0 ? 'bg-highlight' : ($index == 1 ? 'bg-surface-dark' : 'bg-primary-dark') }} flex items-center justify-center shadow-brutal-sm">
-                                    <span class="text-2xl sm:text-3xl font-extrabold text-black">
-                                        {{ strtoupper(substr($entry->username, 0, 1)) }}
-                                    </span>
-                                </div>
-
-                                <h3 class="font-extrabold text-base sm:text-lg uppercase text-black mb-1 truncate">{{ $entry->username }}</h3>
-
-                                {{-- Score with XP bar --}}
-                                <div class="mt-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-[10px] font-extrabold uppercase text-black/60">SCORE</span>
-                                        <span class="text-sm font-extrabold text-black">{{ number_format($entry->score) }} XP</span>
-                                    </div>
-                                    <div class="h-3 border-2 border-black bg-black/10 overflow-hidden">
-                                        @php
-                                            $maxScore = $leaderboard->first()->score ?: 1;
-                                            $pct = min(($entry->score / $maxScore) * 100, 100);
-                                        @endphp
-                                        <div class="h-full {{ $index == 0 ? 'bg-highlight' : ($index == 1 ? 'bg-primary' : 'bg-accent') }}"
-                                             style="width: {{ $pct }}%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                {{-- RANK 4-10 TABLE --}}
-                <div class="max-w-2xl mx-auto">
-                    <div class="card-brutal bg-surface overflow-hidden">
-                        <div class="bg-black px-4 py-2">
-                            <span class="text-xs font-extrabold text-highlight uppercase tracking-wider">Rank 4-10</span>
-                        </div>
-                        <div class="divide-y-2 divide-black">
-                            @foreach($leaderboard->slice(3) as $index => $entry)
-                                @php $rank = $index + 4; @endphp
-                                <div class="flex items-center gap-3 px-4 py-3 hover:bg-highlight/20 transition-colors group">
-                                    {{-- Rank number --}}
-                                    <span class="w-8 h-8 border-2 border-black flex items-center justify-center font-extrabold text-sm shrink-0
-                                        {{ $rank == 4 ? 'bg-highlight text-black' : 'bg-surface-dark text-black/60' }}">
-                                        #{{ $rank }}
-                                    </span>
-
-                                    {{-- Username --}}
-                                    <span class="flex-1 font-bold text-sm sm:text-base text-black uppercase truncate">
-                                        {{ $entry->username }}
-                                    </span>
-
-                                    {{-- Score --}}
-                                    <span class="font-extrabold text-sm text-black shrink-0">
-                                        {{ number_format($entry->score) }}
-                                        <span class="text-[10px] text-black/40">XP</span>
-                                    </span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            @else
-                {{-- Empty state --}}
-                <div class="card-brutal bg-surface max-w-lg mx-auto p-10 text-center">
-                    <div class="text-5xl mb-4">🎮</div>
-                    <h3 class="text-xl font-extrabold text-black uppercase mb-2">No Scores Yet!</h3>
-                    <p class="text-sm font-bold text-black/60">Be the first to play and claim the #1 spot!</p>
-                </div>
-            @endif
-        </div>
-
-        {{-- ==================== GAME IFRAME SECTION ==================== --}}
-        <div class="max-w-4xl mx-auto">
-            {{-- Game title bar --}}
-            <div class="flex items-center justify-between mb-4">
-                <div class="bg-accent border-3 border-black shadow-brutal-sm px-5 py-2 rotate-[-1deg]">
-                    <span class="text-lg sm:text-xl font-extrabold uppercase text-black flex items-center gap-2">
-                        🕹️ PLAY NOW
-                    </span>
-                </div>
-                <div class="bg-black border-2 border-highlight px-3 py-1 shadow-brutal-sm">
-                    <span class="text-[10px] sm:text-xs font-extrabold text-highlight uppercase">v{{ $gameVersion }}</span>
-                </div>
-            </div>
-
-            {{-- Game wrapper --}}
-            <div class="card-brutal bg-black overflow-hidden">
-                <div id="main" class="w-full"></div>
-            </div>
-
-            {{-- Fullscreen button --}}
-            <div class="flex justify-center mt-6">
+            <div class="flex items-center gap-3">
+                <span class="text-[10px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ $gameVersion }}</span>
                 <button id="fullscreenBtn"
-                    class="btn-brutal-yellow text-lg px-8 py-4 inline-flex items-center gap-3 cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
+                    class="bg-highlight border-2 border-black shadow-brutal-sm px-3 py-1.5 cursor-pointer hover:bg-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 text-black">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
                     </svg>
-                    <span class="font-extrabold uppercase">Fullscreen</span>
                 </button>
             </div>
         </div>
 
+        {{-- Game iframe --}}
+        <div class="flex-1 flex items-center justify-center p-2 sm:p-4">
+            <div id="main" class="w-full max-w-5xl border-3 border-black shadow-brutal-lg bg-black"></div>
+        </div>
     </div>
+
 </div>
 @endsection
 
 @push('scripts')
+<script src="//unpkg.com/alpinejs" defer></script>
 <script>
     window.mobileAndTabletCheck = function () {
         let check = false;
