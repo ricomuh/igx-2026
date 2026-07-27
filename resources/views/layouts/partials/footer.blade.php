@@ -53,7 +53,7 @@
             {{-- CENTER: Logo & Social Media --}}
             <div class="flex flex-col gap-6 items-center order-1 lg:order-2">
                 <div class="bg-surface border-3 border-black p-4 shadow-brutal-sm">
-                    <img src="{{ asset('/media/images/logos/logo.svg') }}" class="h-16 sm:h-20" alt="IGX Logo">
+                    <img src="{{ asset('/media/images/logos/logo-stage03.webp') }}" class="h-16 sm:h-20" alt="IGX Logo">
                 </div>
                 <p class="text-xs font-extrabold uppercase tracking-widest text-surface/60">Follow Us</p>
                 <div class="flex gap-4 justify-center">
