@@ -14,17 +14,17 @@
     }
     .podium-1 { animation: pulse-glow 2s ease-in-out infinite; }
 
-    @keyframes float-trophy {
+    @keyframes float-crown {
         0%, 100% { transform: translateY(0) rotate(-5deg); }
         50% { transform: translateY(-8px) rotate(-3deg); }
     }
-    .trophy-float { animation: float-trophy 3s ease-in-out infinite; }
+    .crown-float { animation: float-crown 3s ease-in-out infinite; }
 </style>
 @endpush
 
 @section('content')
 <div class="bg-secondary min-h-screen relative overflow-hidden">
-    {{-- White halftone dots — visible --}}
+    {{-- White halftone dots --}}
     <div class="absolute inset-0 z-0 pointer-events-none"
          style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 16px 16px;">
     </div>
@@ -38,8 +38,10 @@
         {{-- HEADER --}}
         <div class="flex flex-col items-center mb-6">
             <div class="bg-primary border-3 border-black shadow-brutal px-6 py-3 sm:px-10 sm:py-4 rotate-[-1deg] mb-3">
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-black text-center leading-none">
-                    🏆 Leaderboard
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-black text-center leading-none flex items-center gap-3">
+                    <x-heroicon-o-trophy class="w-7 h-7 sm:w-9 sm:h-9 text-black" />
+                    Leaderboard
+                    <x-heroicon-o-trophy class="w-7 h-7 sm:w-9 sm:h-9 text-black" />
                 </h1>
             </div>
             <div class="bg-accent border-3 border-black shadow-brutal px-5 py-2 rotate-[1deg]">
@@ -51,7 +53,10 @@
         <div class="text-center mb-10">
             <a href="{{ route('experiences') }}"
                class="inline-flex items-center gap-2 text-sm font-extrabold uppercase text-highlight hover:text-accent transition-colors border-2 border-highlight/30 px-4 py-2 hover:border-accent">
-                <span>&#x25C0;</span> Back to Game
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back to Game
             </a>
         </div>
 
@@ -59,10 +64,9 @@
             {{-- TOP 3 PODIUM --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-10 max-w-4xl mx-auto">
                 @php
-                    $medals = ['🥇', '🥈', '🥉'];
                     $podiumColors = ['bg-highlight', 'bg-surface', 'bg-primary'];
+                    $tierLabels = ['S', 'A', 'B'];
                     $tierColors = ['bg-highlight text-black', 'bg-surface text-black', 'bg-primary text-black'];
-                    $tiers = ['S', 'A', 'B'];
                     $maxScore = $leaderboard->first()->score ?: 1;
                 @endphp
 
@@ -71,14 +75,16 @@
                     <div class="card-brutal {{ $podiumColors[$index] }} {{ $index == 0 ? 'podium-1 md:scale-110 z-10' : '' }} {{ $index == 0 ? 'md:-mt-4' : 'md:mt-6' }} overflow-hidden">
                         <div class="bg-black px-3 py-1.5 flex items-center justify-between">
                             <span class="text-[10px] sm:text-xs font-extrabold {{ $tierColors[$index] }} px-2 py-0.5 border border-current">
-                                TIER {{ $tiers[$index] }}
+                                TIER {{ $tierLabels[$index] }}
                             </span>
-                            <span class="text-2xl">{{ $medals[$index] }}</span>
+                            <span class="text-xs font-extrabold text-white">#{{ $index + 1 }}</span>
                         </div>
 
                         <div class="p-4 sm:p-5 text-center">
                             @if($index == 0)
-                                <div class="text-4xl trophy-float mb-1">👑</div>
+                                <div class="crown-float mb-1 flex justify-center">
+                                    <x-heroicon-o-star class="w-10 h-10 text-highlight" style="filter: drop-shadow(2px 2px 0 #000);" />
+                                </div>
                             @endif
 
                             <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 border-3 border-black {{ $index == 0 ? 'bg-highlight' : ($index == 1 ? 'bg-surface-dark' : 'bg-primary-dark') }} flex items-center justify-center shadow-brutal-sm">
@@ -132,7 +138,7 @@
             </div>
         @else
             <div class="card-brutal bg-surface max-w-lg mx-auto p-10 text-center">
-                <div class="text-5xl mb-4">🎮</div>
+                <x-heroicon-o-trophy class="w-16 h-16 text-highlight mx-auto mb-4" />
                 <h3 class="text-xl font-extrabold text-black uppercase mb-2">No Scores Yet!</h3>
                 <p class="text-sm font-bold text-black/60 mb-6">Be the first to play and claim the #1 spot!</p>
                 <a href="{{ route('experiences') }}" class="btn-brutal inline-block">Play Now</a>

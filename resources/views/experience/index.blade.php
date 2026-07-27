@@ -9,8 +9,6 @@
     }
     iframe {
         display: block;
-        aspect-ratio: 16 / 9;
-        min-height: 250px;
         border: none !important;
     }
     .iframe-fullscreen {
@@ -20,20 +18,17 @@
         z-index: 10000 !important;
     }
 
-    /* White halftone dots — more visible */
     .game-bg {
         background-color: #322366;
         background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
         background-size: 16px 16px;
     }
 
-    /* Leaderboard sidebar */
     .lb-sidebar { transition: width 0.3s ease; }
     .lb-sidebar.collapsed .lb-content { display: none; }
     .lb-sidebar.collapsed .lb-collapsed-view { display: flex; }
     .lb-sidebar.expanded .lb-collapsed-view { display: none; }
 
-    /* Scrollbar style */
     .lb-scroll::-webkit-scrollbar { width: 6px; }
     .lb-scroll::-webkit-scrollbar-track { background: #1A1040; }
     .lb-scroll::-webkit-scrollbar-thumb { background: #F88832; border-radius: 3px; }
@@ -41,38 +36,41 @@
 @endpush
 
 @section('content')
-<div class="game-bg min-h-screen flex relative" x-data="{ sidebarOpen: true }">
+<div class="game-bg flex relative" style="min-height: calc(100vh - 72px);" x-data="{ sidebarOpen: true }">
 
-    {{-- ========== LEFT SIDEBAR LEADERBOARD (HUD-style) ========== --}}
-    <div class="lb-sidebar expanded shrink-0 relative z-20 border-r-4 border-black bg-black/90 h-screen sticky top-0 overflow-hidden flex flex-col"
+    {{-- ========== LEFT SIDEBAR LEADERBOARD ========== --}}
+    <div class="lb-sidebar expanded shrink-0 relative z-20 border-r-4 border-black bg-black/90 overflow-hidden flex flex-col"
          :class="sidebarOpen ? 'w-72 lg:w-80' : 'w-14'"
-         style="box-shadow: 4px 0 0 rgba(242,83,182,0.3);">
+         style="box-shadow: 4px 0 0 rgba(242,83,182,0.3); min-height: calc(100vh - 72px); max-height: calc(100vh - 72px);">
 
         {{-- Toggle button --}}
         <button @click="sidebarOpen = !sidebarOpen"
                 class="absolute -right-0 top-1/2 -translate-y-1/2 translate-x-full bg-accent border-3 border-black border-l-0 shadow-brutal-sm px-1.5 py-4 z-30 cursor-pointer hover:bg-highlight transition-colors"
                 aria-label="Toggle leaderboard">
-            <span class="text-lg font-extrabold text-black block transition-transform duration-300"
-                  :class="sidebarOpen ? '' : 'rotate-180'">&#x25C0;</span>
+            <svg class="w-4 h-4 text-black transition-transform duration-300" :class="sidebarOpen ? '' : 'rotate-180'"
+                 fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
         </button>
 
-        {{-- Collapsed view: rank icons only --}}
+        {{-- Collapsed view --}}
         <div class="lb-collapsed-view hidden flex-col items-center gap-1 py-4 overflow-y-auto lb-scroll flex-1">
             <span class="text-[10px] font-extrabold text-highlight/60 uppercase mb-1">TOP</span>
             @foreach($leaderboard->take(10) as $index => $entry)
-                <span class="text-xs font-extrabold w-8 h-8 flex items-center justify-center border border-white/20 rounded
+                <span class="text-xs font-extrabold w-8 h-8 flex items-center justify-center border border-white/20
                     {{ $index == 0 ? 'text-highlight bg-highlight/20' : 'text-white/50' }}">
                     {{ $index + 1 }}
                 </span>
             @endforeach
         </div>
 
-        {{-- Expanded view: full sidebar leaderboard --}}
-        <div class="lb-content flex flex-col h-full">
+        {{-- Expanded view --}}
+        <div class="lb-content flex flex-col" style="max-height: calc(100vh - 72px);">
             {{-- Header --}}
             <div class="bg-accent border-b-3 border-black px-4 py-3">
                 <h3 class="text-sm font-extrabold uppercase text-black flex items-center gap-2">
-                    <span>🏆</span> Leaderboard
+                    <x-heroicon-o-trophy class="w-4 h-4 text-black" />
+                    Leaderboard
                 </h3>
                 <p class="text-[10px] font-bold text-black/60 uppercase mt-0.5">Weekly Ranking</p>
             </div>
@@ -80,18 +78,17 @@
             {{-- Top 3 mini podium --}}
             <div class="flex gap-1 px-3 py-3 border-b-2 border-white/10">
                 @foreach($leaderboard->take(3) as $index => $entry)
+                    @php
+                        $medalBg = ['bg-highlight', 'bg-surface-dark', 'bg-primary'];
+                        $medalBorder = ['border-highlight', 'border-white/30', 'border-primary'];
+                        $scoreColor = ['text-highlight', 'text-white/50', 'text-primary'];
+                    @endphp
                     <div class="flex-1 text-center {{ $index == 0 ? '-mt-1' : '' }}">
-                        <div class="text-lg mb-0.5">{{ ['🥇','🥈','🥉'][$index] }}</div>
-                        <div class="w-8 h-8 mx-auto mb-1 border-2 {{ ['border-highlight','border-white/30','border-primary'][$index] }} flex items-center justify-center"
-                             style="background: {{ ['#F2D62D','#322366','#F88832'][$index] }};">
-                            <span class="text-[10px] font-extrabold {{ $index == 0 ? 'text-black' : 'text-white' }}">
-                                {{ strtoupper(substr($entry->username, 0, 2)) }}
-                            </span>
+                        <div class="w-8 h-8 mx-auto mb-1 border-2 {{ $medalBorder[$index] }} flex items-center justify-center {{ $medalBg[$index] }}">
+                            <span class="text-xs font-extrabold {{ $index == 0 ? 'text-black' : 'text-white' }}">#{{ $index + 1 }}</span>
                         </div>
                         <p class="text-[10px] font-bold text-white/70 truncate">{{ $entry->username }}</p>
-                        <p class="text-[9px] font-extrabold {{ ['text-highlight','text-white/50','text-primary'][$index] }}">
-                            {{ number_format($entry->score) }}
-                        </p>
+                        <p class="text-[9px] font-extrabold {{ $scoreColor[$index] }}">{{ number_format($entry->score) }}</p>
                     </div>
                 @endforeach
             </div>
@@ -106,18 +103,19 @@
                         <span class="text-[10px] font-extrabold text-primary">{{ number_format($entry->score) }}</span>
                     </div>
                 @endforeach
-
                 @if($leaderboard->isEmpty())
                     <p class="text-[11px] text-white/40 text-center py-8">No scores yet. Be the first!</p>
                 @endif
             </div>
 
-            {{-- Footer: View Full Leaderboard --}}
+            {{-- Footer --}}
             <a href="{{ route('experiences.leaderboard') }}"
-               class="block bg-highlight border-t-3 border-black px-4 py-2.5 text-center hover:bg-accent transition-colors group">
+               class="block bg-highlight border-t-3 border-black px-4 py-2.5 text-center hover:bg-accent transition-colors group shrink-0">
                 <span class="text-xs font-extrabold uppercase text-black flex items-center justify-center gap-2">
                     Full Leaderboard
-                    <span class="group-hover:translate-x-1 transition-transform">&#x25B6;</span>
+                    <svg class="w-3 h-3 text-black group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
                 </span>
             </a>
         </div>
@@ -126,10 +124,11 @@
     {{-- ========== MAIN GAME AREA ========== --}}
     <div class="flex-1 flex flex-col min-w-0">
         {{-- Top bar --}}
-        <div class="flex items-center justify-between px-5 py-3 border-b-2 border-white/10 bg-black/40">
+        <div class="flex items-center justify-between px-5 py-3 border-b-2 border-white/10 bg-black/40 shrink-0">
             <div class="bg-primary border-2 border-black shadow-brutal-sm px-4 py-1 rotate-[-1deg]">
                 <h1 class="text-sm sm:text-base font-extrabold uppercase text-black flex items-center gap-2">
-                    🕹️ IGX Fusion Celebration
+                    <x-heroicon-o-play-circle class="w-4 h-4 sm:w-5 sm:h-5 text-black" />
+                    IGX Fusion Celebration
                 </h1>
             </div>
             <div class="flex items-center gap-3">
@@ -172,7 +171,7 @@
         const src = mobileAndTabletCheck()
           ? `https://experience.igx.co.id/${version}-mob`
           : `https://experience.igx.co.id/${version}`;
-        container.innerHTML = `<iframe src="${src}" style="width: 100%; border: none;"></iframe>`;
+        container.innerHTML = `<iframe src="${src}" style="width: 100%; height: 100%; min-height: 500px; border: none;"></iframe>`;
     }
 
     const enterFullscreen = () => {
