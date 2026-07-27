@@ -32,39 +32,41 @@
 
         {{-- ===== TEXT OVERLAPPING ===== --}}
         <div class="relative z-40 -mt-12 sm:-mt-16 lg:-mt-20">
-            {{-- Main title --}}
+            {{-- Main title — character-by-character --}}
             <div class="mb-3">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85]"
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-1"
                     style="text-shadow:
                         3px 3px 0px #F253B6,
                         6px 6px 0px #F88832,
                         9px 9px 0px #000000;">
-                    BOSS FIGHT!
+                    @foreach(str_split('BOSS FIGHT!') as $i => $char)
+                        <span class="inline-block char-pop" style="animation-delay: {{ $i * 0.06 }}s">{{ $char === ' ' ? "\u{00A0}" : $char }}</span>
+                    @endforeach
                 </h1>
             </div>
 
         {{-- Subtitle + date --}}
         <div class="inline-flex flex-col sm:flex-row gap-2 sm:gap-0 mb-6">
-            <div class="bg-highlight border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1.5deg]">
+            <div class="bg-highlight border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1.5deg] slide-up" style="animation-delay: 0.5s">
                 <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black">ICE BSD</span>
             </div>
-            <div class="bg-surface border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[1deg] sm:-ml-2">
+            <div class="bg-surface border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[1deg] sm:-ml-2 slide-up" style="animation-delay: 0.6s">
                 <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black">24-25 OCT</span>
             </div>
-            <div class="bg-accent border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1deg] sm:-ml-2">
+            <div class="bg-accent border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1deg] sm:-ml-2 slide-up" style="animation-delay: 0.7s">
                 <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black">2026</span>
             </div>
         </div>
 
         {{-- CTA buttons --}}
         <div class="flex flex-wrap gap-3 justify-center">
-            <a href="#" class="btn-brutal text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group relative overflow-hidden">
+            <a href="#" class="btn-brutal text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group relative overflow-hidden slide-up" style="animation-delay: 0.8s">
                 <span class="relative z-10 flex items-center gap-2">
                     <x-heroicon-o-ticket class="w-5 h-5" />
                     GET TICKET
                 </span>
             </a>
-            <a href="{{ route('experiences') }}" class="btn-brutal-pink text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group">
+            <a href="{{ route('experiences') }}" class="btn-brutal-pink text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group slide-up" style="animation-delay: 0.9s">
                 <span class="flex items-center gap-2">
                     <x-heroicon-o-play-circle class="w-5 h-5" />
                     PLAY NOW
@@ -110,6 +112,17 @@
         50% { transform: translateY(-12px); }
         100% { transform: translateY(0); }
     }
+    @keyframes char-pop {
+        0% { opacity: 0; transform: translateY(24px) scale(0.8); }
+        60% { opacity: 1; transform: translateY(-4px) scale(1.05); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes slide-up {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
     .floating-bg { animation: float-bg 5s ease-in-out infinite; }
     .floating-front { animation: float-front 4s ease-in-out infinite; }
+    .char-pop { animation: char-pop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+    .slide-up { animation: slide-up 0.6s ease-out both; }
 </style>
