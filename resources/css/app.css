@@ -7,7 +7,7 @@
 @source '../**/*.js';
 
 @theme {
-    --font-moon: "MOON GET!", sans-serif;
+    --font-moon: "TT Rounds Neue", sans-serif;
 
     /* IGX Stage 03 — Neo-Brutalism Palette */
     --color-primary: #F88832;
