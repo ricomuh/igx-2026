@@ -4,7 +4,7 @@
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('/media/images/logos/logo-stage03.svg') }}" class="h-10 lg:h-12" alt="IGX Logo">
+                <img src="{{ asset('/media/images/logos/logo-stage03.webp') }}" class="h-10 lg:h-12" alt="IGX Logo">
             </a>
         </div>
 
