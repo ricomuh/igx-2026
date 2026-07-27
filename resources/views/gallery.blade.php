@@ -35,7 +35,7 @@
                     $colors = ['bg-primary', 'bg-accent', 'bg-highlight', 'bg-cyan'];
                     $color = $colors[$loop->index % count($colors)];
                 @endphp
-                <button onclick="showImage('{{ Storage::disk('public')->url($gallery->image) }}')"
+                <button onclick="showImage({{ $loop->index }})"
                         class="card-brutal bg-surface overflow-hidden group break-inside-avoid cursor-pointer text-left w-full">
                     {{-- Colored offset frame --}}
                     <div class="relative">
@@ -66,12 +66,29 @@
     </div>
 </div>
 
-{{-- Lightbox Modal (rundown style) --}}
+{{-- Lightbox Modal (rundown style with prev/next navigation) --}}
 <div id="imageModal" class="fixed inset-0 bg-black/95 hidden items-center justify-center p-4" onclick="hideImage()" style="z-index: 99999;">
-    <div class="relative inline-block">
+    <div class="relative inline-block max-w-full max-h-full">
+        {{-- Previous Button --}}
+        <button onclick="event.stopPropagation(); prevImage()"
+                class="absolute left-4 top-1/2 -translate-y-1/2 bg-highlight border-3 border-black shadow-brutal-sm w-12 h-12 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer z-30">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+
+        {{-- Next Button --}}
+        <button onclick="event.stopPropagation(); nextImage()"
+                class="absolute right-4 top-1/2 -translate-y-1/2 bg-highlight border-3 border-black shadow-brutal-sm w-12 h-12 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer z-30">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+
         <img id="modalImage" src="" alt="" class="max-w-[95vw] max-h-[95vh] object-contain border-3 border-highlight shadow-brutal-lg" onclick="event.stopPropagation()">
+        
         <button onclick="hideImage()"
-                class="absolute -top-4 -right-4 bg-crimson border-3 border-black shadow-brutal-sm w-10 h-10 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer">
+                class="absolute -top-4 -right-4 bg-crimson border-3 border-black shadow-brutal-sm w-10 h-10 flex items-center justify-center hover:bg-accent transition-colors cursor-pointer z-30">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -82,8 +99,16 @@
 
 @push('scripts')
 <script>
-const showImage = (src) => {
-    document.getElementById('modalImage').src = src;
+const images = [
+    @foreach($galleries as $gallery)
+    '{{ Storage::disk('public')->url($gallery->image) }}',
+    @endforeach
+];
+let currentIdx = 0;
+
+const showImage = (idx) => {
+    currentIdx = idx;
+    document.getElementById('modalImage').src = images[currentIdx];
     document.getElementById('imageModal').classList.remove('hidden');
     document.getElementById('imageModal').classList.add('flex');
     document.body.style.overflow = 'hidden';
@@ -93,8 +118,18 @@ const hideImage = () => {
     document.getElementById('imageModal').classList.remove('flex');
     document.body.style.overflow = 'auto';
 }
+const prevImage = () => {
+    currentIdx = (currentIdx - 1 + images.length) % images.length;
+    document.getElementById('modalImage').src = images[currentIdx];
+}
+const nextImage = () => {
+    currentIdx = (currentIdx + 1) % images.length;
+    document.getElementById('modalImage').src = images[currentIdx];
+}
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') hideImage();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
 });
 </script>
 @endpush
