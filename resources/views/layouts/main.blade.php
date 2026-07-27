@@ -35,6 +35,7 @@
             </div>
 
             @include('layouts.partials.footer')
+            @include('components.card.map')
         </main>
 
         @stack('scripts')

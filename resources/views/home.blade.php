@@ -54,7 +54,10 @@
                             </div>
                             <p class="text-xs font-bold text-black/60 uppercase leading-relaxed">24-25 October 2026<br>ICE BSD — HALL 09-10</p>
                         </div>
-
+                        <a href="#map" class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-secondary-lighter hover:text-accent transition-colors group/link">
+                            VIEW LOCATION
+                            <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
                     </div>
                 </div>
 
@@ -185,6 +188,86 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    {{-- ===== BOSS LOCATION: Map + How To Get Here ===== --}}
+    <div id="map" class="bg-surface border-t-4 border-black relative overflow-hidden">
+        <div class="container mx-auto px-5 xl:px-12 py-20 xl:py-28">
+            <div class="flex items-center gap-4 mb-12">
+                <div class="bg-black border-2 border-cyan px-4 py-2 shadow-brutal-sm rotate-[-1deg]">
+                    <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold uppercase text-cyan tracking-wider flex items-center gap-2">
+                        <x-heroicon-o-map-pin class="w-5 h-5 sm:w-6 sm:h-6" />
+                        BOSS LOCATION
+                    </h2>
+                </div>
+                <div class="h-0.5 flex-1 bg-black/10"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+                {{-- Google Map --}}
+                <div class="card-brutal bg-black overflow-hidden h-64 sm:h-80 lg:h-full min-h-[300px]">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.720459553029!2d106.6338767751508!3d-6.300414861662221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fb535f152305%3A0x34406ed8b098f478!2sIndonesia%20Convention%20Exhibition%20(ICE)%20BSD%20City!5e0!3m2!1sen!2sid!4v1724163747000!5m2!1sen!2sid"
+                        class="w-full h-full border-none"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="ICE BSD Map">
+                    </iframe>
+                </div>
+
+                {{-- Venue Info --}}
+                <div class="flex flex-col justify-between gap-6">
+                    <div>
+                        <div class="bg-accent border-3 border-black px-5 py-3 inline-block shadow-brutal-sm rotate-[-1deg] mb-5">
+                            <h3 class="text-xl sm:text-2xl font-extrabold uppercase text-black">ICE BSD</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-3 items-start">
+                                <div class="bg-cyan border-2 border-black p-2 shrink-0 mt-1">
+                                    <x-heroicon-o-map-pin class="w-5 h-5 text-black" />
+                                </div>
+                                <div>
+                                    <p class="text-sm font-extrabold uppercase text-black/40 mb-0.5">Location</p>
+                                    <p class="text-base sm:text-lg font-bold text-black leading-relaxed">
+                                        Indonesia Convention Exhibition (ICE)<br>
+                                        Jl. BSD Grand Boulevard Raya No.1,<br>
+                                        BSD City, Tangerang, 15339
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <div class="bg-primary border-2 border-black p-2 shrink-0 mt-1">
+                                    <x-heroicon-o-calendar-days class="w-5 h-5 text-black" />
+                                </div>
+                                <div>
+                                    <p class="text-sm font-extrabold uppercase text-black/40 mb-0.5">Date</p>
+                                    <p class="text-base sm:text-lg font-bold text-black">24-25 October 2026</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 items-start">
+                                <div class="bg-highlight border-2 border-black p-2 shrink-0 mt-1">
+                                    <x-heroicon-o-building-office-2 class="w-5 h-5 text-black" />
+                                </div>
+                                <div>
+                                    <p class="text-sm font-extrabold uppercase text-black/40 mb-0.5">Hall</p>
+                                    <p class="text-base sm:text-lg font-bold text-black">Hall 09-10</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a target="_blank" rel="noreferrer"
+                       href="https://ice-indonesia.com/en/visitice/getting_here"
+                       class="btn-brutal w-full sm:w-max text-base sm:text-lg px-8 py-4 text-center inline-flex items-center justify-center gap-2 group">
+                        HOW TO GET HERE
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
