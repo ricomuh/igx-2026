@@ -5,89 +5,178 @@
 @push('style')
 <style>
   body {
-    background-color: var(--color-primary) !important;
+    background-color: #322366 !important;
   }
-  .terms-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: url('/media/images/illustrations/banner.webp') no-repeat center center;
-    background-size: contain;
-    opacity: 0.08;
+  .char-bg-pattern {
+    background-image: radial-gradient(circle, #9A94CC 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 </style>
 @endpush
 
 @section('content')
-<div class="terms-bg"></div>
-<div class="container mx-auto px-5 xl:px-12 pt-28 relative z-10" x-data="characterCarousel()">
-  <div class="flex flex-col items-center space-y-6 bg-white/20 backdrop-blur-sm p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 rounded-2xl xl:rounded-4xl shadow-lg mx-auto">
-    {{-- Carousel --}}
-    <div class="flex items-center w-full justify-center relative">
-      <button @click="prev" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -left-3 md:-left-6 max-w-sm:top-1/4 text-gray-700 hover:scale-125 transition min-w-[48px]">&#x276E;</button>
+<div class="bg-secondary min-h-screen relative overflow-hidden char-bg-pattern">
+    {{-- Diagonal accent stripes --}}
+    <div class="absolute top-10 -left-20 w-80 h-20 bg-highlight rotate-[-8deg] border-3 border-black opacity-30 z-0"></div>
+    <div class="absolute bottom-20 -right-20 w-96 h-16 bg-accent rotate-[6deg] border-3 border-black opacity-30 z-0"></div>
 
-      <div class="flex flex-col items-center w-full max-w-2xl xl:max-w-5xl">
-        {{-- Character Cards --}}
-        <template x-for="character in characters" :key="character.name">
-            {{-- Character Info --}}
-            <div class="grid md:grid-cols-2 gap-4 xl:gap-8 w-full items-center justify-center" x-show="character === characters[current]"
+    <div class="container mx-auto px-5 xl:px-12 pt-28 pb-16 relative z-10" x-data="characterCarousel()">
 
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 transform scale-50"
-                x-transition:enter-end="opacity-100 transform scale-100"
-                x-transition:leave="transition ease-in duration-200 absolute"
-                x-transition:leave-start="opacity-100 transform scale-100"
-                x-transition:leave-end="opacity-0 transform scale-50"
-
-            >
-              {{-- Image --}}
-              <img loading="lazy" :src="character.image" alt="Karakter" class="h-56 md:h-auto w-full lg:h-96 mb-2 object-contain drop-shadow-lg mx-auto">
-              {{-- Desc --}}
-              <div class="xl:text-left">
-                {{-- <template x-if="characters[current].thumb"> --}}
-                  <img loading="lazy" :src="character.thumb"
-                   alt="Banner" class="h-24 w-auto mx-auto md:mx-0 object-contain mb-2">
-                {{-- </template> --}}
-                <h2 class="text-xl md:text-2xl xl:text-3xl mb-1 font-bold text-gray-800 text-center md:text-left">
-                  <span x-text="character.name">Character Name</span>
-                </h2>
-                <p class="text-sm lg:text-base italic text-gray-700 mb-4 text-center md:text-left" x-text="character.as"></p>
-                <p class="mt-2 text-gray-700 text-sm xl:text-base leading-relaxed" x-text="character.description"></p>
-              </div>
+        {{-- CHOOSE YOUR FIGHTER Header --}}
+        <div class="flex flex-col items-center mb-8 lg:mb-12">
+            <div class="bg-accent border-3 border-black shadow-brutal px-6 py-3 sm:px-10 sm:py-4 rotate-[-1.5deg] mb-3">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-black text-center leading-none">
+                    CHOOSE YOUR
+                </h1>
             </div>
-        </template>
-      </div>
-
-      <button @click="next" class="text-xl md:text-2xl lg:text-3xl cursor-pointer xl:text-4xl absolute -right-3 md:-right-6 max-w-sm:top-1/4 text-gray-700 hover:scale-125 transition min-w-[48px]">&#x276F;</button>
-    </div>
-    <div class="relative w-full my-6 text-center">
-      <div class="border-t border-white/20"></div>
-      <span class="absolute -top-2 left-1/2 -translate-x-1/2 py-0.5 px-4 bg-white/10 text-white text-[10px] md:text-xs rounded-full backdrop-blur-sm text-nowrap">SELECT CHARACTER</span>
-    </div>
-
-    {{-- Thumbnail Selector --}}
-    <div class="grid grid-cols-5 gap-2 md:gap-4 mt-4 lg:mt-6 w-full">
-      <template x-for="(char, index) in characters" :key="index">
-        <div class="flex justify-center">
-          <img
-            :src="char.image"
-            @click="select(index)"
-            class="cursor-pointer w-full h-full object-contain transition-all duration-300"
-            :class="{
-              'opacity-100 scale-110': index === current,
-              'opacity-40 grayscale': index !== current
-            }"
-            alt="Thumbnail"
-          >
+            <div class="bg-highlight border-3 border-black shadow-brutal px-6 py-3 sm:px-10 sm:py-4 rotate-[1deg]">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase text-black text-center leading-none"
+                    style="text-shadow: 3px 3px 0px #F253B6;">
+                    FIGHTER!
+                </h1>
+            </div>
         </div>
-      </template>
+
+        {{-- Main Carousel --}}
+        <div class="flex items-center w-full justify-center relative gap-2 sm:gap-4">
+            {{-- LEFT Arrow --}}
+            <button @click="prev"
+                class="btn-brutal shrink-0 text-2xl sm:text-3xl lg:text-4xl px-3 sm:px-4 py-3 sm:py-4 z-20 cursor-pointer select-none"
+                aria-label="Previous character">
+                &#x276E;
+            </button>
+
+            {{-- Character Card --}}
+            <div class="flex-1 max-w-3xl xl:max-w-5xl">
+                <template x-for="character in characters" :key="character.name">
+                    <div class="card-brutal bg-surface overflow-hidden"
+                         x-show="character === characters[current]"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-90 translate-x-8"
+                         x-transition:enter-end="opacity-100 transform scale-100 translate-x-0"
+                         x-transition:leave="transition ease-in duration-200 absolute inset-0"
+                         x-transition:leave-start="opacity-100 transform scale-100"
+                         x-transition:leave-end="opacity-0 transform scale-90 -translate-x-8">
+
+                        <div class="grid md:grid-cols-2 gap-0">
+                            {{-- LEFT: Character Image --}}
+                            <div class="relative bg-secondary-lighter/20 flex items-center justify-center p-6 sm:p-8 border-r-0 md:border-r-3 border-b-3 md:border-b-0 border-black">
+                                {{-- Level badge --}}
+                                <div class="absolute top-3 left-3 bg-accent border-2 border-black px-3 py-1 shadow-brutal-sm rotate-[-2deg]">
+                                    <span class="text-xs sm:text-sm font-extrabold text-black uppercase"
+                                          x-text="'Lv.' + (characters.indexOf(character) + 1)">
+                                    </span>
+                                </div>
+                                <img loading="lazy" :src="character.image"
+                                     alt="Character"
+                                     class="h-52 sm:h-64 md:h-72 lg:h-80 w-full object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+                            </div>
+
+                            {{-- RIGHT: Character Info — like game stats screen --}}
+                            <div class="p-5 sm:p-6 lg:p-8 flex flex-col justify-center">
+                                {{-- Name banner --}}
+                                <div class="bg-highlight border-2 border-black px-4 py-1.5 inline-block w-max shadow-brutal-sm rotate-[-1deg] mb-3">
+                                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-black uppercase"
+                                        x-text="character.name"></h2>
+                                </div>
+
+                                {{-- Subtitle / class --}}
+                                <p class="text-sm lg:text-base font-bold text-secondary uppercase tracking-wider mb-4"
+                                   x-text="character.as"></p>
+
+                                {{-- Divider --}}
+                                <div class="border-t-2 border-black w-full mb-4"></div>
+
+                                {{-- Stats-style description --}}
+                                <div class="bg-secondary-lighter/10 border-2 border-black p-3 sm:p-4 mb-4">
+                                    <p class="text-xs sm:text-sm lg:text-base text-black font-bold leading-relaxed"
+                                       x-text="character.description"></p>
+                                </div>
+
+                                {{-- Fake game stats --}}
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-extrabold uppercase text-black w-16">ATK</span>
+                                        <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
+                                            <div class="h-full bg-primary" :style="'width:' + (60 + (characters.indexOf(character) * 8)) + '%'"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-extrabold uppercase text-black w-16">DEF</span>
+                                        <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
+                                            <div class="h-full bg-cyan" :style="'width:' + (80 - (characters.indexOf(character) * 10)) + '%'"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-extrabold uppercase text-black w-16">SPD</span>
+                                        <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
+                                            <div class="h-full bg-accent" :style="'width:' + (45 + (characters.indexOf(character) * 12)) + '%'"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            {{-- RIGHT Arrow --}}
+            <button @click="next"
+                class="btn-brutal shrink-0 text-2xl sm:text-3xl lg:text-4xl px-3 sm:px-4 py-3 sm:py-4 z-20 cursor-pointer select-none"
+                aria-label="Next character">
+                &#x276F;
+            </button>
+        </div>
+
+        {{-- SELECT CHARACTER divider --}}
+        <div class="relative w-full my-8 text-center">
+            <div class="border-t-3 border-highlight/50"></div>
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                <span class="bg-accent border-2 border-black px-5 py-1 text-xs sm:text-sm font-extrabold text-black uppercase shadow-brutal-sm text-nowrap">
+                    SELECT CHARACTER
+                </span>
+            </div>
+        </div>
+
+        {{-- Thumbnail Roster — fighting game style --}}
+        <div class="grid grid-cols-5 gap-2 sm:gap-4 md:gap-6 max-w-2xl xl:max-w-4xl mx-auto">
+            <template x-for="(char, index) in characters" :key="index">
+                <div class="flex flex-col items-center gap-1 cursor-pointer group"
+                     @click="select(index)">
+                    {{-- Thumbnail frame --}}
+                    <div class="relative border-3 border-black transition-all duration-200 overflow-hidden w-full aspect-square"
+                         :class="{
+                           'bg-highlight shadow-brutal scale-110 z-10': index === current,
+                           'bg-surface-dark opacity-50 grayscale hover:opacity-80 hover:grayscale-0': index !== current
+                         }">
+                        <img :src="char.image"
+                             class="w-full h-full object-contain p-1"
+                             alt="Thumbnail">
+
+                        {{-- Selected indicator arrow --}}
+                        <div x-show="index === current"
+                             class="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                            <div class="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-black"></div>
+                        </div>
+                    </div>
+                    {{-- Name label --}}
+                    <span class="text-[10px] sm:text-xs font-extrabold uppercase text-surface text-center leading-tight"
+                          :class="{ 'text-highlight': index === current }"
+                          x-text="char.name.split(' ')[0]"></span>
+                </div>
+            </template>
+        </div>
+
+        {{-- Player count / hint --}}
+        <div class="text-center mt-8">
+            <span class="text-surface/60 text-xs font-bold uppercase tracking-widest">
+                &#x25C0; &#x25B6; Navigate &nbsp;|&nbsp; 5 Characters Available
+            </span>
+        </div>
     </div>
-  </div>
 </div>
 @endsection
 
-{{-- Alpine.js Carousel Logic --}}
 @push('scripts')
 <script src="//unpkg.com/alpinejs" defer></script>
 
@@ -99,35 +188,35 @@ function characterCarousel() {
       {
         name: 'Nitari',
         as: 'Gamer, Influencer & Streamer',
-        description: `Bubbly and full of energy, Nitari is a Gamer and Streamer with high followers number. Whenever she’s online, people will tune in droves just to watch her play. She is constantly fall asleep live even during a competition.`,
+        description: `Bubbly and full of energy, Nitari is a Gamer and Streamer with high followers number. Whenever she's online, people will tune in droves just to watch her play. She is constantly fall asleep live even during a competition.`,
         image: '/media/images/chars/Nitari.webp',
         thumb: '/media/images/chars/Nitari2.webp',
       },
       {
         name: 'DrewCat',
         as: 'TCG & Boardgame Player, Collector & Trainer',
-        description: `A part time moderator for a TCG forum that conducts boardgame and TCG workshops in his advanced trainer bot TC-6, DrewCat often interacts with people who are converted by “Cooper”into TCG, joining their unboxing parties. Every box he opens for them will be blessed with a “hit” but never the ones he opened for himself….`,
+        description: `A part time moderator for a TCG forum that conducts boardgame and TCG workshops in his advanced trainer bot TC-6, DrewCat often interacts with people who are converted by "Cooper" into TCG, joining their unboxing parties. Every box he opens for them will be blessed with a "hit" but never the ones he opened for himself.`,
         image: '/media/images/chars/Drewcat.webp',
         thumb: '/media/images/chars/Drewcat2.webp',
       },
       {
         name: 'Cooper',
         as: 'Weeb & Collector',
-        description: `A Pop culture loving, highly intelligent Nerd who reads comics and collects toys, it likes to passionately share its interest (sometimes aggressively) to others. Whenever it’s successfully done so, it will lay an egg which hatches into a clone of itself!`,
+        description: `A Pop culture loving, highly intelligent Nerd who reads comics and collects toys, it likes to passionately share its interest (sometimes aggressively) to others. Whenever it's successfully done so, it will lay an egg which hatches into a clone of itself!`,
         image: '/media/images/chars/Cooper.webp',
         thumb: '/media/images/chars/Cooper2.webp',
       },
       {
         name: 'P.Orter',
         as: 'Gamer, Retro Collector',
-        description: `An old soul trapped in a constantly changing outer shell, he loves everything vintage but also a perfectionist. Everything has to be in pristine condition and complete with box, he can’t sleep until his collection is complete.`,
+        description: `An old soul trapped in a constantly changing outer shell, he loves everything vintage but also a perfectionist. Everything has to be in pristine condition and complete with box, he can't sleep until his collection is complete.`,
         image: '/media/images/chars/Orter.webp',
         thumb: '/media/images/chars/Orter2.webp',
       },
       {
         name: 'Pitari',
         as: 'Nitari AI Hologram',
-        description: `Pitari is AI version of Nitari, Appears whenever Nitari falls asleep…`,
+        description: `Pitari is AI version of Nitari, Appears whenever Nitari falls asleep...`,
         image: '/media/images/chars/Pitari.webp',
         thumb: '/media/images/chars/Pitari2.webp',
       },

@@ -30,10 +30,10 @@
         @stack('style')
     </head>
 
-    <body class="h-full">
+    <body class="bg-bg">
         @include('layouts.partials.navbar')
         <!--begin::Content-->
-        <main id="content">
+        <main id="content" class="pt-[72px] lg:pt-[76px]">
             <div>
                 @yield('content')
             </div>
