@@ -16,8 +16,8 @@
 
         {{-- ===== KEY ART — CENTERED ===== --}}
         <div class="relative">
-            {{-- Layer 1: Background (smaller) --}}
-            <div class="relative z-20 floating-bg">
+            {{-- Layer 1: Background --}}
+            <div class="relative z-20 floating-bg drop-shadow-[6px_6px_0px_#000]">
                 <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
                      class="w-full max-w-[200px] sm:max-w-[260px] lg:max-w-[340px] xl:max-w-[400px]"
                      alt="IGX Background">
