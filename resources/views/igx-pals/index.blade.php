@@ -47,7 +47,7 @@
             </button>
 
             {{-- Character Card --}}
-            <div class="flex-1 max-w-3xl xl:max-w-5xl h-auto md:h-[360px] lg:h-[380px]">
+            <div class="flex-1 max-w-3xl xl:max-w-5xl h-auto md:h-[420px] lg:h-[440px]">
                 <template x-for="character in characters" :key="character.name">
                     <div class="card-brutal bg-surface overflow-hidden"
                          x-show="character === characters[current]"
