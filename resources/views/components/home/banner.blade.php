@@ -19,13 +19,13 @@
             {{-- Layer 1: Background --}}
             <div class="relative z-20 floating-bg drop-shadow-[6px_6px_0px_#000]">
                 <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
-                     class="w-full max-w-[200px] sm:max-w-[260px] lg:max-w-[340px] xl:max-w-[400px]"
+                     class="w-full max-w-[280px] sm:max-w-[360px] lg:max-w-[460px] xl:max-w-[540px]"
                      alt="IGX Background">
             </div>
             {{-- Layer 2: Frontman (bigger) --}}
             <div class="absolute inset-0 z-30 floating-front flex items-center justify-center">
                 <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
-                     class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[520px]"
+                     class="w-full max-w-[340px] sm:max-w-[440px] lg:max-w-[560px] xl:max-w-[640px]"
                      alt="IGX Characters">
             </div>
         </div>
@@ -34,13 +34,13 @@
         <div class="relative z-40 -mt-12 sm:-mt-16 lg:-mt-20">
             {{-- Main title — character-by-character --}}
             <div class="mb-3">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-1"
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-0.5"
                     style="text-shadow:
                         3px 3px 0px #F253B6,
                         6px 6px 0px #F88832,
                         9px 9px 0px #000000;">
                     @foreach(str_split('BOSS FIGHT!') as $i => $char)
-                        <span class="inline-block char-pop" style="animation-delay: {{ $i * 0.06 }}s">{{ $char === ' ' ? "\u{00A0}" : $char }}</span>
+                        <span class="inline-block char-float" style="animation-delay: {{ $i * 0.08 }}s">{{ $char === ' ' ? "\u{00A0}" : $char }}</span>
                     @endforeach
                 </h1>
             </div>
@@ -112,10 +112,9 @@
         50% { transform: translateY(-12px); }
         100% { transform: translateY(0); }
     }
-    @keyframes char-pop {
-        0% { opacity: 0; transform: translateY(24px) scale(0.8); }
-        60% { opacity: 1; transform: translateY(-4px) scale(1.05); }
-        100% { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes char-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
     }
     @keyframes slide-up {
         0% { opacity: 0; transform: translateY(20px); }
@@ -123,6 +122,6 @@
     }
     .floating-bg { animation: float-bg 5s ease-in-out infinite; }
     .floating-front { animation: float-front 4s ease-in-out infinite; }
-    .char-pop { animation: char-pop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+    .char-float { animation: char-float 2.5s ease-in-out infinite; }
     .slide-up { animation: slide-up 0.6s ease-out both; }
 </style>
