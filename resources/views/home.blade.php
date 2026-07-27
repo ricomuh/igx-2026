@@ -125,27 +125,6 @@
                     </div>
                 </div>
 
-                {{-- CARD 4: GUESTS --}}
-                <a href="{{ route('guests') }}"
-                   class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col no-underline">
-                    <div class="bg-highlight border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
-                        <span class="text-xs font-extrabold uppercase text-black tracking-wider flex items-center gap-2">
-                            <x-heroicon-o-star class="w-4 h-4" /> MISSION 05
-                        </span>
-                        <span class="text-[9px] font-bold text-black/60 uppercase">SPECIAL</span>
-                    </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-surface mb-3">Special Guests</h3>
-                            <p class="text-xs font-bold text-surface/60 uppercase leading-relaxed">Meet our lineup of gaming legends, cosplayers, and industry icons.</p>
-                        </div>
-                        <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-highlight group-hover/link:text-accent transition-colors">
-                            MEET THEM
-                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </span>
-                    </div>
-                </a>
-
                 {{-- CARD 5: RUNDOWN --}}
                 <a href="{{ route('rundown') }}"
                    class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col no-underline">
@@ -272,43 +251,7 @@
         </div>
     </div>
 
-    {{-- ===== EXHIBITORS ===== --}}
-    <div class="bg-bg border-t-4 border-black relative overflow-hidden">
-        <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.04]"
-             style="background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 16px 16px;">
-        </div>
-        <div class="container mx-auto px-5 xl:px-12 py-20 xl:py-28 relative z-10">
-            <div class="flex items-center gap-4 mb-12">
-                <div class="bg-black border-2 border-primary px-4 py-2 shadow-brutal-sm rotate-[-1deg]">
-                    <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold uppercase text-primary tracking-wider flex items-center gap-2">
-                        <x-heroicon-o-building-storefront class="w-5 h-5 sm:w-6 sm:h-6" />
-                        EXHIBITORS
-                    </h2>
-                </div>
-                <div class="h-0.5 flex-1 bg-white/10"></div>
-                <a href="{{ route('exhibitors') }}" class="text-xs font-extrabold uppercase text-surface/40 hover:text-highlight transition-colors flex items-center gap-1">
-                    VIEW ALL
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </a>
-            </div>
 
-            <p class="text-sm sm:text-base font-bold text-surface/60 uppercase mb-8 max-w-2xl">
-                Meet the biggest names in gaming, tech, and entertainment. From indie developers to AAA publishers — all under one roof.
-            </p>
-
-            {{-- Exhibitor grid: placeholder cards --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                @foreach(range(1,6) as $i)
-                    <div class="card-brutal bg-surface-dark p-4 sm:p-6 flex items-center justify-center aspect-square group hover:bg-highlight transition-colors cursor-pointer">
-                        <div class="text-center">
-                            <x-heroicon-o-building-office-2 class="w-8 h-8 sm:w-10 sm:h-10 text-black/30 mx-auto mb-2 group-hover:text-black transition-colors" />
-                            <span class="text-[10px] sm:text-xs font-extrabold uppercase text-black/30 group-hover:text-black transition-colors">Exhibitor {{ $i }}</span>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 
