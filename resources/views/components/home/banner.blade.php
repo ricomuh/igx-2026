@@ -22,15 +22,15 @@
         {{-- ===== KEY ART — CENTERED ===== --}}
         <div class="relative mb-8 lg:mb-10">
             {{-- Layer 1: Background --}}
-            <div class="relative z-20 border-3 border-black overflow-hidden bg-surface-dark floating-bg">
+            <div class="relative z-20 floating-bg">
                 <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
-                     class="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[560px] xl:max-w-[640px]"
+                     class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[520px]"
                      alt="IGX Background">
             </div>
             {{-- Layer 2: Frontman --}}
             <div class="absolute inset-0 z-30 floating-front">
                 <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
-                     class="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[560px] xl:max-w-[640px]"
+                     class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[520px]"
                      alt="IGX Characters">
             </div>
 
