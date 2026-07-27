@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{{ @$title ? $title . ' | ' : '' }}{{ env('APP_NAME') }}</title>
+        <title>{{ @$title ? $title . ' | ' : '' }}{{ config('app.name') }}</title>
 
         <meta name="description" content="{{ @$description ?? env('APP_DESCRIPTION', 'Indonesia Game Expo - The Ultimate Gaming Event in Indonesia') }}">
         <meta name="keywords" content="IGX, Indonesia Game Expo, Gaming Event, Esports, Convention, ICE BSD, Game Festival, {{ @$keywords ?? '' }}">
