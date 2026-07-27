@@ -1,82 +1,147 @@
-{{-- Stage 03 Hero — Neo-Brutalism --}}
-<div class="bg-bg w-full min-h-screen flex items-center justify-center relative overflow-hidden">
-    {{-- Halftone dots bg pattern --}}
-    <div class="absolute inset-0 z-0 opacity-[0.06]"
-         style="background-image: radial-gradient(circle, #9A94CC 1px, transparent 1px); background-size: 24px 24px;">
+{{-- Stage 03 Hero — Game HUD / Asymmetrical Layout --}}
+<div class="bg-bg min-h-screen relative overflow-hidden flex flex-col">
+
+    {{-- Halftone dots + scanlines --}}
+    <div class="absolute inset-0 z-0 pointer-events-none"
+         style="background:
+            radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px) 0 0 / 20px 20px,
+            repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);">
     </div>
 
-    {{-- Diagonal accent stripes --}}
-    <div class="absolute -top-20 -right-20 w-96 h-96 bg-primary rotate-12 z-0 border-3 border-black opacity-20"></div>
-    <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-highlight -rotate-12 z-0 border-3 border-black opacity-20"></div>
+    {{-- Giant geometric shapes --}}
+    <div class="absolute top-0 right-0 w-[60%] h-full bg-primary border-l-4 border-black z-0"
+         style="clip-path: polygon(25% 0, 100% 0, 100% 100%, 10% 100%);">
+    </div>
+    <div class="absolute top-[25%] right-[35%] w-72 h-72 bg-accent border-3 border-black rotate-12 opacity-40 z-0"></div>
+    <div class="absolute bottom-[15%] left-[5%] w-48 h-48 bg-highlight border-3 border-black -rotate-6 opacity-30 z-0"></div>
 
-    <div class="container mx-auto relative z-10 flex flex-col justify-center px-5">
-        <div class="flex flex-col lg:flex-row lg:gap-12 w-full justify-center items-center pt-20 sm:pt-28 xl:pt-36 pb-10 sm:pb-16">
+    <div class="container mx-auto px-5 xl:px-12 relative z-10 flex-1 flex items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 w-full items-center py-20 lg:py-0">
 
-            {{-- LEFT: Text Content --}}
-            <div class="flex-1">
-                {{-- BOSS FIGHT! — main title with pink shadow offset --}}
-                <div class="relative inline-block mb-2">
-                    <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-8xl font-extrabold uppercase text-surface leading-none relative z-10"
-                        style="text-shadow: 4px 4px 0px #F253B6, 8px 8px 0px #000000;">
-                        BOSS FIGHT!
+            {{-- ===== LEFT: TEXT + HUD ELEMENTS ===== --}}
+            <div class="relative">
+
+                {{-- Glitch badge top-left --}}
+                <div class="absolute -top-6 -left-3 bg-black border-3 border-highlight px-3 py-1 shadow-brutal-sm rotate-[-2deg] z-20">
+                    <span class="text-[10px] sm:text-xs font-extrabold text-highlight uppercase tracking-[0.2em]">STAGE 03</span>
+                </div>
+
+                {{-- Main title with layered shadows --}}
+                <div class="mb-3">
+                    <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] relative z-10"
+                        style="text-shadow:
+                            3px 3px 0px #F253B6,
+                            6px 6px 0px #F88832,
+                            9px 9px 0px #000000;">
+                        BOSS<br>FIGHT!
                     </h1>
                 </div>
 
-                {{-- STAGE 03 badge --}}
-                <div class="inline-block bg-highlight border-4 border-black px-5 py-2 sm:px-8 sm:py-3 mb-4 shadow-brutal rotate-[-1deg]">
-                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase text-black">STAGE 03</span>
+                {{-- Subtitle + date in one brutalist block --}}
+                <div class="inline-flex flex-col sm:flex-row gap-2 sm:gap-0 mb-6">
+                    <div class="bg-highlight border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1.5deg]">
+                        <span class="text-xl sm:text-2xl md:text-3xl font-extrabold uppercase text-black">ICE BSD</span>
+                    </div>
+                    <div class="bg-surface border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[1deg] sm:-ml-2">
+                        <span class="text-xl sm:text-2xl md:text-3xl font-extrabold uppercase text-black">24-25 OCT</span>
+                    </div>
+                    <div class="bg-accent border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1deg] sm:-ml-2">
+                        <span class="text-xl sm:text-2xl md:text-3xl font-extrabold uppercase text-black">2026</span>
+                    </div>
                 </div>
 
-                {{-- Date & Venue --}}
-                <div class="mt-4 sm:mt-6">
-                    <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-surface uppercase"
-                       style="text-shadow: 3px 3px 0px #F253B6;">
-                        ICE BSD
-                    </p>
-                    <p class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-highlight uppercase"
-                       style="text-shadow: 3px 3px 0px #000000;">
-                        24-25 OCTOBER
-                    </p>
-                    <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-surface leading-none"
-                       style="text-shadow: 4px 4px 0px #F253B6;">
-                        2026
-                    </p>
+                {{-- HP BAR: days until event --}}
+                <div class="max-w-md mb-6">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] sm:text-xs font-extrabold uppercase text-surface/60 tracking-wider">BOSS ENCOUNTER IN</span>
+                        <span class="text-[10px] sm:text-xs font-extrabold text-highlight countdown days" data-countdown="2026-10-24T00:00:00Z">--</span>
+                    </div>
+                    <div class="h-4 border-3 border-black bg-black/30 overflow-hidden shadow-brutal-sm">
+                        <div class="hp-bar h-full bg-gradient-to-r from-crimson via-primary to-highlight transition-all duration-1000"
+                             style="width: 30%;"></div>
+                    </div>
+                    <div class="flex justify-between mt-0.5">
+                        <span class="text-[8px] font-bold text-surface/40 uppercase">0</span>
+                        <span class="text-[8px] font-bold text-surface/40 uppercase">365</span>
+                    </div>
                 </div>
 
-                {{-- CTA --}}
-                <div class="flex flex-wrap gap-4 mt-6 sm:mt-8">
-                    <a href="#" class="btn-brutal text-lg sm:text-xl md:text-2xl px-8 py-4">
-                        Get Your Ticket!
+                {{-- CTA buttons --}}
+                <div class="flex flex-wrap gap-3">
+                    <a href="#" class="btn-brutal text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group relative overflow-hidden">
+                        <span class="relative z-10 flex items-center gap-2">
+                            <x-heroicon-o-ticket class="w-5 h-5" />
+                            GET TICKET
+                        </span>
                     </a>
-                    <a href="{{ route('experiences') }}" class="btn-brutal-pink text-lg sm:text-xl md:text-2xl px-8 py-4">
-                        Play Game
+                    <a href="{{ route('experiences') }}" class="btn-brutal-pink text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group">
+                        <span class="flex items-center gap-2">
+                            <x-heroicon-o-play-circle class="w-5 h-5" />
+                            PLAY NOW
+                        </span>
                     </a>
+                </div>
+
+                {{-- Mini stats badge --}}
+                <div class="mt-6 inline-flex gap-2">
+                    <div class="bg-black border-2 border-white/20 px-2 py-0.5">
+                        <span class="text-[9px] font-bold text-white/50 uppercase">HALL 09-10</span>
+                    </div>
+                    <div class="bg-black border-2 border-highlight/30 px-2 py-0.5">
+                        <span class="text-[9px] font-bold text-highlight uppercase">
+                            <x-heroicon-o-user-group class="w-3 h-3 inline -mt-0.5" /> 10K+ EXPECTED
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            {{-- RIGHT: Character Image --}}
-            <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-8 lg:mt-0 flex items-center justify-center">
+            {{-- ===== RIGHT: CHARACTER + FLOATING UI ===== --}}
+            <div class="relative flex items-center justify-center">
+                {{-- Character frame --}}
                 <div class="relative">
-                    {{-- Orange splash behind character --}}
-                    <div class="absolute inset-0 bg-primary border-3 border-black rotate-6 scale-90 -z-10"></div>
-                    {{-- Pink splash --}}
-                    <div class="absolute inset-0 bg-accent border-3 border-black -rotate-3 scale-95 -z-20"></div>
+                    {{-- Orange bg block --}}
+                    <div class="absolute -inset-8 bg-primary border-3 border-black rotate-3 z-0"></div>
+                    {{-- Pink accent --}}
+                    <div class="absolute -inset-4 bg-accent border-3 border-black -rotate-2 z-10"></div>
                     {{-- Image --}}
-                    <img src="{{ asset('media/images/illustrations/banner.webp') }}"
-                         class="w-full drop-shadow-2xl floating-igx relative z-10 border-3 border-black"
-                         alt="IGX Stage 03 Characters">
+                    <div class="relative z-20 border-3 border-black overflow-hidden bg-surface-dark">
+                        <img src="{{ asset('media/images/illustrations/banner.webp') }}"
+                             class="w-full max-w-[380px] lg:max-w-[480px] xl:max-w-[560px] floating-igx"
+                             alt="IGX Characters">
+                    </div>
+
+                    {{-- Floating HUD element: label --}}
+                    <div class="absolute -top-4 -right-4 z-30 bg-highlight border-3 border-black px-3 py-1.5 shadow-brutal rotate-[3deg] animate-pulse">
+                        <span class="text-xs sm:text-sm font-extrabold uppercase text-black">BOSS</span>
+                    </div>
+
+                    {{-- Floating HUD: HP label --}}
+                    <div class="absolute -bottom-3 -left-3 z-30 bg-black border-2 border-crimson px-2 py-1">
+                        <span class="text-[9px] font-extrabold text-crimson uppercase tracking-wider flex items-center gap-1">
+                            <x-heroicon-o-shield-check class="w-3 h-3" /> LV.99
+                        </span>
+                    </div>
                 </div>
-                <style>
-                    @keyframes float-igx {
-                        0% { transform: translateY(0); }
-                        50% { transform: translateY(-32px); }
-                        100% { transform: translateY(0); }
-                    }
-                    .floating-igx {
-                        animation: float-igx 3.5s ease-in-out infinite;
-                    }
-                </style>
             </div>
         </div>
     </div>
+
+    {{-- Bottom scroll indicator --}}
+    <div class="relative z-10 pb-6 flex justify-center">
+        <div class="flex flex-col items-center gap-1 animate-bounce">
+            <span class="text-[8px] font-extrabold uppercase text-surface/30 tracking-[0.3em]">SCROLL</span>
+            <svg class="w-4 h-4 text-surface/30" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </div>
 </div>
+
+<style>
+    @keyframes float-igx {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-32px); }
+        100% { transform: translateY(0); }
+    }
+    .floating-igx { animation: float-igx 3.5s ease-in-out infinite; }
+</style>
