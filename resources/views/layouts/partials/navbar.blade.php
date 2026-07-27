@@ -18,7 +18,7 @@
             class="hidden flex-col gap-4 absolute top-full left-0 w-full bg-bg border-b-3 border-black pt-4 p-5 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-3 lg:p-0 lg:border-b-0">
             @foreach ([
                 'Home' => route("home"),
-                'IGX Pals' =>  route("pals"),
+                'G.I.X Squad' =>  route("pals"),
                 'Experience' =>  route("experiences"),
                 'Guests' =>  route("guests"),
                 'Rundown' =>  route("rundown"),
