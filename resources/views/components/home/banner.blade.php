@@ -97,16 +97,18 @@
 
             {{-- ===== RIGHT: CHARACTER + FLOATING UI ===== --}}
             <div class="relative flex items-center justify-center">
-                {{-- Character frame --}}
+                {{-- Character frame with 2 layers — parallax floating --}}
                 <div class="relative">
-                    {{-- Orange bg block --}}
-                    <div class="absolute -inset-8 bg-primary border-3 border-black rotate-3 z-0"></div>
-                    {{-- Pink accent --}}
-                    <div class="absolute -inset-4 bg-accent border-3 border-black -rotate-2 z-10"></div>
-                    {{-- Image --}}
-                    <div class="relative z-20 border-3 border-black overflow-hidden bg-surface-dark">
-                        <img src="{{ asset('media/images/illustrations/banner.webp') }}"
-                             class="w-full max-w-[380px] lg:max-w-[480px] xl:max-w-[560px] floating-igx"
+                    {{-- Layer 1: Background --}}
+                    <div class="relative z-20 border-3 border-black overflow-hidden bg-surface-dark floating-bg">
+                        <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
+                             class="w-full max-w-[380px] lg:max-w-[480px] xl:max-w-[560px]"
+                             alt="IGX Background">
+                    </div>
+                    {{-- Layer 2: Frontman --}}
+                    <div class="absolute inset-0 z-30 floating-front">
+                        <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
+                             class="w-full max-w-[380px] lg:max-w-[480px] xl:max-w-[560px]"
                              alt="IGX Characters">
                     </div>
 
@@ -138,10 +140,16 @@
 </div>
 
 <style>
-    @keyframes float-igx {
+    @keyframes float-bg {
         0% { transform: translateY(0); }
-        50% { transform: translateY(-32px); }
+        50% { transform: translateY(-16px); }
         100% { transform: translateY(0); }
     }
-    .floating-igx { animation: float-igx 3.5s ease-in-out infinite; }
+    @keyframes float-front {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-28px); }
+        100% { transform: translateY(0); }
+    }
+    .floating-bg { animation: float-bg 4s ease-in-out infinite; }
+    .floating-front { animation: float-front 3s ease-in-out infinite; }
 </style>
