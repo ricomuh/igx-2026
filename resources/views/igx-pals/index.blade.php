@@ -47,7 +47,7 @@
             </button>
 
             {{-- Character Card --}}
-            <div class="flex-1 max-w-3xl xl:max-w-5xl h-[420px] sm:h-[440px] md:h-[400px] lg:h-[420px]">
+            <div class="flex-1 max-w-3xl xl:max-w-5xl h-[380px] sm:h-[400px] md:h-[360px] lg:h-[380px]">
                 <template x-for="character in characters" :key="character.name">
                     <div class="card-brutal bg-surface overflow-hidden"
                          x-show="character === characters[current]"
@@ -69,7 +69,7 @@
                                 </div>
                                 <img loading="lazy" :src="character.image"
                                      alt="Character"
-                                     class="h-52 sm:h-64 md:h-72 lg:h-80 w-full object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+                                     class="h-40 sm:h-48 md:h-56 lg:h-64 w-full object-contain drop-shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
                             </div>
 
                             {{-- RIGHT: Character Info — like game stats screen --}}
@@ -88,7 +88,7 @@
                                 <div class="border-t-2 border-black w-full mb-4"></div>
 
                                 {{-- Stats-style description --}}
-                                <div class="bg-secondary-lighter/10 border-2 border-black p-3 sm:p-4 mb-4 h-[80px] sm:h-[100px] overflow-hidden">
+                                <div class="bg-secondary-lighter/10 border-2 border-black p-3 sm:p-4 mb-4 h-[70px] sm:h-[80px] overflow-hidden">
                                     <p class="text-xs sm:text-sm lg:text-base text-black font-bold leading-relaxed"
                                        x-text="character.description"></p>
                                 </div>

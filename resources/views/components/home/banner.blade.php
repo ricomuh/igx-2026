@@ -42,13 +42,13 @@
             {{-- Layer 1: Background --}}
             <div class="relative z-20 floating-bg drop-shadow-[6px_6px_0px_#000]">
                 <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
-                     class="w-full max-w-[280px] sm:max-w-[360px] lg:max-w-[460px] xl:max-w-[540px]"
+                     class="w-full max-w-[220px] sm:max-w-[280px] lg:max-w-[360px] xl:max-w-[420px]"
                      alt="IGX Background">
             </div>
             {{-- Layer 2: Frontman (bigger) --}}
             <div class="absolute inset-0 z-30 floating-front flex items-center justify-center">
                 <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
-                     class="w-full max-w-[340px] sm:max-w-[440px] lg:max-w-[560px] xl:max-w-[640px]"
+                     class="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[440px] xl:max-w-[500px]"
                      alt="IGX Characters">
             </div>
         </div>
