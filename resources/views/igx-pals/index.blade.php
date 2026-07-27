@@ -98,19 +98,19 @@
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-extrabold uppercase text-black w-16">ATK</span>
                                         <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
-                                            <div class="h-full bg-primary" :style="'width:' + (60 + (characters.indexOf(character) * 8)) + '%'"></div>
+                                            <div class="h-full bg-primary" :style="'width:' + Math.min(95, Math.max(5, 60 + (characters.indexOf(character) * 8))) + '%'"></div>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-extrabold uppercase text-black w-16">DEF</span>
                                         <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
-                                            <div class="h-full bg-cyan" :style="'width:' + (80 - (characters.indexOf(character) * 10)) + '%'"></div>
+                                            <div class="h-full bg-cyan" :style="'width:' + Math.min(95, Math.max(5, 80 - (characters.indexOf(character) * 10))) + '%'"></div>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-extrabold uppercase text-black w-16">SPD</span>
                                         <div class="flex-1 h-3 border-2 border-black bg-surface-dark">
-                                            <div class="h-full bg-accent" :style="'width:' + (45 + (characters.indexOf(character) * 12)) + '%'"></div>
+                                            <div class="h-full bg-accent" :style="'width:' + Math.min(95, Math.max(5, 45 + (characters.indexOf(character) * 12))) + '%'"></div>
                                         </div>
                                     </div>
                                 </div>
