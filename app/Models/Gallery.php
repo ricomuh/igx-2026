@@ -37,10 +37,16 @@ class Gallery extends Model
         });
 
         static::saved(function (Gallery $gallery) {
-            if ($gallery->wasChanged('image') && $gallery->image) {
-                app(ImageOptimizer::class)->optimize('public', $gallery->image);
-                $gallery->image = ImageOptimizer::webpPath($gallery->image);
-                $gallery->saveQuietly();
+            if ($gallery->wasChanged('image') && $gallery->image && !str_ends_with($gallery->image, '.webp')) {
+                $optimizer = app(ImageOptimizer::class);
+                $success = $optimizer->optimize('public', $gallery->image);
+
+                if ($success) {
+                    $newPath = ImageOptimizer::webpPath($gallery->image);
+                    static::withoutEvents(function () use ($gallery, $newPath) {
+                        $gallery->update(['image' => $newPath]);
+                    });
+                }
             }
         });
     }
