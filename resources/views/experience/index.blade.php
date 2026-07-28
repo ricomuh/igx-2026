@@ -180,8 +180,8 @@
                 </h1>
             </div>
             <div class="flex items-center gap-2 sm:gap-3">
-                <div class="bg-black/10 border-2 border-black/20 px-2 py-0.5 hidden sm:block">
-                    <span class="text-[9px] font-extrabold text-white/50 uppercase">Stage 02 · Past</span>
+                <div class="bg-accent border-2 border-black px-2 py-1">
+                    <span class="text-[10px] sm:text-xs font-extrabold text-black uppercase">Stage 02 · Past</span>
                 </div>
                 <span class="text-[9px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ $gameVersion }}</span>
                 <button onclick="toggleFullscreen()"
