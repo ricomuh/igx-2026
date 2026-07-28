@@ -25,6 +25,12 @@ Route::get('/privacy-policy', fn() => view('privacy-policy.index'))->name('priva
 Route::get('/terms-of-service', fn() => view('terms-of-service.index'))->name('terms-of-service');
 Route::get('/contact-us', fn() => view('contact-us.index'))->name('contact-us');
 
+// Debug route to verify font fix (bypasses cache)
+Route::get('/debug-font', fn() => view('welcome'))->name('debug-font');
+
+// Font CSS as raw CSS (bypasses view cache)
+Route::get('/font-css', fn() => response('@font-face{font-family:"Brush King";src:url(/fnt/brush-king.otf) format("opentype");font-weight:normal;font-style:normal}', 200, ['Content-Type' => 'text/css']));
+
 // Font serving with correct MIME type (bypasses Hostinger nosniff + octet-stream)
 Route::get('/fnt/{file}', function ($file) {
     $path = public_path("fonts/{$file}");

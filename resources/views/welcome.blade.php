@@ -11,14 +11,7 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         <!-- Local Fonts -->
-        <style>
-            @font-face {
-                font-family: "Brush King";
-                src: url("/fnt/brush-king.otf?v={{ filemtime(public_path('fonts/brush-king.otf')) }}") format("opentype");
-                font-weight: normal;
-                font-style: normal;
-            }
-        </style>
+        <link rel="stylesheet" href="/font-css">
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
