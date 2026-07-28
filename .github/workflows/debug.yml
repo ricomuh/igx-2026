@@ -10,7 +10,7 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      - name: Diagnose 500 via SSH
+      - name: Fix & Diagnose
         env:
           SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
           HOST: ${{ secrets.HOSTINGER_HOST }}
@@ -20,23 +20,19 @@ jobs:
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
           sshpass -e ssh $SSH_OPTS $USER@$HOST '
             cd domains/igx.co.id
-            echo "=== HTACCESS ==="
-            cat .htaccess 2>/dev/null || echo "NO .htaccess"
-            echo "=== PUBLIC HTACCESS ==="
-            cat public/.htaccess 2>/dev/null || echo "NO public .htaccess"
-            echo "=== PUBLIC_HTML ==="
-            ls -la public_html/ 2>/dev/null | head -10 || echo "NO public_html"
-            echo "=== PHP HANDLER ==="
-            cat .htaccess 2>/dev/null | grep -i php || echo "No PHP handler in .htaccess"
-            echo "=== ARTISAN WITH FULL PATH ==="
+            echo "=== VENDOR CHECK ==="
+            ls vendor/autoload.php 2>&1
+            echo "=== ENV CHECK ==="
+            ls -la .env 2>&1
+            head -3 .env 2>&1
+            echo "=== ARTISAN RAW ==="
             /opt/alt/php84/usr/bin/php artisan --version 2>&1
-            /opt/alt/php84/usr/bin/php artisan view:clear 2>&1
-            /opt/alt/php84/usr/bin/php artisan config:clear 2>&1
-            /opt/alt/php84/usr/bin/php artisan cache:clear 2>&1
-            echo "=== INDEX.PHP ==="
-            head -5 public/index.php 2>/dev/null
-            echo "=== STORAGE PERMS ==="
-            ls -la storage/ 2>/dev/null
-            ls -la bootstrap/cache/ 2>/dev/null
+            echo "EXIT: $?"
+            echo "=== COMPOSER ==="
+            which composer 2>&1 || which composer.phar 2>&1 || ls /opt/alt/php84/usr/bin/composer* 2>&1 || echo "NO COMPOSER"
+            echo "=== PHP MODULES ==="
+            /opt/alt/php84/usr/bin/php -m 2>&1 | grep -iE "pdo|mysql|mbstring|xml|json|curl|openssl"
+            echo "=== ARTISAN WITH FULL ERROR ==="
+            /opt/alt/php84/usr/bin/php -d display_errors=1 -d error_reporting=E_ALL artisan --version 2>&1
             echo "=== DONE ==="
-          ' 2>&1 || echo "SSH FAILED"
+          ' 2>&1
