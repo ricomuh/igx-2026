@@ -28,19 +28,29 @@ jobs:
         run: sudo apt-get install -y sshpass
 
       - name: Deploy via rsync
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
         run: |
-          sshpass -p "${{ secrets.HOSTINGER_PASSWORD }}" rsync -avz \
-            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_PORT }}" \
+          sshpass -e rsync -avz \
+            -e "ssh -o StrictHostKeyChecking=no -p $PORT" \
             --exclude '.git' \
             --exclude 'node_modules' \
             --exclude '.env' \
             --exclude 'tests' \
             --exclude 'storage/framework/cache/data/*' \
-            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:domains/igx.co.id/
+            ./ $USER@$HOST:domains/igx.co.id/
 
       - name: Post-deploy cache clear
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
         run: |
-          sshpass -p "${{ secrets.HOSTINGER_PASSWORD }}" ssh \
-            -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_PORT }} \
-            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} \
-            "cd domains/igx.co.id && rm -f public/storage && ln -s /home/${{ secrets.HOSTINGER_USER }}/domains/igx.co.id/storage/app/public public/storage && /opt/alt/php84/usr/bin/php artisan optimize:clear && /opt/alt/php84/usr/bin/php artisan optimize"
+          sshpass -e ssh \
+            -o StrictHostKeyChecking=no -p $PORT \
+            $USER@$HOST \
+            "cd domains/igx.co.id && rm -f public/storage && ln -s /home/$USER/domains/igx.co.id/storage/app/public public/storage && /opt/alt/php84/usr/bin/php artisan optimize:clear && /opt/alt/php84/usr/bin/php artisan optimize"
