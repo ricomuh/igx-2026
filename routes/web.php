@@ -24,3 +24,12 @@ Route::as('news.')->prefix('news')->group(function () {
 Route::get('/privacy-policy', fn() => view('privacy-policy.index'))->name('privacy-policy');
 Route::get('/terms-of-service', fn() => view('terms-of-service.index'))->name('terms-of-service');
 Route::get('/contact-us', fn() => view('contact-us.index'))->name('contact-us');
+
+// Font serving with correct MIME type (bypasses Hostinger nosniff + octet-stream)
+Route::get('/fonts/{file}', function ($file) {
+    $path = public_path("fonts/{$file}");
+    if (!file_exists($path)) abort(404);
+    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    $mimes = ['otf' => 'font/otf', 'ttf' => 'font/ttf', 'woff' => 'font/woff', 'woff2' => 'font/woff2'];
+    return response()->file($path, ['Content-Type' => $mimes[$ext] ?? 'application/octet-stream']);
+})->where('file', '.*');
