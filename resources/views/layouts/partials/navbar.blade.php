@@ -20,9 +20,7 @@
                 'Home' => route("home"),
                 'G.I.X Squad' =>  route("pals"),
                 'Experience' =>  route("experiences"),
-                'Guests' =>  route("guests"),
                 'Rundown' =>  route("rundown"),
-                'Exhibitors' =>  route("exhibitors"),
                 'Promo' =>  route("promo"),
                 'Gallery' =>  route("gallery"),
                 'News' => route("news.index")
