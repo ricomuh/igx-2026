@@ -1,0 +1,46 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install & Build Assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy via rsync
+        run: |
+          sshpass -p "${{ secrets.HOSTINGER_PASSWORD }}" rsync -avz \
+            -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_PORT }}" \
+            --exclude '.git' \
+            --exclude 'node_modules' \
+            --exclude '.env' \
+            --exclude 'tests' \
+            --exclude 'storage/framework/cache/data/*' \
+            ./ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:domains/igx.co.id/
+
+      - name: Post-deploy cache clear
+        run: |
+          sshpass -p "${{ secrets.HOSTINGER_PASSWORD }}" ssh \
+            -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_PORT }} \
+            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} \
+            "cd domains/igx.co.id && rm -f public/storage && ln -s /home/${{ secrets.HOSTINGER_USER }}/domains/igx.co.id/storage/app/public public/storage && /opt/alt/php84/usr/bin/php artisan optimize:clear && /opt/alt/php84/usr/bin/php artisan optimize"
