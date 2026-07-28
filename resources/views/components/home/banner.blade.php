@@ -58,7 +58,8 @@
             {{-- Main title — character-by-character --}}
             <div class="mb-3">
                 <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-0.5"
-                    style="text-shadow:
+                    style="font-family: 'Brush King', sans-serif;
+                        text-shadow:
                         3px 3px 0px #F253B6,
                         6px 6px 0px #F88832,
                         9px 9px 0px #000000;">

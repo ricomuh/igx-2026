@@ -1,3 +1,11 @@
+/* Brush King — Hero title */
+@font-face {
+    font-family: "Brush King";
+    src: url("/fonts/Brush King.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* TT Rounds Neue Trial — Core weights */
 @font-face {
     font-family: "TT Rounds Neue";
