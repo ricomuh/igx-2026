@@ -67,7 +67,13 @@ jobs:
             else
               echo "Creating .env from .env.example"
               cp .env.example .env
-              /opt/alt/php84/usr/bin/php artisan key:generate --force 2>&1 || echo "key:generate failed (proc_open?)"
+            fi
+            # Check if APP_KEY is set; generate manually if not (proc_open disabled)
+            if ! grep -q "^APP_KEY=[A-Za-z0-9]" .env 2>/dev/null; then
+              echo "Generating APP_KEY manually..."
+              NEW_KEY=$(/opt/alt/php84/usr/bin/php -r "echo 'base64:'.base64_encode(random_bytes(32));" 2>&1)
+              sed -i "s/^APP_KEY=.*/APP_KEY=$NEW_KEY/" .env
+              echo "APP_KEY set to: $NEW_KEY"
             fi
 
             echo "---ARTISAN CHECK---"
