@@ -53,7 +53,7 @@ jobs:
           done
 
           # Cache clear — direct file removal (xargs -I{} incompatible on Hostinger)
-          echo "=== Cache clear ==="
+          echo "=== Sync public to public_html ==="
           sshpass -e ssh $SSH_OPTS $USER@$HOST \
-            "cd domains/igx.co.id && rm -rf storage/framework/views/* bootstrap/cache/* && for php in /opt/alt/php84/usr/bin/php /opt/alt/php83/usr/bin/php /opt/alt/php82/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan optimize && break; done" || true
+            "cd domains/igx.co.id && rm -rf storage/framework/views/* bootstrap/cache/* && rsync -a public/ public_html/ --exclude 'storage' && for php in /opt/alt/php84/usr/bin/php /opt/alt/php83/usr/bin/php /opt/alt/php82/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan optimize && break; done" || true
           echo "Deploy complete"
