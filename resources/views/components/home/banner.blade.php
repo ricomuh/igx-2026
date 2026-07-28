@@ -57,7 +57,7 @@
         <div class="relative z-40 -mt-12 sm:-mt-16 lg:-mt-20">
             {{-- Main title — character-by-character --}}
             <div class="mb-3">
-                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-0.5"
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold uppercase text-surface leading-[0.85] flex justify-center flex-wrap gap-x-0.5"
                     style="font-family: 'Brush King', sans-serif;
                         text-shadow:
                         3px 3px 0px #F253B6,
