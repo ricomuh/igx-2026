@@ -26,7 +26,7 @@ Route::get('/terms-of-service', fn() => view('terms-of-service.index'))->name('t
 Route::get('/contact-us', fn() => view('contact-us.index'))->name('contact-us');
 
 // Font serving with correct MIME type (bypasses Hostinger nosniff + octet-stream)
-Route::get('/fonts/{file}', function ($file) {
+Route::get('/fnt/{file}', function ($file) {
     $path = public_path("fonts/{$file}");
     if (!file_exists($path)) abort(404);
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
