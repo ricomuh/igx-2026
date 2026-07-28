@@ -55,5 +55,5 @@ jobs:
           # Cache clear — direct file removal (xargs -I{} incompatible on Hostinger)
           echo "=== Sync public to public_html ==="
           sshpass -e ssh $SSH_OPTS $USER@$HOST \
-            "cd domains/igx.co.id && rm -rf storage/framework/views/* bootstrap/cache/* && rm -rf public_html/build public_html/fonts public_html/fnt && rsync -a public/ public_html/ --exclude 'storage' && for php in /opt/alt/php84/usr/bin/php /opt/alt/php83/usr/bin/php /opt/alt/php82/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan optimize && break; done && ls -la public_html/build/manifest.json && cat public_html/build/manifest.json" || true
+            "cd domains/igx.co.id && echo '---BEFORE---' && ls -la public/build/manifest.json && cat public/build/manifest.json && echo '---CLEARING---' && rm -rf storage/framework/views/* bootstrap/cache/* && rm -rf public_html/build public_html/fonts && echo '---SYNCING---' && rsync -a public/ public_html/ --exclude 'storage' && echo '---AFTER---' && ls -la public_html/build/manifest.json && cat public_html/build/manifest.json && echo '---OPTIMIZE---' && for php in /opt/alt/php84/usr/bin/php /opt/alt/php83/usr/bin/php /opt/alt/php82/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan optimize && break; done && echo 'DONE'" || true
           echo "Deploy complete"
