@@ -1,0 +1,42 @@
+name: Server Debug
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Diagnose 500 Error
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+        run: |
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
+          sshpass -e ssh $SSH_OPTS $USER@$HOST "bash -s" << 'REMOTE_EOF'
+          echo "=== PHP VERSION ==="
+          for php in /opt/alt/php84/usr/bin/php /usr/bin/php; do
+            [ -x "$php" ] && $php -v 2>&1 && break
+          done
+          echo "=== APACHE ERROR LOG ==="
+          tail -30 domains/igx.co.id/error_log 2>/dev/null || echo "No error_log"
+          echo "=== LARAVEL LOG ==="
+          tail -30 domains/igx.co.id/storage/logs/laravel.log 2>/dev/null || echo "No laravel.log"
+          echo "=== TRY ARTISAN ==="
+          cd domains/igx.co.id
+          for php in /opt/alt/php84/usr/bin/php /usr/bin/php; do
+            if [ -x "$php" ]; then
+              echo "PHP: $php"
+              $php artisan --version 2>&1
+              break
+            fi
+          done
+          ls -la storage/logs/ 2>/dev/null
+          ls -la bootstrap/cache/ 2>/dev/null
+          echo "=== DONE ==="
+          REMOTE_EOF
