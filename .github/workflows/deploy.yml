@@ -55,5 +55,5 @@ jobs:
           # Cache clear — direct file removal (xargs -I{} incompatible on Hostinger)
           echo "=== Verify deploy ==="
           sshpass -e ssh $SSH_OPTS $USER@$HOST \
-            "cd domains/igx.co.id && python3 -c \"import json; d=json.load(open('public/build/manifest.json')); print(d['resources/css/app.css']['file'])\" && echo '---CLEAR VIEWS---' && rm -rf storage/framework/views/* && echo '---PUBLIC HTML SYNC---' && rsync -a public/ public_html/ --exclude 'storage' && echo '---OPTIMIZE---' && for php in /opt/alt/php84/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan optimize && break; done && echo 'DONE'" || true
+            "cd domains/igx.co.id && python3 -c \"import json; d=json.load(open('public/build/manifest.json')); print(d['resources/css/app.css']['file'])\" && echo '---CLEAR VIEWS---' && for php in /opt/alt/php84/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan view:clear && \$php artisan config:clear && \$php artisan cache:clear && break; done && echo '---PUBLIC HTML SYNC---' && rsync -a public/ public_html/ --exclude 'storage' && echo '---OPTIMIZE---' && for php in /opt/alt/php84/usr/bin/php /usr/bin/php; do [ -x \$php ] && \$php artisan config:cache && break; done && echo 'DONE'" || true
           echo "Deploy complete"
