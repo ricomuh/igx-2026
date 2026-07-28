@@ -14,7 +14,7 @@
         <style>
             @font-face {
                 font-family: "Brush King";
-                src: url("/fnt/brush-king.otf") format("opentype");
+                src: url("/fnt/brush-king.otf?v={{ filemtime(public_path('fonts/brush-king.otf')) }}") format("opentype");
                 font-weight: normal;
                 font-style: normal;
             }
