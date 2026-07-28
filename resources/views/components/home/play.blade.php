@@ -11,7 +11,12 @@
                 <span class="text-xs sm:text-sm font-extrabold uppercase text-white tracking-wider">MISSION 01</span>
             </div>
             <div class="h-0.5 flex-1 bg-black border-t-2 border-dashed border-black/20"></div>
-            <span class="text-[10px] font-extrabold text-black/30 uppercase tracking-[0.2em]">FEATURED</span>
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] font-extrabold text-black/30 uppercase tracking-[0.2em]">FEATURED</span>
+                <div class="bg-black/10 border-2 border-black/20 px-2 py-0.5">
+                    <span class="text-[9px] font-extrabold text-black/50 uppercase">Stage 02 · Past</span>
+                </div>
+            </div>
         </div>
 
         <div class="grid lg:grid-cols-5 gap-8 md:gap-12 items-center">

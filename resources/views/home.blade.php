@@ -125,45 +125,47 @@
                     </div>
                 </div>
 
-                {{-- CARD 5: RUNDOWN --}}
-                <a href="{{ route('rundown') }}"
-                   class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col no-underline">
+                {{-- CARD 5: RUNDOWN — COMING SOON --}}
+                <div class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col">
                     <div class="bg-cyan border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
                         <span class="text-xs font-extrabold uppercase text-black tracking-wider flex items-center gap-2">
                             <x-heroicon-o-calendar-days class="w-4 h-4" /> MISSION 06
                         </span>
                         <span class="text-[9px] font-bold text-black/60 uppercase">SCHEDULE</span>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div class="p-5 flex-1 flex flex-col justify-between items-center text-center">
                         <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-surface mb-3">Event Rundown</h3>
-                            <p class="text-xs font-bold text-surface/60 uppercase leading-relaxed">Full schedule of tournaments, panels, performances, and activities.</p>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-surface mb-2">Event Rundown</h3>
+                            <div class="bg-highlight border-3 border-black inline-block px-4 py-2 shadow-brutal-sm rotate-[-1deg] mb-3">
+                                <span class="text-xl sm:text-2xl font-extrabold uppercase text-black">Coming Soon</span>
+                            </div>
+                            <p class="text-[10px] font-bold text-surface/50 uppercase">2026</p>
                         </div>
-                        <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-cyan group-hover/link:text-highlight transition-colors">
-                            VIEW SCHEDULE
-                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </span>
+                        <div class="flex items-center gap-2 mt-3">
+                            <div class="w-2 h-2 bg-highlight border-2 border-black animate-pulse"></div>
+                            <div class="w-2 h-2 bg-accent border-2 border-black animate-pulse" style="animation-delay: 0.2s"></div>
+                            <div class="w-2 h-2 bg-primary border-2 border-black animate-pulse" style="animation-delay: 0.4s"></div>
+                        </div>
                     </div>
-                </a>
+                </div>
 
-                {{-- CARD 6: SPONSORS --}}
+                {{-- CARD 6: SPONSOR — LANGGENG PARIWARA --}}
                 <div class="card-brutal bg-surface group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col">
                     <div class="bg-crimson border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
                         <span class="text-xs font-extrabold uppercase text-white tracking-wider flex items-center gap-2">
                             <x-heroicon-o-bolt class="w-4 h-4" /> POWER-UPS
                         </span>
-                        <span class="text-[9px] font-bold text-white/60 uppercase">SPONSORS</span>
+                        <span class="text-[9px] font-bold text-white/60 uppercase">SPONSOR</span>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div class="p-5 flex-1 flex flex-col justify-between items-center text-center">
                         <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">Powered By</h3>
-                            <div class="flex flex-wrap gap-2">
-                                @foreach(['Langgeng', 'AKG', 'Dewa Utd', 'BOTT', 'Blibli'] as $s)
-                                    <span class="text-[10px] font-extrabold uppercase text-black/50 border-2 border-black/20 px-2 py-1">{{ $s }}</span>
-                                @endforeach
-                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">Official Media Partner</h3>
+                            <img src="{{ asset('media/images/logos/langgeng.webp') }}"
+                                 alt="Langgeng Pariwara"
+                                 class="h-16 md:h-20 object-contain mx-auto mb-3">
+                            <p class="text-sm font-extrabold uppercase text-black">Langgeng Pariwara</p>
                         </div>
-                        <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-crimson/60">5 SPONSORS ACTIVE</span>
+                        <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-crimson/60">1 SPONSOR ACTIVE</span>
                     </div>
                 </div>
 
