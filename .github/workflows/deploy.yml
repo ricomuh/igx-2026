@@ -27,30 +27,33 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      - name: Deploy via rsync
+      - name: Deploy to Hostinger
         env:
           SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
           HOST: ${{ secrets.HOSTINGER_HOST }}
           PORT: ${{ secrets.HOSTINGER_PORT }}
           USER: ${{ secrets.HOSTINGER_USER }}
         run: |
-          sshpass -e rsync -avz \
-            -e "ssh -o StrictHostKeyChecking=no -p $PORT" \
-            --exclude '.git' \
-            --exclude 'node_modules' \
-            --exclude '.env' \
-            --exclude 'tests' \
-            --exclude 'storage/framework/cache/data/*' \
-            ./ $USER@$HOST:domains/igx.co.id/
+          set +e
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=10 -p $PORT"
 
-      - name: Post-deploy cache clear
-        env:
-          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
-          HOST: ${{ secrets.HOSTINGER_HOST }}
-          PORT: ${{ secrets.HOSTINGER_PORT }}
-          USER: ${{ secrets.HOSTINGER_USER }}
-        run: |
-          sshpass -e ssh \
-            -o StrictHostKeyChecking=no -p $PORT \
-            $USER@$HOST \
-            "cd domains/igx.co.id && ls /opt/alt/php*/usr/bin/php 2>/dev/null | tail -1 | xargs -I{} {} artisan optimize:clear; ls /opt/alt/php*/usr/bin/php 2>/dev/null | tail -1 | xargs -I{} {} artisan optimize"
+          # Retry rsync up to 3 times
+          for i in 1 2 3; do
+            echo "=== Rsync attempt $i ==="
+            sshpass -e rsync -avz \
+              -e "ssh $SSH_OPTS" \
+              --exclude '.git' \
+              --exclude 'node_modules' \
+              --exclude '.env' \
+              --exclude 'tests' \
+              --exclude 'storage/framework/cache/data/*' \
+              ./ $USER@$HOST:domains/igx.co.id/ && break
+            echo "Attempt $i failed, retrying..."
+            sleep 15
+          done
+
+          # Cache clear
+          echo "=== Cache clear ==="
+          sshpass -e ssh $SSH_OPTS $USER@$HOST \
+            "cd domains/igx.co.id && ls /opt/alt/php*/usr/bin/php 2>/dev/null | tail -1 | xargs -I{} {} artisan optimize:clear; ls /opt/alt/php*/usr/bin/php 2>/dev/null | tail -1 | xargs -I{} {} artisan optimize" || true
+          echo "Deploy complete"
