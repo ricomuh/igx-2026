@@ -24,8 +24,8 @@ jobs:
             grep -E "APP_KEY|DB_" .env 2>/dev/null | sed "s/=.*/=***/"
             echo "=== ERROR LOG ==="
             tail -30 error_log 2>/dev/null || echo "no error_log"
-            echo "=== LARAVEL LOG ==="
-            tail -30 storage/logs/laravel.log 2>/dev/null || echo "no laravel.log"
+            echo "=== LARAVEL LOG (last 80) ==="
+            tail -80 storage/logs/laravel.log 2>/dev/null || echo "no laravel.log"
             echo "=== APACHE ERROR ==="
             find . -name "error_log" -exec tail -20 {} \; 2>/dev/null
             echo "=== ARTISAN TEST ==="
