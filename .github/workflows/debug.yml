@@ -10,7 +10,7 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      - name: Fix & Diagnose
+      - name: Check Error
         env:
           SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
           HOST: ${{ secrets.HOSTINGER_HOST }}
@@ -20,19 +20,15 @@ jobs:
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
           sshpass -e ssh $SSH_OPTS $USER@$HOST '
             cd domains/igx.co.id
-            echo "=== VENDOR CHECK ==="
-            ls vendor/autoload.php 2>&1
             echo "=== ENV CHECK ==="
-            ls -la .env 2>&1
-            head -3 .env 2>&1
-            echo "=== ARTISAN RAW ==="
-            /opt/alt/php84/usr/bin/php artisan --version 2>&1
-            echo "EXIT: $?"
-            echo "=== COMPOSER ==="
-            which composer 2>&1 || which composer.phar 2>&1 || ls /opt/alt/php84/usr/bin/composer* 2>&1 || echo "NO COMPOSER"
-            echo "=== PHP MODULES ==="
-            /opt/alt/php84/usr/bin/php -m 2>&1 | grep -iE "pdo|mysql|mbstring|xml|json|curl|openssl"
-            echo "=== ARTISAN WITH FULL ERROR ==="
-            /opt/alt/php84/usr/bin/php -d display_errors=1 -d error_reporting=E_ALL artisan --version 2>&1
+            grep -E "APP_KEY|DB_" .env 2>/dev/null | sed "s/=.*/=***/"
+            echo "=== ERROR LOG ==="
+            tail -30 error_log 2>/dev/null || echo "no error_log"
+            echo "=== LARAVEL LOG ==="
+            tail -30 storage/logs/laravel.log 2>/dev/null || echo "no laravel.log"
+            echo "=== APACHE ERROR ==="
+            find . -name "error_log" -exec tail -20 {} \; 2>/dev/null
+            echo "=== ARTISAN TEST ==="
+            /opt/alt/php84/usr/bin/php artisan about 2>&1 | head -30
             echo "=== DONE ==="
           ' 2>&1
