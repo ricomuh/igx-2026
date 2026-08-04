@@ -12,7 +12,7 @@
   <div class="text-center container pt-20 pb-28 xl:pt-28 xl:pb-36 px-5 mx-auto flex flex-col items-center justify-center">
     <div class="bg-highlight border-3 border-black shadow-brutal px-8 py-4 mb-14 lg:mb-20 rotate-[0.5deg]">
         <h1 class="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-center text-black uppercase">Sponsored By:</h1>
-        <p class="text-sm font-bold text-black/60 uppercase mt-1">Official Media Partner</p>
+        <p class="text-sm font-bold text-black/60 uppercase mt-1">organized by Langgeng Pariwara</p>
     </div>
 
     <div class="flex gap-6 md:gap-8 lg:gap-10 2xl:gap-14 flex-wrap justify-center">

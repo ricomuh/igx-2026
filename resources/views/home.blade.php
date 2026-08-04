@@ -159,7 +159,7 @@
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between items-center text-center">
                         <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">Official Media Partner</h3>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-3">organized by Langgeng Pariwara</h3>
                             <img src="{{ asset('media/images/logos/langgeng.webp') }}"
                                  alt="Langgeng Pariwara"
                                  class="h-16 md:h-20 object-contain mx-auto mb-3">
