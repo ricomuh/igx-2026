@@ -3,13 +3,13 @@
 @section('content')
 {{-- ===== FULL-HEIGHT HERO — countdown + tickets in one viewport ===== --}}
 <section class="relative flex-1 flex flex-col overflow-hidden">
-    {{-- Graphic layer (fills whole section, down to footer) --}}
+    {{-- Graphic layer (fills whole section, down to footer) — both layers full-bleed --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
              class="w-full h-full object-cover opacity-40"
              alt="">
         <img src="{{ asset('media/images/illustrations/hero-front.webp') }}"
-             class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] max-w-4xl opacity-50 pointer-events-none"
+             class="absolute inset-0 w-full h-full object-cover opacity-50"
              alt="">
     </div>
     {{-- Scanline overlay --}}
@@ -17,9 +17,11 @@
          style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px);"></div>
 
     <div class="container mx-auto px-5 xl:px-12 py-6 sm:py-8 flex-1 flex flex-col justify-center text-center relative z-10">
-        {{-- Event banner --}}
-        <div class="bg-accent border-3 border-black shadow-brutal inline-block self-center px-4 sm:px-6 py-1.5 sm:py-2 rotate-[0.5deg] mb-4 sm:mb-5">
-            <span class="font-extrabold uppercase text-black text-xs sm:text-sm lg:text-base tracking-wider">ICE BSD · Hall 9-10 / 24-25 October 2026</span>
+        {{-- Event banner (wrapper centers it — flex items stretch otherwise) --}}
+        <div class="flex justify-center mb-4 sm:mb-5">
+            <div class="bg-accent border-3 border-black shadow-brutal inline-block px-4 sm:px-6 py-1.5 sm:py-2 rotate-[0.5deg]">
+                <span class="font-extrabold uppercase text-black text-xs sm:text-sm lg:text-base tracking-wider">ICE BSD · Hall 9-10 / 24-25 October 2026</span>
+            </div>
         </div>
 
         {{-- Headline --}}
