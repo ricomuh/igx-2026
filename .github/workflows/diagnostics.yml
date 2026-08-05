@@ -20,6 +20,22 @@ jobs:
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
           sshpass -e ssh $SSH_OPTS $USER@$HOST '
             cd domains/igx.co.id
+            echo "===== KERNEL RENDER TESTS ====="
+            /opt/alt/php84/usr/bin/php -r '\''
+              require "vendor/autoload.php";
+              $app = require "bootstrap/app.php";
+              $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+              foreach (["http://igx-03.leolitgames.com/" => "HOME", "http://igx-03.leolitgames.com/pals" => "PALS", "http://ticket.igx-03.leolitgames.com/" => "TICKET"] as $url => $label) {
+                try {
+                  $res = $kernel->handle(Illuminate\Http\Request::create($url, "GET"));
+                  echo $label.": ".$res->getStatusCode()."\n";
+                } catch (Throwable $e) {
+                  echo $label." EXCEPTION: ".get_class($e).": ".$e->getMessage()." AT ".$e->getFile().":".$e->getLine()."\n";
+                  $t = $e->getTrace();
+                  if (isset($t[1])) echo "  TRACE1: ".($t[1]["file"] ?? "?").":".($t[1]["line"] ?? "?")." ".($t[1]["function"] ?? "?")."\n";
+                }
+              }
+            '\''
             echo "===== CONFIG.PHP SIZE ====="
             ls -la bootstrap/cache/config.php 2>&1
             echo "===== CONFIG:CACHE RAW OUTPUT ====="
