@@ -42,9 +42,9 @@
                 </div>
             </template>
 
-            {{-- 1. Order summary --}}
+            {{-- 1. Order Summary --}}
             <div>
-                <h2 class="font-extrabold uppercase text-black mb-4 text-sm tracking-wider">1. Ringkasan Pesanan</h2>
+                <h2 class="font-extrabold uppercase text-black mb-4 text-sm tracking-wider">1. Order Summary</h2>
                 <div class="space-y-3 mb-4">
                     <template x-for="(item, index) in cart" :key="item.ticket_type_id">
                         <div class="flex items-center gap-3 border-3 border-black bg-bg px-4 py-3">
@@ -69,26 +69,52 @@
                 </div>
             </div>
 
-            {{-- 2. Data diri --}}
+            {{-- 2. Personal Details --}}
             <div>
-                <h2 class="font-extrabold uppercase text-black mb-4 text-sm tracking-wider">2. Data Diri</h2>
+                <h2 class="font-extrabold uppercase text-black mb-4 text-sm tracking-wider">2. Personal Details</h2>
                 <div class="grid gap-4">
                     <div>
-                        <label for="customer_name" class="font-extrabold uppercase text-black text-xs mb-1 block">Nama Lengkap *</label>
+                        <label for="customer_name" class="font-extrabold uppercase text-black text-xs mb-1 block">Name *</label>
                         <input type="text" name="customer_name" id="customer_name" value="{{ old('customer_name') }}"
-                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required>
+                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required placeholder="Your full name">
                         @error('customer_name')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="age" class="font-extrabold uppercase text-black text-xs mb-1 block">Age *</label>
+                            <input type="number" name="age" id="age" min="1" max="120" value="{{ old('age') }}"
+                                   class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required placeholder="e.g. 22">
+                            @error('age')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label for="gender" class="font-extrabold uppercase text-black text-xs mb-1 block">Gender *</label>
+                            <select name="gender" id="gender" required
+                                    class="w-full border-3 border-black bg-bg px-4 py-3 font-bold">
+                                <option value="" disabled @selected(! old('gender'))>Select gender</option>
+                                @foreach (['Male', 'Female', 'Other', 'Prefer not to say'] as $option)
+                                    <option value="{{ $option }}" @selected(old('gender') === $option)>{{ $option }}</option>
+                                @endforeach
+                            </select>
+                            @error('gender')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
+                    <div>
+                        <label for="nationality" class="font-extrabold uppercase text-black text-xs mb-1 block">Nationality *</label>
+                        <input type="text" name="nationality" id="nationality" value="{{ old('nationality') }}"
+                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required placeholder="e.g. Indonesian">
+                        @error('nationality')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label for="customer_email" class="font-extrabold uppercase text-black text-xs mb-1 block">Email *</label>
                         <input type="email" name="customer_email" id="customer_email" value="{{ old('customer_email') }}"
-                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required>
+                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required placeholder="you@example.com">
                         @error('customer_email')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label for="customer_phone" class="font-extrabold uppercase text-black text-xs mb-1 block">No. WhatsApp</label>
+                        <label for="customer_phone" class="font-extrabold uppercase text-black text-xs mb-1 block">Phone Number *</label>
                         <input type="tel" name="customer_phone" id="customer_phone" value="{{ old('customer_phone') }}"
-                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold">
+                               class="w-full border-3 border-black bg-bg px-4 py-3 font-bold" required placeholder="+62 812 3456 7890">
+                        @error('customer_phone')<p class="text-xs font-extrabold uppercase text-crimson mt-1">{{ $message }}</p>@enderror
                     </div>
                 </div>
             </div>
@@ -98,12 +124,12 @@
                     <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
                 </span>
                 <p class="text-xs sm:text-sm font-bold text-black/70">
-                    Pembayaran diproses via <strong class="text-black">Midtrans</strong> — Virtual Account, QRIS &amp; E-Wallet. Integrasi segera hadir.
+                    Payment is processed via <strong class="text-black">Midtrans</strong> — Virtual Account, QRIS &amp; E-Wallet. Integration coming soon.
                 </p>
             </div>
 
             <button type="submit" class="w-full bg-accent border-3 border-black px-6 py-4 font-extrabold uppercase text-black shadow-brutal hover:shadow-brutal-lg hover:-translate-y-0.5 transition-all">
-                Buat Order &rarr;
+                Place Order &rarr;
             </button>
         </form>
     </div>

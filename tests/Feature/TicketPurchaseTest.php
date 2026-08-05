@@ -24,6 +24,9 @@ test('checkout creates pending order with items and total', function () {
         'customer_name' => 'Rico Muhammad',
         'customer_email' => 'rico@example.com',
         'customer_phone' => '081234567890',
+        'age' => 24,
+        'gender' => 'Male',
+        'nationality' => 'Indonesian',
         'items' => [['ticket_type_id' => $type->id, 'qty' => 2]],
     ]);
 
@@ -32,6 +35,9 @@ test('checkout creates pending order with items and total', function () {
         ->and($order->status)->toBe(Order::STATUS_PENDING)
         ->and($order->payment_method)->toBe('midtrans')
         ->and($order->total_amount)->toBe('150000.00')
+        ->and($order->age)->toBe(24)
+        ->and($order->gender)->toBe('Male')
+        ->and($order->nationality)->toBe('Indonesian')
         ->and($order->items)->toHaveCount(1)
         ->and($order->items->first()->qty)->toBe(2)
         ->and($order->order_number)->not->toBeNull();
@@ -44,7 +50,14 @@ test('checkout requires customer data', function () {
 
     $this->post(route('ticket.checkout.store'), [
         'items' => [['ticket_type_id' => $type->id, 'qty' => 1]],
-    ])->assertSessionHasErrors(['customer_name', 'customer_email']);
+    ])->assertSessionHasErrors([
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'age',
+        'gender',
+        'nationality',
+    ]);
 });
 
 test('checkout rejects inactive ticket type', function () {
@@ -53,6 +66,10 @@ test('checkout rejects inactive ticket type', function () {
     $this->post(route('ticket.checkout.store'), [
         'customer_name' => 'Rico',
         'customer_email' => 'rico@example.com',
+        'customer_phone' => '081234567890',
+        'age' => 24,
+        'gender' => 'Male',
+        'nationality' => 'Indonesian',
         'items' => [['ticket_type_id' => $type->id, 'qty' => 1]],
     ])->assertSessionHasErrors(['items.0.ticket_type_id']);
 });
@@ -71,6 +88,10 @@ test('checkout rejects when ticket sold out', function () {
     $this->post(route('ticket.checkout.store'), [
         'customer_name' => 'Rico',
         'customer_email' => 'rico@example.com',
+        'customer_phone' => '081234567890',
+        'age' => 24,
+        'gender' => 'Male',
+        'nationality' => 'Indonesian',
         'items' => [['ticket_type_id' => $type->id, 'qty' => 1]],
     ])->assertSessionHasErrors(['items.0.ticket_type_id']);
 });
