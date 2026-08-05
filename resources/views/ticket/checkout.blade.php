@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'Checkout Tiket'])
+@extends('layouts.ticket', ['title' => 'Checkout Tiket'])
 
 @section('content')
 <section class="bg-bg border-b-4 border-black">

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'Pembayaran Order'])
+@extends('layouts.ticket', ['title' => 'Pembayaran Order'])
 
 @php
     $badges = [
