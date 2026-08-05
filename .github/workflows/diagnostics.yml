@@ -22,26 +22,21 @@ jobs:
             cd domains/igx.co.id
             echo "===== LOG FILES ====="
             ls -la storage/logs/
-            echo "===== HOME LOGS ====="
-            ls ~/logs/ 2>/dev/null | head
-            echo "===== LOCAL CURL (before) ====="
-            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: igx-03.leolitgames.com" http://127.0.0.1/
-            echo "===== FRESH LOG AFTER CURL ====="
-            tail -8 storage/logs/laravel.log
-            echo "===== PHP-FPM ERROR LOG (last 30) ====="
-            tail -30 ~/logs/error.log 2>/dev/null || echo "no ~/logs/error.log"
-            echo "===== ENV SPECIAL CHARS ====="
-            grep -c "!" .env || true
-            grep -c "#" .env || true
-            echo "===== INDEX.PHP head ====="
-            head -5 public_html/index.php
-            echo "===== .htaccess? ====="
-            ls -la public_html/.htaccess 2>/dev/null || echo "no .htaccess"
-            echo "===== STORAGE LINK ====="
-            ls -la public_html/storage 2>/dev/null || echo "no storage link"
-            echo "===== FRESH LOG CHECK AFTER 2nd CURL ====="
-            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: igx-03.leolitgames.com" "http://127.0.0.1/admin"
-            sleep 1
-            tail -3 storage/logs/laravel.log
+            echo "===== LOCAL CURL igx.co.id ====="
+            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: igx.co.id" http://127.0.0.1/
+            curl -s -H "Host: igx.co.id" http://127.0.0.1/ | head -c 200
+            echo
+            echo "===== LOCAL CURL www.igx.co.id ====="
+            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: www.igx.co.id" http://127.0.0.1/
+            echo "===== ALL HOSTINGER LOGS (recent) ====="
+            find ~ -maxdepth 4 -name "*.log" -mmin -720 2>/dev/null | head -20
+            echo "===== DOMAIN LOGS DIR ====="
+            ls -la domains/igx.co.id/logs/ 2>/dev/null || echo "no domain logs dir"
+            echo "===== ERROR LOG TAIL ====="
+            tail -40 ~/logs/error.log 2>/dev/null || tail -40 ~/logs/error_log 2>/dev/null || echo "no error log found"
+            echo "===== ROUTE CACHE VALID? ====="
+            /opt/alt/php84/usr/bin/php artisan route:list --path=/ 2>&1 | head -5 || echo "route:list FAIL"
+            echo "===== ARTISAN BOOT TEST ====="
+            /opt/alt/php84/usr/bin/php artisan env 2>&1 | head -3 || echo "artisan env FAIL"
             echo "DONE"
           ' 2>&1
