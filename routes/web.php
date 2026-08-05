@@ -6,7 +6,24 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Ticket\CheckoutController;
+use App\Http\Controllers\Ticket\LandingController;
+use App\Http\Controllers\Ticket\PaymentController;
+use App\Http\Controllers\Ticket\StatusController;
 use Illuminate\Support\Facades\Route;
+
+// ===== TICKETING — served on the ticket subdomain (same app, same Filament panel) =====
+// Registered FIRST so the bare '/' on the ticket domain hits the ticket landing,
+// not the main-site home route (first match wins in Laravel).
+Route::domain(config('app.ticket_domain'))->name('ticket.')->group(function () {
+    Route::get('/', LandingController::class)->name('landing');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('throttle:10,1');
+    Route::get('/payment/{order:order_number}', [PaymentController::class, 'show'])->name('payment');
+    Route::post('/payment/{order:order_number}/upload', [PaymentController::class, 'upload'])->name('payment.upload')->middleware('throttle:5,1');
+    Route::get('/status', [StatusController::class, 'index'])->name('status');
+    Route::post('/status', [StatusController::class, 'lookup'])->name('status.lookup')->middleware('throttle:10,1');
+});
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');

@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'ticket_domain' => env('TICKET_DOMAIN', 'ticket.igx-03.leolitgames.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
