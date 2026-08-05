@@ -1,0 +1,57 @@
+name: Diagnostics
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: SSH Enable Debug
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+        run: |
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
+          sshpass -e ssh $SSH_OPTS $USER@$HOST '
+            cd domains/igx.co.id
+            echo "===== SESSION DIR ====="
+            ls -la storage/framework/sessions 2>/dev/null | head -3
+            echo "===== TOGGLE DEBUG ON ====="
+            sed -i "s/^APP_DEBUG=.*/APP_DEBUG=true/" .env
+            /opt/alt/php84/usr/bin/php artisan config:cache 2>&1 | tail -1 || echo "config:cache FAIL"
+            grep "^APP_DEBUG" .env
+            echo DONE
+          ' 2>&1
+
+      - name: Curl Public (trace)
+        run: |
+          echo "===== PUBLIC igx-03 ====="
+          curl -s --max-time 25 https://igx-03.leolitgames.com/ -o /tmp/trace.html -w "code=%{http_code}\n"
+          echo "--- trace (first 3000 chars) ---"
+          head -c 3000 /tmp/trace.html
+          echo
+          echo "===== PUBLIC ticket.igx-03 ====="
+          curl -s --max-time 25 https://ticket.igx-03.leolitgames.com/ -o /dev/null -w "code=%{http_code}\n" || true
+
+      - name: SSH Revert Debug
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+        run: |
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
+          sshpass -e ssh $SSH_OPTS $USER@$HOST '
+            cd domains/igx.co.id
+            echo "===== REVERT DEBUG OFF ====="
+            sed -i "s/^APP_DEBUG=.*/APP_DEBUG=false/" .env
+            /opt/alt/php84/usr/bin/php artisan config:cache 2>&1 | tail -1 || echo "revert FAIL"
+            grep "^APP_DEBUG" .env
+            echo DONE
+          ' 2>&1
