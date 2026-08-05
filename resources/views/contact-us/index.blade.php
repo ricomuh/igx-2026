@@ -34,7 +34,7 @@
                     <p class="text-xs font-bold text-black/60 uppercase">Click to chat</p>
                 </a>
 
-                <a href="mailto:indonesiagameexpo23@gmail.com"
+                <a href="mailto:Indonesiagameexpo@igx.co.id"
                    class="card-brutal bg-highlight group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 p-8 text-center no-underline">
                     <div class="bg-black/20 border-3 border-black w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform">
                         <img src="{{ asset('/media/images/icons/email.svg') }}" class="w-10 h-10" alt="Email">

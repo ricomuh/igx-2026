@@ -35,20 +35,28 @@
                 <li>IGX reserves the right to restrict access for misuse.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">3. Leaderboard & Prize Rules</h2>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">3. Ticket Purchases</h2>
+            <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
+                <li>Tickets are purchased through IGX's own ticketing system at <a href="https://tiket.igx.co.id" class="text-primary font-extrabold underline decoration-2">tiket.igx.co.id</a>.</li>
+                <li>To complete a purchase you must provide: full name, age, gender, nationality, email address, and phone number. This data is stored by IGX to process your order and for event entry verification — see our Privacy Policy for details.</li>
+                <li>Payments are processed by Midtrans. Ticket orders are confirmed only after payment is successfully verified.</li>
+                <li>Tickets are non-refundable unless otherwise stated. IGX may cancel any order suspected of fraud or misuse.</li>
+            </ul>
+
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">4. Leaderboard & Prize Rules</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>Email and username submitted after game completion may appear on leaderboard.</li>
                 <li>Submission is voluntary and only used to identify winners.</li>
                 <li>IGX reserves the right to disqualify false or offensive entries.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">4. Content Ownership</h2>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">5. Content Ownership</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>All content is intellectual property of IGX and/or partners.</li>
                 <li>No copying, distribution, or commercial use without written permission.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">5. Prohibited Activities</h2>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">6. Prohibited Activities</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>Unlawful use of website or games.</li>
                 <li>False information or impersonation.</li>
@@ -56,19 +64,19 @@
                 <li>Interference with contest or leaderboard integrity.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">6. Disclaimers</h2>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">7. Disclaimers</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>Services provided "as is" — no guarantee of uninterrupted operation.</li>
                 <li>Not responsible for loss, damage, or data issues.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">7. Changes to Terms</h2>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">8. Changes to Terms</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>IGX may update Terms anytime. Continued use = acceptance.</li>
             </ul>
 
-            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">8. Contact</h2>
-            <p class="text-sm lg:text-base mb-2">📧 <a href="mailto:indonesiagameexpo23@gmail.com" class="text-primary font-extrabold underline decoration-2">indonesiagameexpo23@gmail.com</a></p>
+            <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">9. Contact</h2>
+            <p class="text-sm lg:text-base mb-2">📧 <a href="mailto:Indonesiagameexpo@igx.co.id" class="text-primary font-extrabold underline decoration-2">Indonesiagameexpo@igx.co.id</a></p>
         </div>
     </div>
 </div>

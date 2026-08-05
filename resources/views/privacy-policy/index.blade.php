@@ -25,24 +25,26 @@
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li><span class="font-extrabold">Website Visitors:</span> No personal information collected. Basic technical data may be processed automatically for security purposes only.</li>
                 <li><span class="font-extrabold">Game Participants:</span> Email and username submitted voluntarily — used only for leaderboard display and prize winner contact.</li>
-                <li><span class="font-extrabold">Event Registrants:</span> Data handled entirely by third-party ticketing marketplace. IGX does not collect registration data.</li>
+                <li><span class="font-extrabold">Ticket Buyers:</span> When you purchase a ticket through IGX's own ticketing system, we collect and store: full name, age, gender, nationality, email address, and phone number. We also store your order details (ticket type, quantity, total amount, order status and number). This data is required to process and fulfil your ticket order and for event entry verification.</li>
             </ul>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">How We Use Your Information</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li>Display rankings on the game leaderboard</li>
                 <li>Contact winners for prize distribution</li>
+                <li>Process and manage your ticket purchase, payment status, and event entry</li>
+                <li>Contact you about your order (confirmation, payment, or event updates)</li>
             </ul>
             <p class="text-sm lg:text-base mb-4">No marketing, third-party sharing, or other purposes.</p>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">Third Parties</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
                 <li><span class="font-extrabold">Analytics:</span> IGX does not use Google Analytics, Facebook Pixel, or similar tracking tools.</li>
-                <li><span class="font-extrabold">Ticket Platform:</span> Event registration data governed by external platform's own privacy policy.</li>
+                <li><span class="font-extrabold">Payment Processing:</span> Ticket payments are processed by Midtrans. When paying, the necessary payment details are shared with Midtrans solely to complete your transaction. IGX does not store your card or bank account details.</li>
             </ul>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">Data Storage & Security</h2>
-            <p class="text-sm lg:text-base mb-4">Data securely stored with access limited to authorized IGX personnel. Deleted or anonymized after event concludes.</p>
+            <p class="text-sm lg:text-base mb-4">Buyer and order data is stored securely in IGX's own systems with access limited to authorized IGX personnel. Deleted or anonymized after the event concludes.</p>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">Your Rights</h2>
             <ul class="list-disc pl-5 sm:pl-6 mb-6 space-y-2 text-sm lg:text-base">
@@ -53,7 +55,7 @@
             </ul>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">Contact</h2>
-            <p class="text-sm lg:text-base mb-2">📧 <a href="mailto:indonesiagameexpo23@gmail.com" class="text-primary font-extrabold underline decoration-2">indonesiagameexpo23@gmail.com</a></p>
+            <p class="text-sm lg:text-base mb-2">📧 <a href="mailto:Indonesiagameexpo@igx.co.id" class="text-primary font-extrabold underline decoration-2">Indonesiagameexpo@igx.co.id</a></p>
         </div>
     </div>
 </div>

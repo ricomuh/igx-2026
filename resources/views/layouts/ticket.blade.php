@@ -90,7 +90,7 @@
         <footer class="bg-black border-t-4 border-black py-3">
             <div class="container mx-auto px-5 text-center">
                 <p class="text-[10px] font-extrabold uppercase text-white/60 tracking-wider">
-                    Indonesia Game Expo 2026 · ICE BSD Hall 9-10 · 24-25 October 2026 · <a href="mailto:hello@igx.co.id" class="text-accent hover:text-white transition-colors underline decoration-2">hello@igx.co.id</a>
+                    Indonesia Game Expo 2026 · ICE BSD Hall 9-10 · 24-25 October 2026 · <a href="mailto:Indonesiagameexpo@igx.co.id" class="text-accent hover:text-white transition-colors underline decoration-2">Indonesiagameexpo@igx.co.id</a>
                 </p>
             </div>
         </footer>
