@@ -1,0 +1,38 @@
+name: Diagnostics
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: SSH Diagnostics
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+        run: |
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
+          sshpass -e ssh $SSH_OPTS $USER@$HOST '
+            cd domains/igx.co.id
+            echo "===== PHP VERSION ====="
+            /opt/alt/php84/usr/bin/php --version | head -1
+            echo "===== BOOTSTRAP CACHE ====="
+            ls -la bootstrap/cache/ | grep -E "config|route|view|events|packages" || echo "no cached files"
+            echo "===== STORAGE PERMS ====="
+            ls -ld storage storage/logs bootstrap/cache
+            echo "===== LARAVEL LOG (last 60 lines) ====="
+            tail -60 storage/logs/laravel.log 2>/dev/null || echo "no log file"
+            echo "===== ENV CHECK (masked) ====="
+            grep -E "^(APP_ENV|APP_DEBUG|APP_URL|APP_KEY|DB_CONNECTION|DB_DATABASE|DB_HOST|DB_PORT|DB_USERNAME)" .env | sed -E "s/(=.*)/=***/" || echo "no .env"
+            echo "===== MIGRATE STATUS ====="
+            /opt/alt/php84/usr/bin/php artisan migrate:status 2>&1 | head -20 || echo "migrate:status FAIL"
+            echo "===== DB TABLE COUNT ====="
+            /opt/alt/php84/usr/bin/php -r '\''$e=parse_ini_file(".env");$p=new PDO("mysql:host=".($e["DB_HOST"]??"127.0.0.1").";dbname=".$e["DB_DATABASE"], $e["DB_USERNAME"], $e["DB_PASSWORD"]);echo "tables: ".count($p->query("SHOW TABLES")->fetchAll())."\n";'\'' 2>&1 || echo "PDO FAIL"
+            echo "DONE"
+          ' 2>&1
