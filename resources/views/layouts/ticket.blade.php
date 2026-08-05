@@ -82,7 +82,7 @@
             </div>
         </header>
 
-        <main class="flex-1 relative">
+        <main class="flex-1 flex flex-col relative">
             @yield('content')
         </main>
 

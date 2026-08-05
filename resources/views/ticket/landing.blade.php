@@ -1,9 +1,9 @@
 @extends('layouts.ticket', ['title' => 'Tiket'])
 
 @section('content')
-{{-- ===== FULL-HEIGHT HERO — logo + countdown + tickets in one viewport ===== --}}
-<section class="relative flex-1 flex flex-col justify-center overflow-hidden">
-    {{-- Graphic layer --}}
+{{-- ===== FULL-HEIGHT HERO — countdown + tickets in one viewport ===== --}}
+<section class="relative flex-1 flex flex-col overflow-hidden">
+    {{-- Graphic layer (fills whole section, down to footer) --}}
     <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="{{ asset('media/images/illustrations/hero-bg.webp') }}"
              class="w-full h-full object-cover opacity-40"
@@ -16,14 +16,9 @@
     <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.04]"
          style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px);"></div>
 
-    <div class="container mx-auto px-5 xl:px-12 py-6 sm:py-8 text-center relative z-10">
-        {{-- Logo --}}
-        <div class="bg-surface border-3 border-black p-1.5 sm:p-2 shadow-brutal inline-block rotate-[-0.5deg] mb-3 sm:mb-4">
-            <img src="{{ asset('media/images/logos/logo-stage03-v3.webp') }}" class="h-9 sm:h-12 lg:h-14" alt="IGX Logo">
-        </div>
-
+    <div class="container mx-auto px-5 xl:px-12 py-6 sm:py-8 flex-1 flex flex-col justify-center text-center relative z-10">
         {{-- Event banner --}}
-        <div class="bg-accent border-3 border-black shadow-brutal inline-block px-4 sm:px-6 py-1.5 sm:py-2 rotate-[0.5deg] mb-4 sm:mb-5">
+        <div class="bg-accent border-3 border-black shadow-brutal inline-block self-center px-4 sm:px-6 py-1.5 sm:py-2 rotate-[0.5deg] mb-4 sm:mb-5">
             <span class="font-extrabold uppercase text-black text-xs sm:text-sm lg:text-base tracking-wider">ICE BSD · Hall 9-10 / 24-25 October 2026</span>
         </div>
 
@@ -61,7 +56,7 @@
                 <p class="text-sm font-bold text-black/50 mt-2">Pantau terus website ini ya!</p>
             </div>
         @else
-            <div class="grid sm:grid-cols-2 gap-3 sm:gap-5 max-w-2xl mx-auto">
+            <div class="grid sm:grid-cols-2 gap-3 sm:gap-5 max-w-2xl mx-auto w-full">
                 @foreach ($ticketTypes as $type)
                     <div class="bg-surface border-3 border-black shadow-brutal p-4 sm:p-5 flex flex-col gap-2 text-left transition-all duration-200 hover:shadow-brutal-lg hover:-translate-y-0.5">
                         <div class="flex items-center justify-between gap-2">
