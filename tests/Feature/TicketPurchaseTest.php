@@ -127,3 +127,24 @@ test('confirm marks order paid', function () {
     expect($order->fresh()->status)->toBe(Order::STATUS_CONFIRMED);
     expect($order->fresh()->paid_at)->not->toBeNull();
 });
+
+test('ticket subdomain serves only ticket pages, main site untouched', function () {
+    $host = config('app.ticket_domain');
+    $mainHost = parse_url(config('app.url'), PHP_URL_HOST);
+    TicketType::factory()->create(['name' => 'Isolated Pass']);
+
+    // Ticket pages reachable on the ticket subdomain
+    $this->get("http://{$host}/")->assertOk()->assertSee('Isolated Pass');
+    $this->get("http://{$host}/status")->assertOk();
+
+    // Main-site pages are NOT served on the ticket subdomain
+    $this->get("http://{$host}/pals")->assertNotFound();
+    $this->get("http://{$host}/news")->assertNotFound();
+    $this->get("http://{$host}/admin")->assertNotFound();
+
+    // Font route still served (custom typeface)
+    $this->get("http://{$host}/font-css")->assertOk();
+
+    // Main site still serves its own pages
+    $this->get("http://{$mainHost}/pals")->assertOk();
+});
