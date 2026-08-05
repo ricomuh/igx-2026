@@ -22,7 +22,6 @@ class EnsureTicketDomainIsolation
             $allowed = $path === '/'
                 || str_starts_with($path, '/checkout')
                 || str_starts_with($path, '/payment')
-                || str_starts_with($path, '/status')
                 || str_starts_with($path, '/fnt')
                 || $path === '/font-css';
 

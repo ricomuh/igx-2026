@@ -58,7 +58,7 @@ class CheckoutController extends Controller
                 'customer_phone' => $validated['customer_phone'] ?? null,
                 'total_amount' => 0,
                 'status' => Order::STATUS_PENDING,
-                'payment_method' => 'transfer',
+                'payment_method' => 'midtrans',
             ]);
 
             $total = 0;

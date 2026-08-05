@@ -3,8 +3,6 @@
 use App\Models\Order;
 use App\Models\TicketType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
 
@@ -32,6 +30,7 @@ test('checkout creates pending order with items and total', function () {
     $order = Order::first();
     expect($order)->not->toBeNull()
         ->and($order->status)->toBe(Order::STATUS_PENDING)
+        ->and($order->payment_method)->toBe('midtrans')
         ->and($order->total_amount)->toBe('150000.00')
         ->and($order->items)->toHaveCount(1)
         ->and($order->items->first()->qty)->toBe(2)
@@ -76,7 +75,7 @@ test('checkout rejects when ticket sold out', function () {
     ])->assertSessionHasErrors(['items.0.ticket_type_id']);
 });
 
-test('payment page shows order details', function () {
+test('payment page shows order details and midtrans placeholder', function () {
     $order = Order::factory()->create([
         'order_number' => 'IGX-20260804-ABC123',
         'total_amount' => 150000,
@@ -85,38 +84,8 @@ test('payment page shows order details', function () {
     $this->get(route('ticket.payment', $order->order_number))
         ->assertOk()
         ->assertSee('IGX-20260804-ABC123')
-        ->assertSee('150.000');
-});
-
-test('proof upload marks order waiting confirmation', function () {
-    Storage::fake('proofs');
-    $order = Order::factory()->create();
-
-    $this->post(route('ticket.payment.upload', $order->order_number), [
-        'reference_number' => 'TRX12345',
-        'proof' => UploadedFile::fake()->image('proof.jpg'),
-    ])->assertRedirect(route('ticket.payment', $order->order_number));
-
-    expect($order->fresh()->status)->toBe(Order::STATUS_WAITING_CONFIRMATION);
-    expect($order->fresh()->payments)->toHaveCount(1);
-});
-
-test('status lookup finds order by number and email', function () {
-    $order = Order::factory()->create(['customer_email' => 'rico@example.com']);
-
-    $this->post(route('ticket.status.lookup'), [
-        'order_number' => $order->order_number,
-        'customer_email' => 'rico@example.com',
-    ])->assertRedirect(route('ticket.payment', $order->order_number));
-});
-
-test('status lookup rejects mismatched email', function () {
-    $order = Order::factory()->create(['customer_email' => 'rico@example.com']);
-
-    $this->post(route('ticket.status.lookup'), [
-        'order_number' => $order->order_number,
-        'customer_email' => 'wrong@example.com',
-    ])->assertSessionHasErrors('order_number');
+        ->assertSee('150.000')
+        ->assertSee('Midtrans');
 });
 
 test('confirm marks order paid', function () {
@@ -135,9 +104,10 @@ test('ticket subdomain serves only ticket pages, main site untouched', function 
 
     // Ticket pages reachable on the ticket subdomain
     $this->get("http://{$host}/")->assertOk()->assertSee('Isolated Pass');
-    $this->get("http://{$host}/status")->assertOk();
+    $this->get("http://{$host}/checkout")->assertOk();
 
-    // Main-site pages are NOT served on the ticket subdomain
+    // Status lookup and main-site pages are NOT served on the ticket subdomain
+    $this->get("http://{$host}/status")->assertNotFound();
     $this->get("http://{$host}/pals")->assertNotFound();
     $this->get("http://{$host}/news")->assertNotFound();
     $this->get("http://{$host}/admin")->assertNotFound();
