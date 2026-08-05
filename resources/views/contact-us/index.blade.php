@@ -25,13 +25,13 @@
 
             {{-- Contact Cards --}}
             <div class="grid sm:grid-cols-2 gap-5 lg:gap-6">
-                <a href="https://api.whatsapp.com/message/U3XML62HR7O2C1" target="_blank" rel="noopener"
+                <a href="https://wa.me/62817743797" target="_blank" rel="noopener"
                    class="card-brutal bg-accent group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 p-8 text-center no-underline">
                     <div class="bg-black/20 border-3 border-black w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:rotate-6 transition-transform">
                         <img src="{{ asset('/media/images/icons/wa.svg') }}" class="w-10 h-10" alt="WhatsApp">
                     </div>
                     <h2 class="text-xl sm:text-2xl font-extrabold uppercase text-black mb-2">WhatsApp</h2>
-                    <p class="text-xs font-bold text-black/60 uppercase">Click to chat</p>
+                    <p class="text-xs font-bold text-black/60 uppercase">0817-7437-97 · Click to chat</p>
                 </a>
 
                 <a href="mailto:Indonesiagameexpo@igx.co.id"

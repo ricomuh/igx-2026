@@ -59,7 +59,7 @@
                 <div class="flex gap-4 justify-center">
                     @php
                         $socials = [
-                            ['platform' => 'whatsapp', 'url' => 'https://api.whatsapp.com/message/U3XML62HR7O2C1', 'bg' => 'bg-mint', 'icon_color' => ''],
+                            ['platform' => 'whatsapp', 'url' => 'https://wa.me/62817743797', 'bg' => 'bg-mint', 'icon_color' => ''],
                             ['platform' => 'instagram', 'url' => 'https://www.instagram.com/indonesiagameexpo/', 'bg' => 'bg-accent', 'icon_color' => ''],
                             ['platform' => 'facebook', 'url' => 'https://www.facebook.com/share/uxMivasQaUMuc5fZ/?mibextid=LQQJ4d', 'bg' => 'bg-primary', 'icon_color' => ''],
                             ['platform' => 'youtube', 'url' => 'https://www.youtube.com/@indonesiagameexpo', 'bg' => 'bg-crimson', 'icon_color' => 'brightness-0 invert'],
