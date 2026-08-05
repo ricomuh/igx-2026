@@ -32,12 +32,11 @@ jobs:
       - name: Curl Public (trace)
         run: |
           echo "===== PUBLIC igx-03 ====="
-          curl -s --max-time 25 https://igx-03.leolitgames.com/ -o /tmp/trace.html -w "code=%{http_code}\n"
-          echo "--- trace (first 3000 chars) ---"
-          head -c 3000 /tmp/trace.html
-          echo
+          curl -s --max-time 25 https://igx-03.leolitgames.com/ -o /dev/null -w "code=%{http_code}\n"
           echo "===== PUBLIC ticket.igx-03 ====="
-          curl -s --max-time 25 https://ticket.igx-03.leolitgames.com/ -o /dev/null -w "code=%{http_code}\n" || true
+          curl -s --max-time 25 https://ticket.igx-03.leolitgames.com/ -o /tmp/ticket.html -w "code=%{http_code}\n" || true
+          echo "--- ticket trace (first 4000 chars) ---"
+          head -c 4000 /tmp/ticket.html
 
       - name: SSH Revert Debug
         env:
