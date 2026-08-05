@@ -10,7 +10,7 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      - name: SSH Diagnostics
+      - name: SSH Diagnostics Phase 2
         env:
           SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
           HOST: ${{ secrets.HOSTINGER_HOST }}
@@ -20,19 +20,28 @@ jobs:
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
           sshpass -e ssh $SSH_OPTS $USER@$HOST '
             cd domains/igx.co.id
-            echo "===== PHP VERSION ====="
-            /opt/alt/php84/usr/bin/php --version | head -1
-            echo "===== BOOTSTRAP CACHE ====="
-            ls -la bootstrap/cache/ | grep -E "config|route|view|events|packages" || echo "no cached files"
-            echo "===== STORAGE PERMS ====="
-            ls -ld storage storage/logs bootstrap/cache
-            echo "===== LARAVEL LOG (last 60 lines) ====="
-            tail -60 storage/logs/laravel.log 2>/dev/null || echo "no log file"
-            echo "===== ENV CHECK (masked) ====="
-            grep -E "^(APP_ENV|APP_DEBUG|APP_URL|APP_KEY|DB_CONNECTION|DB_DATABASE|DB_HOST|DB_PORT|DB_USERNAME)" .env | sed -E "s/(=.*)/=***/" || echo "no .env"
-            echo "===== MIGRATE STATUS ====="
-            /opt/alt/php84/usr/bin/php artisan migrate:status 2>&1 | head -20 || echo "migrate:status FAIL"
-            echo "===== DB TABLE COUNT ====="
-            /opt/alt/php84/usr/bin/php -r '\''$e=parse_ini_file(".env");$p=new PDO("mysql:host=".($e["DB_HOST"]??"127.0.0.1").";dbname=".$e["DB_DATABASE"], $e["DB_USERNAME"], $e["DB_PASSWORD"]);echo "tables: ".count($p->query("SHOW TABLES")->fetchAll())."\n";'\'' 2>&1 || echo "PDO FAIL"
+            echo "===== LOG FILES ====="
+            ls -la storage/logs/
+            echo "===== HOME LOGS ====="
+            ls ~/logs/ 2>/dev/null | head
+            echo "===== LOCAL CURL (before) ====="
+            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: igx-03.leolitgames.com" http://127.0.0.1/
+            echo "===== FRESH LOG AFTER CURL ====="
+            tail -8 storage/logs/laravel.log
+            echo "===== PHP-FPM ERROR LOG (last 30) ====="
+            tail -30 ~/logs/error.log 2>/dev/null || echo "no ~/logs/error.log"
+            echo "===== ENV SPECIAL CHARS ====="
+            grep -c "!" .env || true
+            grep -c "#" .env || true
+            echo "===== INDEX.PHP head ====="
+            head -5 public_html/index.php
+            echo "===== .htaccess? ====="
+            ls -la public_html/.htaccess 2>/dev/null || echo "no .htaccess"
+            echo "===== STORAGE LINK ====="
+            ls -la public_html/storage 2>/dev/null || echo "no storage link"
+            echo "===== FRESH LOG CHECK AFTER 2nd CURL ====="
+            curl -s -o /dev/null -w "code=%{http_code}\n" -H "Host: igx-03.leolitgames.com" "http://127.0.0.1/admin"
+            sleep 1
+            tail -3 storage/logs/laravel.log
             echo "DONE"
           ' 2>&1
