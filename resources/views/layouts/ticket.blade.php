@@ -57,25 +57,25 @@
           }">
         {{-- ===== HEADER — Neo-Brutalism Style (matches igx-03.leolitgames.com) ===== --}}
         <header class="bg-secondary border-b-4 border-black relative z-20">
-            <div class="mx-auto px-5 xl:px-12 py-4 flex items-center justify-between gap-4">
+            <div class="mx-auto px-5 xl:px-12 py-2.5 flex items-center justify-between gap-4">
                 <a href="{{ route('ticket.landing') }}" class="flex items-center gap-3">
-                    <span class="bg-surface border-3 border-black p-1.5 shadow-brutal-sm rotate-[-1deg] block">
-                        <img src="{{ asset('media/images/logos/logo-stage03-v3.webp') }}" class="h-8 sm:h-10 lg:h-12" alt="IGX Logo">
+                    <span class="bg-surface border-3 border-black p-1 shadow-brutal-sm rotate-[-1deg] block">
+                        <img src="{{ asset('media/images/logos/logo-stage03-v3.webp') }}" class="h-7 sm:h-9 lg:h-10" alt="IGX Logo">
                     </span>
                     <span class="hidden sm:block">
                         <span class="block text-[10px] font-extrabold uppercase text-secondary-lighter tracking-widest leading-tight">Indonesia Game Expo 2026</span>
                         <span class="block text-xs font-extrabold uppercase text-accent leading-tight">ICE BSD · Hall 9-10 · 24-25 Oct</span>
                     </span>
                 </a>
-                <nav class="flex items-center gap-3">
+                <nav class="flex items-center gap-2 sm:gap-3">
                     {{-- Interactive Floating Cart Button --}}
                     <button @click="cartOpen = true"
-                            class="bg-highlight border-3 border-black px-4 py-2 text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-accent hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                            class="bg-highlight border-3 border-black px-3 py-1.5 text-[10px] sm:text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-accent hover:-translate-y-0.5 transition-all flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
-                        Cart (<span x-text="cartCount">0</span>)
+                        <span class="hidden sm:inline">Cart</span> (<span x-text="cartCount">0</span>)
                     </button>
                     <a href="{{ route('home') }}" target="_blank" rel="noopener"
-                       class="bg-cyan border-3 border-black px-4 py-2 text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-highlight hover:-translate-y-0.5 transition-all">
+                       class="bg-cyan border-3 border-black px-3 py-1.5 text-[10px] sm:text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-highlight hover:-translate-y-0.5 transition-all">
                         igx.co.id
                     </a>
                 </nav>
@@ -87,13 +87,10 @@
         </main>
 
         {{-- ===== FOOTER — Neo-Brutalism Style ===== --}}
-        <footer class="bg-black border-t-4 border-black py-8">
+        <footer class="bg-black border-t-4 border-black py-3">
             <div class="container mx-auto px-5 text-center">
-                <p class="text-[10px] sm:text-xs font-extrabold uppercase text-white/60 tracking-wider">
-                    Indonesia Game Expo 2026 · ICE BSD Hall 9-10 · 24-25 October 2026
-                </p>
-                <p class="text-[10px] font-bold uppercase text-white/40 mt-1">
-                    Pertanyaan? <a href="mailto:hello@igx.co.id" class="text-accent hover:text-white transition-colors underline decoration-2">hello@igx.co.id</a>
+                <p class="text-[10px] font-extrabold uppercase text-white/60 tracking-wider">
+                    Indonesia Game Expo 2026 · ICE BSD Hall 9-10 · 24-25 October 2026 · <a href="mailto:hello@igx.co.id" class="text-accent hover:text-white transition-colors underline decoration-2">hello@igx.co.id</a>
                 </p>
             </div>
         </footer>
