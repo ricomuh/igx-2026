@@ -20,8 +20,23 @@ jobs:
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -p $PORT"
           sshpass -e ssh $SSH_OPTS $USER@$HOST '
             cd domains/igx.co.id
-            echo "===== SESSION DIR ====="
-            ls -la storage/framework/sessions 2>/dev/null | head -3
+            echo "===== KERNEL RENDER TEST (ticket landing) ====="
+            /opt/alt/php84/usr/bin/php -r '\''
+              require "vendor/autoload.php";
+              $app = require "bootstrap/app.php";
+              $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+              try {
+                $req = Illuminate\Http\Request::create("http://ticket.igx-03.leolitgames.com/", "GET");
+                $res = $kernel->handle($req);
+                echo "STATUS: ".$res->getStatusCode()."\n";
+                $body = substr($res->getContent(), 0, 300);
+                echo "BODY: ".str_replace("\n", " ", $body)."\n";
+              } catch (Throwable $e) {
+                echo "EXCEPTION: ".get_class($e).": ".$e->getMessage()."\n";
+                echo "AT: ".$e->getFile().":".$e->getLine()."\n";
+                echo "TRACE0: ".($e->getTrace()[0]["file"] ?? "?").":".($e->getTrace()[0]["line"] ?? "?")." ".($e->getTrace()[0]["function"] ?? "?")."\n";
+              }
+            '\''
             echo "===== TOGGLE DEBUG ON ====="
             sed -i "s/^APP_DEBUG=.*/APP_DEBUG=true/" .env
             /opt/alt/php84/usr/bin/php artisan config:cache 2>&1 | tail -1 || echo "config:cache FAIL"
