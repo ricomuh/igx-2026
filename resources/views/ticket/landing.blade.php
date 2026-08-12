@@ -54,8 +54,8 @@
         {{-- Tickets --}}
         @if ($ticketTypes->isEmpty())
             <div class="card-brutal bg-surface p-8 text-center max-w-xl mx-auto">
-                <p class="font-extrabold uppercase text-lg">Tiket belum dibuka</p>
-                <p class="text-sm font-bold text-black/50 mt-2">Pantau terus website ini ya!</p>
+                <p class="font-extrabold uppercase text-lg">Tickets Not Open Yet</p>
+                <p class="text-sm font-bold text-black/50 mt-2">Stay tuned to this website!</p>
             </div>
         @else
             <div class="grid sm:grid-cols-2 gap-3 sm:gap-5 max-w-2xl mx-auto w-full">
