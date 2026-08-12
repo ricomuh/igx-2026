@@ -84,7 +84,7 @@
 
         {{-- CTA buttons --}}
         <div class="flex flex-wrap gap-3 justify-center">
-            <a href="#" class="btn-brutal text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group relative overflow-hidden slide-up" style="animation-delay: 0.8s">
+            <a href="{{ route('ticket.landing') }}" class="btn-brutal text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4 group relative overflow-hidden slide-up" style="animation-delay: 0.8s">
                 <span class="relative z-10 flex items-center gap-2">
                     <x-heroicon-o-ticket class="w-5 h-5" />
                     GET TICKET

@@ -2,10 +2,10 @@
 
 @php
     $badges = [
-        'pending' => ['Menunggu Pembayaran', 'bg-highlight text-black'],
-        'waiting_confirmation' => ['Menunggu Verifikasi Admin', 'bg-cyan text-black'],
-        'confirmed' => ['Pembayaran Dikonfirmasi', 'bg-accent text-white'],
-        'cancelled' => ['Dibatalkan', 'bg-crimson text-white'],
+        'pending' => ['Awaiting Payment', 'bg-highlight text-black'],
+        'waiting_confirmation' => ['Awaiting Admin Verification', 'bg-cyan text-black'],
+        'confirmed' => ['Payment Confirmed', 'bg-accent text-white'],
+        'cancelled' => ['Cancelled', 'bg-crimson text-white'],
     ];
     [$statusLabel, $statusClass] = $badges[$order->status] ?? ['Unknown', 'bg-black text-white'];
 @endphp
@@ -47,7 +47,7 @@
                     <p class="font-bold text-black/70">{{ $order->customer_email }}</p>
                 </div>
                 <div>
-                    <p class="text-xs font-extrabold uppercase text-black/40 mb-1">Tanggal Order</p>
+                    <p class="text-xs font-extrabold uppercase text-black/40 mb-1">Order Date</p>
                     <p class="font-bold text-black/70">{{ $order->created_at->timezone('Asia/Jakarta')->translatedFormat('d F Y H:i') }}</p>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <table class="w-full border-3 border-black">
                 <thead>
                     <tr class="bg-black text-white">
-                        <th class="text-left px-4 py-2 text-xs font-extrabold uppercase">Tiket</th>
+                        <th class="text-left px-4 py-2 text-xs font-extrabold uppercase">Ticket</th>
                         <th class="text-center px-4 py-2 text-xs font-extrabold uppercase">Qty</th>
                         <th class="text-right px-4 py-2 text-xs font-extrabold uppercase">Subtotal</th>
                     </tr>
@@ -96,19 +96,19 @@
             </div>
         @elseif ($order->status === 'confirmed')
             <div class="card-brutal bg-accent p-6 sm:p-10 mb-8 text-center">
-                <p class="font-extrabold uppercase text-white text-lg">Tiket Aktif!</p>
-                <p class="text-sm font-bold text-white/70 mt-2">Pembayaran dikonfirmasi {{ $order->paid_at?->timezone('Asia/Jakarta')->translatedFormat('d F Y H:i') }}. Sampai jumpa di IGX 2026!</p>
+                <p class="font-extrabold uppercase text-white text-lg">Ticket Active!</p>
+                <p class="text-sm font-bold text-white/70 mt-2">Payment confirmed {{ $order->paid_at?->timezone('Asia/Jakarta')->translatedFormat('d F Y H:i') }}. See you at IGX 2026!</p>
             </div>
         @elseif ($order->status === 'cancelled')
             <div class="card-brutal bg-crimson p-6 sm:p-10 mb-8 text-center">
-                <p class="font-extrabold uppercase text-white text-lg">Order Dibatalkan</p>
-                <p class="text-sm font-bold text-white/70 mt-2">Hubungi panitia untuk informasi lebih lanjut.</p>
+                <p class="font-extrabold uppercase text-white text-lg">Order Cancelled</p>
+                <p class="text-sm font-bold text-white/70 mt-2">Contact the organizer for more information.</p>
             </div>
         @endif
 
         <p class="text-center">
             <a href="{{ route('ticket.landing') }}" class="inline-flex items-center gap-2 text-sm font-extrabold uppercase text-primary-dark hover:text-accent transition-colors">
-                &larr; Kembali ke Beranda Tiket
+                &larr; Back to Tickets
             </a>
         </p>
     </div>

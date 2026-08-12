@@ -74,7 +74,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
                         <span class="hidden sm:inline">Cart</span> (<span x-text="cartCount">0</span>)
                     </button>
-                    <a href="{{ route('home') }}" target="_blank" rel="noopener"
+                    <a href="https://igx.co.id" target="_blank" rel="noopener"
                        class="bg-cyan border-3 border-black px-3 py-1.5 text-[10px] sm:text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-highlight hover:-translate-y-0.5 transition-all">
                         igx.co.id
                     </a>
@@ -87,10 +87,17 @@
         </main>
 
         {{-- ===== FOOTER — Neo-Brutalism Style ===== --}}
-        <footer class="bg-black border-t-4 border-black py-3">
-            <div class="container mx-auto px-5 text-center">
+        <footer class="bg-black border-t-4 border-black py-4">
+            <div class="container mx-auto px-5 text-center space-y-2">
                 <p class="text-[10px] font-extrabold uppercase text-white/60 tracking-wider">
                     Indonesia Game Expo 2026 · ICE BSD Hall 9-10 · 24-25 October 2026 · <a href="mailto:Indonesiagameexpo@igx.co.id" class="text-accent hover:text-white transition-colors underline decoration-2">Indonesiagameexpo@igx.co.id</a>
+                </p>
+                <p class="text-[10px] font-extrabold uppercase text-white/40 tracking-wider">
+                    <a href="https://igx.co.id/contact-us" target="_blank" rel="noopener" class="hover:text-white transition-colors">Contact Us</a>
+                    <span class="mx-2">·</span>
+                    <a href="https://igx.co.id/terms-of-service" target="_blank" rel="noopener" class="hover:text-white transition-colors">Terms of Service</a>
+                    <span class="mx-2">·</span>
+                    <a href="https://igx.co.id/privacy-policy" target="_blank" rel="noopener" class="hover:text-white transition-colors">Privacy Policy</a>
                 </p>
             </div>
         </footer>
@@ -121,8 +128,8 @@
                 <div class="flex-1 overflow-y-auto space-y-4 pr-1">
                     <template x-if="cart.length === 0">
                         <div class="card-brutal bg-surface p-8 text-center my-10">
-                            <p class="font-extrabold uppercase text-black/50">Keranjang Belanja Kosong</p>
-                            <p class="text-xs font-bold text-black/40 mt-1">Pilih tiket di halaman depan untuk memesan.</p>
+                            <p class="font-extrabold uppercase text-black/50">Your Cart is Empty</p>
+                            <p class="text-xs font-bold text-black/40 mt-1">Pick tickets on the main page to order.</p>
                         </div>
                     </template>
 

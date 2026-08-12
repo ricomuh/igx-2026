@@ -1,4 +1,4 @@
-@extends('layouts.ticket', ['title' => 'Tiket'])
+@extends('layouts.ticket', ['title' => 'Ticket'])
 
 @section('content')
 {{-- ===== FULL-HEIGHT HERO — countdown + tickets in one viewport ===== --}}
@@ -88,7 +88,7 @@
                                             class="bg-bg border-3 border-black w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center font-extrabold shadow-brutal-sm hover:bg-black/5 transition-colors shrink-0">+</button>
                                     <button @click="addToCart({{ $type->id }}, '{{ addslashes($type->name) }}', {{ $type->price }}, qty)"
                                             class="flex-1 bg-accent border-3 border-black px-3 py-2 text-[11px] sm:text-xs font-extrabold uppercase text-black shadow-brutal-sm hover:bg-highlight hover:shadow-brutal transition-all">
-                                        + Keranjang
+                                        + Cart
                                     </button>
                                 </div>
                             @endif

@@ -22,7 +22,7 @@
                 'Experience' =>  route("experiences"),
                 'Rundown' =>  route("rundown"),
                 'Promo' =>  route("promo"),
-                'Tiket' => route("ticket.landing"),
+                'Ticket' => route("ticket.landing"),
                 'Gallery' =>  route("gallery"),
                 'News' => route("news.index")
             ] as $name => $link)
