@@ -119,6 +119,19 @@
                 </div>
             </div>
 
+            {{-- 3. Organizer --}}
+            <div>
+                <h2 class="font-extrabold uppercase text-black mb-4 text-sm tracking-wider">3. Organizer</h2>
+                <div class="border-3 border-black bg-bg px-5 py-4 space-y-1">
+                    <p class="font-extrabold uppercase text-black text-sm">PT Daya Kreasi Asasta</p>
+                    <p class="text-xs font-bold text-black/60 leading-relaxed">
+                        MyRepublic Plaza, Wing A, Lt. Dasar, Zona 6<br>
+                        Jl. Grand Boulevard, BSD Green Office Park, BSD City<br>
+                        Sampora, Cisauk, Kab. Tangerang, Banten 15345
+                    </p>
+                </div>
+            </div>
+
             <div class="bg-cyan/10 border-3 border-black px-5 py-4 flex items-center gap-4">
                 <span class="w-10 h-10 shrink-0 bg-cyan border-2 border-black flex items-center justify-center">
                     <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
