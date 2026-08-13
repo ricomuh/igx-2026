@@ -43,6 +43,19 @@
                     <p class="text-xs font-bold text-black/60 uppercase">Send us a message</p>
                 </a>
             </div>
+
+            {{-- Company Address --}}
+            <div class="card-brutal bg-surface mt-8 p-8 text-center">
+                <div class="bg-black/10 border-3 border-black w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <x-heroicon-o-building-office-2 class="w-10 h-10 text-black" />
+                </div>
+                <h2 class="text-xl sm:text-2xl font-extrabold uppercase text-black mb-4">PT Daya Kreasi Asasta</h2>
+                <p class="text-sm font-bold text-black/60 uppercase leading-relaxed">
+                    MyRepublic Plaza, Wing A, Lt. Dasar, Zona 6<br>
+                    Jl. Grand Boulevard, BSD Green Office Park, BSD City<br>
+                    Sampora, Cisauk, Kab. Tangerang, Banten 15345
+                </p>
+            </div>
         </div>
     </div>
 </div>
