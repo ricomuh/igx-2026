@@ -99,17 +99,7 @@
             </a>
         </div>
 
-        {{-- Mini stats --}}
-        <div class="mt-6 inline-flex gap-2">
-            <div class="bg-black border-2 border-white/20 px-2 py-0.5">
-                <span class="text-[9px] font-bold text-white/50 uppercase">HALL 09-10</span>
-            </div>
-            <div class="bg-black border-2 border-highlight/30 px-2 py-0.5">
-                <span class="text-[9px] font-bold text-highlight uppercase">
-                    <x-heroicon-o-user-group class="w-3 h-3 inline -mt-0.5" /> 10K+ EXPECTED
-                </span>
-            </div>
-        </div>
+
 
         </div>{{-- end text overlap --}}
 
