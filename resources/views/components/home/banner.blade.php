@@ -72,7 +72,8 @@
         {{-- Subtitle + date --}}
         <div class="inline-flex flex-col sm:flex-row gap-2 sm:gap-0 mb-6">
             <div class="bg-highlight border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[-1.5deg] slide-up" style="animation-delay: 0.5s">
-                <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black">ICE BSD</span>
+                <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black leading-tight block">ICE BSD</span>
+                <span class="text-[10px] sm:text-xs font-extrabold uppercase text-black leading-tight tracking-wider block bg-accent px-1.5 py-0.5 border-2 border-black shadow-brutal-sm mt-1">Hall 09-10</span>
             </div>
             <div class="bg-surface border-3 border-black px-4 py-2 sm:px-6 sm:py-3 shadow-brutal-sm rotate-[1deg] sm:-ml-2 slide-up" style="animation-delay: 0.6s">
                 <span class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black">24-25 OCT</span>
