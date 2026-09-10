@@ -23,6 +23,7 @@ Route::domain(config('app.ticket_domain'))->name('ticket.')->group(function () {
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');
+Route::get('/card-maker', fn() => view('card-maker.index'))->name('card-maker');
 Route::get('/experiences', fn() => view('coming-soon'))->name('experiences');
 Route::get('/experiences/leaderboard', fn() => view('coming-soon'))->name('experiences.leaderboard');
 Route::get('/guests', GuestController::class)->name('guests');

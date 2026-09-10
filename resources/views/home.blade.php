@@ -125,6 +125,33 @@
                     </div>
                 </div>
 
+                {{-- CARD 4: IGX CARD GENERATOR --}}
+                <div class="card-brutal bg-surface group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col">
+                    <div class="bg-highlight border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
+                        <span class="text-xs font-extrabold uppercase text-black tracking-wider flex items-center gap-2">
+                            <x-heroicon-o-identification class="w-4 h-4" /> MISSION 05
+                        </span>
+                        <span class="text-[9px] font-bold text-black/60 uppercase">INTERACTIVE</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="border-2 border-black overflow-hidden mb-3 aspect-[16/10] bg-secondary">
+                                <img src="{{ asset('media/images/card-maker/preview.webp') }}"
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                     alt="IGX Card Generator">
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-1">IGX Card Generator</h3>
+                            <p class="text-xs font-bold text-black/60 uppercase leading-relaxed mb-3">
+                                "Turn yourself into a collectible card!"
+                            </p>
+                        </div>
+                        <a href="{{ route('card-maker') }}" class="mt-2 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-accent hover:text-highlight transition-colors group/link">
+                            CREATE YOUR CARD
+                            <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+                    </div>
+                </div>
+
                 {{-- CARD 5: RUNDOWN — COMING SOON --}}
                 <div class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col">
                     <div class="bg-cyan border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
