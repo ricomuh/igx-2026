@@ -141,7 +141,7 @@ body { background-color: #322366 !important; }
                 <div class="card-brutal overflow-hidden inline-block">
                     <canvas id="card-canvas"
                             style="display:block; max-width:100%; height:auto;"
-                            width="630" height="787">
+                            width="1260" height="1574">
                     </canvas>
                 </div>
                 <p class="mt-3 text-[10px] font-bold text-surface/50 uppercase tracking-wider text-center">
@@ -186,7 +186,7 @@ ttFont.load().then(f => {
 // ─── State ────────────────────────────────────────────────
 let croppedDataUrl = null;
 let cropper = null;
-const W = 630, H = 787;
+const W = 1260, H = 1574;
 
 // Template images
 const imgBg   = new Image();
@@ -228,9 +228,9 @@ function renderCard() {
         ctx.fillRect(0, 0, W, H);
     }
 
-    // Photo area (scaled from 4117×5146 → 630×787, uniform scale 0.153):
-    // (817,1308)->(3298,4389) => canvas x=125,y=200,w=380,h=471
-    const PX = 125, PY = 200, PW = 380, PH = 471;
+    // Photo area (scaled from 4117×5146 → 1260×1574, uniform scale 0.306):
+    // (817,1308)->(3298,4389) => canvas x=250,y=400,w=760,h=942
+    const PX = 250, PY = 400, PW = 760, PH = 942;
 
     if (croppedDataUrl) {
         const photoImg = new Image();
@@ -247,7 +247,7 @@ function renderCard() {
         ctx.fillStyle = '#9A94CC';
         ctx.fillRect(PX, PY, PW, PH);
         ctx.fillStyle = '#ffffff66';
-        ctx.font = 'bold 15px sans-serif';
+        ctx.font = 'bold 30px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('Upload your photo', PX + PW/2, PY + PH/2);
@@ -258,29 +258,29 @@ function renderCard() {
 
 function drawText(ctx, name, desc) {
     // ── Name ──────────────────────────────────────────────
-    // Original: right x=3284 → canvas x=503; posisi sedikit lebih bawah (y=213)
-    // Font size dinamis nama: 34..18px (untuk max 20 chars)
+    // Original: right x=503 → ×2 = 1006; y=187 → ×2 = 374
+    // Font size dinamis nama: 68..36px (untuk max 20 chars)
     if (name) {
         const len = name.length;
-        const size = Math.round(34 - (len - 1) * (16 / 19)); // 34..18px
+        const size = Math.round(68 - (len - 1) * (32 / 19)); // 68..36px
         ctx.save();
         ctx.font = `800 ${size}px "TT Rounds Neue", Arial, sans-serif`;
         ctx.fillStyle = '#4750d0';
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
-        ctx.fillText(name.toUpperCase(), 503, 187);
+        ctx.fillText(name.toUpperCase(), 1006, 374);
         ctx.restore();
     }
 
     // ── Description ───────────────────────────────────────
-    // Desc box canvas: x=157, y=528, w=316, h=71 → pad 8px inside
+    // Desc box canvas: x=314, y=1056, w=632, h=142 → pad 16px inside
     if (desc) {
         ctx.save();
-        ctx.font = '800 11px "TT Rounds Neue", Arial, sans-serif';
+        ctx.font = '800 22px "TT Rounds Neue", Arial, sans-serif';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        wrapText(ctx, desc, 165, 536, 300, 16, 4);
+        wrapText(ctx, desc, 330, 1072, 600, 32, 4);
         ctx.restore();
     }
 }
