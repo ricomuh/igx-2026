@@ -340,10 +340,13 @@ function openCropper(src) {
             aspectRatio: 380 / 471,
             viewMode: 1,
             autoCropArea: 0.9,
-            movable: true,
-            zoomable: true,
+            movable: false,
+            zoomable: false,
             rotatable: false,
             scalable: false,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            dragMode: 'none',
         });
     }, 100);
 }
