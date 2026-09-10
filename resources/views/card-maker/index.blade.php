@@ -358,7 +358,7 @@ function cancelCrop() {
 
 function confirmCrop() {
     if (!cropper) return;
-    const cropCanvas = cropper.getCroppedCanvas({ width: 760, height: 942 });
+    const cropCanvas = cropper.getCroppedCanvas({ width: 1520, height: 1884 });
     croppedDataUrl = cropCanvas.toDataURL('image/png');
 
     // Update thumb
@@ -370,18 +370,62 @@ function confirmCrop() {
     renderCard();
 }
 
-// ─── Download ─────────────────────────────────────────────
+// ─── Download (2× HD) ─────────────────────────────────────
 function downloadCard() {
-    // Force re-render then grab PNG
-    renderCard();
-    // Give async photo draw time to finish
-    setTimeout(() => {
-        const canvas = document.getElementById('card-canvas');
-        const link   = document.createElement('a');
-        link.download = 'igx-card.png';
-        link.href    = canvas.toDataURL('image/png');
-        link.click();
-    }, 300);
+    const SCALE  = 2;
+    const hdW    = W * SCALE;
+    const hdH    = H * SCALE;
+
+    const hdCanvas = document.createElement('canvas');
+    hdCanvas.width  = hdW;
+    hdCanvas.height = hdH;
+    const hdCtx = hdCanvas.getContext('2d');
+    hdCtx.scale(SCALE, SCALE);
+
+    const name = document.getElementById('input-name').value;
+    const desc = document.getElementById('input-desc').value;
+
+    // 1. Background
+    if (bgLoaded) hdCtx.drawImage(imgBg, 0, 0, W, H);
+    else {
+        hdCtx.fillStyle = '#322366';
+        hdCtx.fillRect(0, 0, W, H);
+    }
+
+    // 2. Photo
+    const drawFgAndText = () => {
+        if (fgLoaded) hdCtx.drawImage(imgFg, 0, 0, W, H);
+        drawText(hdCtx, name, desc);
+
+        hdCanvas.toBlob((blob) => {
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'igx-card.png';
+            link.href     = url;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }, 'image/png');
+    };
+
+    if (croppedDataUrl) {
+        const photoImg  = new Image();
+        photoImg.onload = () => {
+            hdCtx.drawImage(photoImg, PX, PY, PW, PH);
+            drawFgAndText();
+        };
+        photoImg.src = croppedDataUrl;
+    } else {
+        hdCtx.fillStyle = '#9A94CC';
+        hdCtx.fillRect(PX, PY, PW, PH);
+        hdCtx.fillStyle = '#ffffff66';
+        hdCtx.font = 'bold 30px sans-serif';
+        hdCtx.textAlign = 'center';
+        hdCtx.textBaseline = 'middle';
+        hdCtx.fillText('Upload your photo', PX + PW/2, PY + PH/2);
+        drawFgAndText();
+    }
 }
 
 // Initial render
