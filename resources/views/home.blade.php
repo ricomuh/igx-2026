@@ -135,9 +135,9 @@
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <div class="border-2 border-black overflow-hidden mb-3 aspect-[4/5] bg-secondary">
+                            <div class="border-2 border-black overflow-hidden mb-3 h-40 sm:h-44 bg-secondary">
                                 <img src="{{ asset('media/images/card-maker/preview.webp') }}"
-                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                                      alt="IGX Card Generator">
                             </div>
                             <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-1">IGX Card Generator</h3>
