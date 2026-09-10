@@ -101,12 +101,12 @@ body { background-color: #322366 !important; }
                             <label class="block text-xs font-extrabold uppercase text-black tracking-wider">
                                 Name
                             </label>
-                            <span id="name-count" class="char-count">0/14</span>
+                            <span id="name-count" class="char-count">0/20</span>
                         </div>
-                        <input type="text" id="input-name" maxlength="14"
+                        <input type="text" id="input-name" maxlength="20"
                                placeholder="Your name..."
                                class="w-full border-3 border-black px-3 py-2 text-sm font-bold bg-surface focus:outline-none focus:bg-highlight/10"
-                               oninput="updateCount('input-name','name-count',14); renderCard()">
+                               oninput="updateCount('input-name','name-count',20); renderCard()">
                     </div>
 
                     {{-- Description --}}
@@ -115,12 +115,12 @@ body { background-color: #322366 !important; }
                             <label class="block text-xs font-extrabold uppercase text-black tracking-wider">
                                 Description
                             </label>
-                            <span id="desc-count" class="char-count">0/160</span>
+                            <span id="desc-count" class="char-count">0/200</span>
                         </div>
-                        <textarea id="input-desc" maxlength="160" rows="4"
+                        <textarea id="input-desc" maxlength="200" rows="4"
                                   placeholder="Describe yourself..."
                                   class="w-full border-3 border-black px-3 py-2 text-sm font-bold bg-surface focus:outline-none focus:bg-highlight/10 resize-none"
-                                  oninput="updateCount('input-desc','desc-count',160); renderCard()"></textarea>
+                                  oninput="updateCount('input-desc','desc-count',200); renderCard()"></textarea>
                     </div>
 
                     {{-- Download --}}
@@ -259,10 +259,10 @@ function renderCard() {
 function drawText(ctx, name, desc) {
     // ── Name ──────────────────────────────────────────────
     // Original: right x=3284 → canvas x=503; posisi sedikit lebih bawah (y=213)
-    // Font size dinamis nama: 34..22px (turun dikit dari 39..25px)
+    // Font size dinamis nama: 34..18px (untuk max 20 chars)
     if (name) {
         const len = name.length;
-        const size = Math.round(34 - (len - 1) * (12 / 13)); // 34..22px
+        const size = Math.round(34 - (len - 1) * (16 / 19)); // 34..18px
         ctx.save();
         ctx.font = `800 ${size}px "TT Rounds Neue", Arial, sans-serif`;
         ctx.fillStyle = '#4750d0';
