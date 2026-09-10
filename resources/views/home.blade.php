@@ -133,22 +133,24 @@
                         </span>
                         <span class="text-[9px] font-bold text-black/60 uppercase">INTERACTIVE</span>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <div class="border-2 border-black overflow-hidden mb-3 h-40 sm:h-44 bg-secondary">
-                                <img src="{{ asset('media/images/card-maker/preview.webp') }}"
-                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                                     alt="IGX Card Generator">
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-black mb-1">IGX Card Generator</h3>
-                            <p class="text-xs font-bold text-black/60 uppercase leading-relaxed mb-3">
-                                "Turn yourself into a collectible card!"
-                            </p>
+                    <div class="p-4 flex-1 flex items-center gap-4">
+                        <div class="w-24 sm:w-28 shrink-0 border-2 border-black overflow-hidden aspect-[4/5] bg-secondary shadow-brutal-sm">
+                            <img src="{{ asset('media/images/card-maker/preview.webp') }}"
+                                 class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                 alt="IGX Card Generator">
                         </div>
-                        <a href="{{ route('card-maker') }}" class="mt-2 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-accent hover:text-highlight transition-colors group/link">
-                            CREATE YOUR CARD
-                            <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                        </a>
+                        <div class="flex-1 flex flex-col justify-between h-full">
+                            <div>
+                                <h3 class="text-base sm:text-lg font-extrabold uppercase text-black mb-1">IGX Card Generator</h3>
+                                <p class="text-[11px] sm:text-xs font-bold text-black/60 uppercase leading-snug mb-2">
+                                    "Turn yourself into a collectible card!"
+                                </p>
+                            </div>
+                            <a href="{{ route('card-maker') }}" class="inline-flex items-center gap-1 text-[11px] sm:text-xs font-extrabold uppercase text-accent hover:text-highlight transition-colors group/link">
+                                CREATE YOUR CARD
+                                <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
