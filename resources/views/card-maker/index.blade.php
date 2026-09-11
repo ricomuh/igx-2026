@@ -416,9 +416,12 @@ function downloadCard() {
 
         hdCanvas.toBlob((blob) => {
             const url  = URL.createObjectURL(blob);
-            const link = document.createElement('a');
+            const name    = document.getElementById('input-name').value.trim();
+            const ts      = new Date().toISOString().slice(0,19).replace(/[:T]/g, '-');
+            const slug    = name ? name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' : '';
+            const link    = document.createElement('a');
             link.href     = url;
-            link.download = 'igx-card.png';
+            link.download = `igx-card-${slug}${ts}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
