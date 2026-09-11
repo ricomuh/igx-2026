@@ -400,8 +400,15 @@ function downloadCard() {
         hdCanvas.toBlob((blob) => {
             const url  = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.download = 'igx-card.png';
-            link.href     = url;
+            link.href  = url;
+            // mobile browsers often block download attribute — open in new tab as fallback
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (isMobile) {
+                link.target = '_blank';
+                link.rel    = 'noopener';
+            } else {
+                link.download = 'igx-card.png';
+            }
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
