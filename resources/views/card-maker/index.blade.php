@@ -203,6 +203,9 @@ let croppedDataUrl = null;
 let cropper = null;
 const W = 1260, H = 1574;
 
+// Photo area constants (global)
+const PX = 250, PY = 400, PW = 760, PH = 942;
+
 // Template images
 const imgBg   = new Image();
 const imgFg   = new Image();
@@ -245,7 +248,6 @@ function renderCard() {
 
     // Photo area (scaled from 4117×5146 → 1260×1574, uniform scale 0.306):
     // (817,1308)->(3298,4389) => canvas x=250,y=400,w=760,h=942
-    const PX = 250, PY = 400, PW = 760, PH = 942;
 
     if (croppedDataUrl) {
         const photoImg = new Image();
