@@ -131,6 +131,21 @@ body { background-color: #322366 !important; }
                 </div>
             </div>
 
+            {{-- Save Modal (mobile) --}}
+            <div id="save-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;align-items:center;justify-content:center;padding:16px;">
+                <div class="bg-surface border-3 border-black shadow-brutal p-4 w-full max-w-sm mx-auto">
+                    <h3 class="text-base font-extrabold uppercase mb-1 text-black">Simpan Kartu</h3>
+                    <p class="text-[11px] font-bold text-black/60 uppercase mb-3">Tekan lama gambar → Save Image</p>
+                    <div class="border-2 border-black mb-4 overflow-hidden">
+                        <img id="save-modal-img" src="" alt="IGX Card" style="width:100%;display:block;">
+                    </div>
+                    <button onclick="document.getElementById('save-modal').style.display='none'"
+                        class="btn-brutal w-full py-2 text-sm font-extrabold uppercase">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+
             {{-- RIGHT: Preview --}}
             <div class="w-full lg:flex-1 flex flex-col items-center">
                 <div class="mb-3">
@@ -398,21 +413,24 @@ function downloadCard() {
         drawText(hdCtx, name, desc);
 
         hdCanvas.toBlob((blob) => {
-            const url  = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href  = url;
-            // mobile browsers often block download attribute — open in new tab as fallback
+            const url      = URL.createObjectURL(blob);
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
             if (isMobile) {
-                link.target = '_blank';
-                link.rel    = 'noopener';
+                // Show modal with image — user long-press to save
+                const modal = document.getElementById('save-modal');
+                const img   = document.getElementById('save-modal-img');
+                img.src     = url;
+                modal.style.display = 'flex';
+                setTimeout(() => URL.revokeObjectURL(url), 60000);
             } else {
+                const link    = document.createElement('a');
+                link.href     = url;
                 link.download = 'igx-card.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
             }
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
         }, 'image/png');
     };
 
