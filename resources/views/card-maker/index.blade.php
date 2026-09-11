@@ -415,24 +415,29 @@ function downloadCard() {
         drawText(hdCtx, name, desc);
 
         hdCanvas.toBlob((blob) => {
-            const url      = URL.createObjectURL(blob);
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (isMobile) {
-                // Show modal with image — user long-press to save
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href     = url;
+            link.download = 'igx-card.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Fallback: if download didn't trigger (common on mobile),
+            // show modal after 800ms so user can long-press save
+            const timer = setTimeout(() => {
                 const modal = document.getElementById('save-modal');
                 const img   = document.getElementById('save-modal-img');
                 img.src     = url;
                 modal.style.display = 'flex';
                 setTimeout(() => URL.revokeObjectURL(url), 60000);
-            } else {
-                const link    = document.createElement('a');
-                link.href     = url;
-                link.download = 'igx-card.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
-            }
+            }, 800);
+
+            // If download worked, blob URL revoke after 5s
+            setTimeout(() => {
+                clearTimeout(timer);
+                URL.revokeObjectURL(url);
+            }, 5000);
         }, 'image/png');
     };
 
