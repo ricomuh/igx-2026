@@ -387,7 +387,7 @@ function confirmCrop() {
     renderCard();
 }
 
-// ─── Download (2× HD) ─────────────────────────────────────
+// ─── Download (2× HD) + Submit to server ──────────────────
 function downloadCard() {
     const SCALE  = 2;
     const hdW    = W * SCALE;
@@ -415,19 +415,37 @@ function downloadCard() {
         drawText(hdCtx, name, desc);
 
         hdCanvas.toBlob((blob) => {
-            const url  = URL.createObjectURL(blob);
-            const name    = document.getElementById('input-name').value.trim();
+            // ── Trigger browser download ──
+            const url     = URL.createObjectURL(blob);
+            const nameVal = document.getElementById('input-name').value.trim();
             const ts      = new Date().toISOString().slice(0,19).replace(/[:T]/g, '-');
-            const slug    = name ? name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' : '';
+            const slug    = nameVal ? nameVal.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' : '';
             const link    = document.createElement('a');
             link.href     = url;
             link.download = `igx-card-${slug}${ts}.png`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-
-            // Fallback modal disabled — download works on all browsers
             setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+            // ── Submit to server silently (fire-and-forget) ──
+            const reader = new FileReader();
+            reader.onload = () => {
+                const b64 = reader.result; // data:image/png;base64,...
+                fetch('{{ route("card-maker.submit") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({
+                        name:  document.getElementById('input-name').value.trim(),
+                        description: document.getElementById('input-desc').value.trim(),
+                        image: b64,
+                    }),
+                }).catch(() => {}); // silent — never alert user on failure
+            };
+            reader.readAsDataURL(blob);
         }, 'image/png');
     };
 

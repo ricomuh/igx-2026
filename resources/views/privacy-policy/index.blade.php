@@ -26,6 +26,7 @@
                 <li><span class="font-extrabold">Website Visitors:</span> No personal information collected. Basic technical data may be processed automatically for security purposes only.</li>
                 <li><span class="font-extrabold">Game Participants:</span> Email and username submitted voluntarily — used only for leaderboard display and prize winner contact.</li>
                 <li><span class="font-extrabold">Ticket Buyers:</span> When you purchase a ticket through IGX's own ticketing system, we collect and store: full name, age, gender, nationality, email address, and phone number. We also store your order details (ticket type, quantity, total amount, order status and number). This data is required to process and fulfil your ticket order and for event entry verification.</li>
+                <li><span class="font-extrabold">IGX Card Maker:</span> When you download a card you created using the IGX Card Maker tool, we automatically save a copy of your card image along with the name and description you entered. We also record your IP address, browser/device information, and the time of submission. This data is used solely to populate the public Card Gallery (after manual review and approval by IGX staff) and to prevent abuse. No card will appear in the gallery without explicit approval.</li>
             </ul>
 
             <h2 class="text-lg font-extrabold uppercase mt-8 mb-3 border-b-3 border-black pb-2">How We Use Your Information</h2>
@@ -34,6 +35,7 @@
                 <li>Contact winners for prize distribution</li>
                 <li>Process and manage your ticket purchase, payment status, and event entry</li>
                 <li>Contact you about your order (confirmation, payment, or event updates)</li>
+                <li>Display your IGX Card in the public Card Gallery (pending admin approval) and prevent spam submissions</li>
             </ul>
             <p class="text-sm lg:text-base mb-4">No marketing, third-party sharing, or other purposes.</p>
 

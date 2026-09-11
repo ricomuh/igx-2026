@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CardMakerController;
 use App\Http\Controllers\ExhibitorController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GalleryController;
@@ -23,7 +24,9 @@ Route::domain(config('app.ticket_domain'))->name('ticket.')->group(function () {
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/pals', fn() => view('igx-pals.index'))->name('pals');
-Route::get('/card-maker', fn() => view('card-maker.index'))->name('card-maker');
+Route::get('/card-maker', [CardMakerController::class, 'index'])->name('card-maker');
+Route::post('/card-maker/submit', [CardMakerController::class, 'store'])->name('card-maker.submit');
+Route::get('/card-maker/gallery', [CardMakerController::class, 'gallery'])->name('card-maker.gallery');
 Route::get('/experiences', fn() => view('coming-soon'))->name('experiences');
 Route::get('/experiences/leaderboard', fn() => view('coming-soon'))->name('experiences.leaderboard');
 Route::get('/guests', GuestController::class)->name('guests');
