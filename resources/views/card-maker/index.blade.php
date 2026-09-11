@@ -155,7 +155,7 @@ body { background-color: #322366 !important; }
                 </div>
                 <div class="card-brutal overflow-hidden inline-block">
                     <canvas id="card-canvas"
-                            style="display:block; max-width:100%; height:auto;"
+                            style="display:block; width:100%; height:auto; vertical-align:bottom;"
                             width="1260" height="1574">
                     </canvas>
                 </div>
