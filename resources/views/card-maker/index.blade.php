@@ -432,7 +432,7 @@ function downloadCard() {
             const reader = new FileReader();
             reader.onload = () => {
                 const b64 = reader.result; // data:image/png;base64,...
-                fetch('{{ route("card-maker.submit") }}', {
+                fetch(window.location.origin + '/card-maker/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
