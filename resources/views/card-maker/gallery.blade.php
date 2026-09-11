@@ -62,7 +62,7 @@ body { background-color: #322366 !important; }
                 <div class="group flex flex-col">
                     <div class="card-brutal overflow-hidden border-3 border-black shadow-brutal transition-transform group-hover:-translate-y-1">
                         <img
-                            src="{{ Storage::url(str_replace('public/', '', $submission->card_image_path)) }}"
+                            src="{{ $submission->card_image_url }}"
                             alt="IGX Card — {{ e($submission->name) }}"
                             loading="lazy"
                             class="w-full h-auto block"

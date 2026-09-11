@@ -429,23 +429,41 @@ function downloadCard() {
             setTimeout(() => URL.revokeObjectURL(url), 5000);
 
             // ── Submit to server silently (fire-and-forget) ──
-            const reader = new FileReader();
-            reader.onload = () => {
-                const b64 = reader.result; // data:image/png;base64,...
-                fetch(window.location.origin + '/card-maker/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    },
-                    body: JSON.stringify({
-                        name:  document.getElementById('input-name').value.trim(),
-                        description: document.getElementById('input-desc').value.trim(),
-                        image: b64,
-                    }),
-                }).catch(() => {}); // silent — never alert user on failure
+            // Downscale 2×→1× + re-encode WebP so the base64 payload stays
+            // under nginx client_max_body_size (1MB default → 413 error).
+            const gCanvas = document.createElement('canvas');
+            gCanvas.width  = W;
+            gCanvas.height = H;
+            const gCtx = gCanvas.getContext('2d');
+            gCtx.imageSmoothingQuality = 'high';
+            gCtx.drawImage(hdCanvas, 0, 0, W, H);
+
+            const sendGallery = (quality) => {
+                gCanvas.toBlob((gBlob) => {
+                    if (!gBlob) return;
+                    // Still too big? Re-encode at lower quality.
+                    if (gBlob.size > 700 * 1024 && quality > 0.4) {
+                        return sendGallery(quality - 0.2);
+                    }
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        fetch(window.location.origin + '/card-maker/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') || {}).content,
+                            },
+                            body: JSON.stringify({
+                                name:  document.getElementById('input-name').value.trim(),
+                                description: document.getElementById('input-desc').value.trim(),
+                                image: reader.result,
+                            }),
+                        }).catch(() => {}); // silent — never alert user on failure
+                    };
+                    reader.readAsDataURL(gBlob);
+                }, 'image/webp', quality);
             };
-            reader.readAsDataURL(blob);
+            sendGallery(0.8);
         }, 'image/png');
     };
 

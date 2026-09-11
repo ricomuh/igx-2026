@@ -47,27 +47,28 @@ class CardMakerController extends Controller
             'image'       => ['required', 'string'], // base64 PNG data URL
         ]);
 
-        // Decode base64 image
+        // Decode base64 image (png / jpeg / webp data URL)
         $imageData = $request->input('image');
-        if (!str_starts_with($imageData, 'data:image/png;base64,')) {
+        if (!preg_match('/^data:image\/(png|jpeg|webp);base64,/', $imageData, $m)) {
             return response()->json(['success' => false], 422);
         }
+        $ext = $m[1] === 'jpeg' ? 'jpg' : $m[1];
 
-        $base64 = substr($imageData, strlen('data:image/png;base64,'));
+        $base64 = substr($imageData, strpos($imageData, ';base64,') + 8);
         $decoded = base64_decode($base64);
-        if ($decoded === false) {
+        if ($decoded === false || strlen($decoded) > 2 * 1024 * 1024) {
             return response()->json(['success' => false], 422);
         }
 
         // Save image to storage
-        $filename = 'cards/' . Str::uuid() . '.png';
+        $filename = 'cards/' . Str::uuid() . '.' . $ext;
         Storage::disk('public')->put($filename, $decoded);
 
         // Save submission
         CardMakerSubmission::create([
             'name'             => $request->input('name'),
             'description'      => $request->input('description'),
-            'card_image_path'  => 'public/' . $filename,
+            'card_image_path'  => $filename,
             'ip_address'       => $ip,
             'user_agent'       => substr($request->userAgent() ?? '', 0, 500),
             'status'           => 'pending',
