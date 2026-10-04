@@ -14,12 +14,16 @@
  */
 
 (function (root, factory) {
+    const api = factory();
+    if (typeof globalThis !== 'undefined') globalThis.IgxGameApi = api;
+    if (typeof window !== 'undefined') window.IgxGameApi = api;
+    if (typeof self !== 'undefined') self.IgxGameApi = api;
     if (typeof define === 'function' && define.amd) {
-        define([], factory);
+        define([], () => api);
     } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
+        module.exports = api;
     } else {
-        root.IgxGameApi = factory();
+        root.IgxGameApi = api;
     }
 }(typeof self !== 'undefined' ? self : this, function () {
     'use strict';
