@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GameSession;
 use App\Models\Score;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,15 @@ class ExperienceController extends Controller
 
         $gameVersion = "3.4";
 
-        return view('experience.index', compact('leaderboard', 'gameVersion'));
+        // Generate a new secure session token for this player embed
+        $session = GameSession::createSession(
+            isDemo: false,
+            ip: $request->ip(),
+            userAgent: $request->userAgent()
+        );
+        $param = $session->token;
+
+        return view('experience.index', compact('leaderboard', 'gameVersion', 'param'));
     }
 
     public function leaderboard(Request $request)

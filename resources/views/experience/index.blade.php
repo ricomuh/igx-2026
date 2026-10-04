@@ -196,7 +196,12 @@
         {{-- Game iframe --}}
         <div class="flex-1 flex items-center justify-center p-1 sm:p-4">
             <div id="gameContainer" class="w-full h-full max-w-5xl border-3 border-black shadow-brutal-lg bg-black" style="min-height: 500px;">
-                <iframe src="https://experience.igx.co.id/{{ $gameVersion }}"
+                @php
+                    $iframeBase = rtrim(config('game.experience_iframe_url', 'https://experience.igx.co.id'), '/');
+                    $versionPath = !empty($gameVersion) ? '/' . trim($gameVersion, '/') : '';
+                    $iframeSrc = $iframeBase . $versionPath . '/?param=' . urlencode($param ?? '');
+                @endphp
+                <iframe src="{{ $iframeSrc }}"
                         style="width: 100%; height: 100%; min-height: 500px; border: none;"
                         allow="autoplay; fullscreen"
                         allowfullscreen

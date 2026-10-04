@@ -3,73 +3,131 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\GameSession;
 use App\Models\Score;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 
 class ScoreController extends Controller
 {
     public function store(Request $request)
     {
         try {
-            // Validate the request data
-            $request->validate([
+            // Check if request is encrypted (standard requirement)
+            if ($request->has(['param', 'payload', 'iv'])) {
+                $param = (string) $request->input('param');
+                $payloadB64 = (string) $request->input('payload');
+                $ivB64 = (string) $request->input('iv');
+
+                // 1. Verify and consume the one-time game session parameter
+                $session = GameSession::verifyAndConsume($param);
+                if (!$session) {
+                    return response()->json([
+                        'message' => 'Invalid, expired, or already used game session parameter.',
+                        'error' => 'invalid_session',
+                    ], 403);
+                }
+
+                // 2. Derive key: SHA-256(KEY_CONST + ":" + param)
+                $secretKey = config('game.secret_key');
+                $derivedKey = hash('sha256', $secretKey . ':' . $param, true);
+
+                $cipherRaw = base64_decode($payloadB64, true);
+                $ivRaw = base64_decode($ivB64, true);
+
+                if ($cipherRaw === false || $ivRaw === false || strlen($ivRaw) !== 16) {
+                    return response()->json([
+                        'message' => 'Invalid base64 payload or IV length.',
+                        'error' => 'invalid_payload_format',
+                    ], 400);
+                }
+
+                // 3. Decrypt AES-256-CBC
+                $decrypted = openssl_decrypt($cipherRaw, 'AES-256-CBC', $derivedKey, OPENSSL_RAW_DATA, $ivRaw);
+                if ($decrypted === false) {
+                    return response()->json([
+                        'message' => 'Decryption failed. Invalid payload or encryption key.',
+                        'error' => 'decryption_failed',
+                    ], 400);
+                }
+
+                $data = json_decode($decrypted, true);
+                if (!is_array($data)) {
+                    return response()->json([
+                        'message' => 'Decrypted data is not valid JSON.',
+                        'error' => 'invalid_json',
+                    ], 422);
+                }
+            } elseif (!app()->isProduction() && $request->has(['username', 'email', 'score'])) {
+                // Allow unencrypted payload only in non-production environments for testing
+                $data = $request->only(['username', 'email', 'score']);
+            } else {
+                return response()->json([
+                    'message' => 'Encrypted score payload (param, payload, iv) is required.',
+                    'error' => 'encrypted_payload_required',
+                ], 400);
+            }
+
+            // 4. Validate decrypted payload
+            $validator = Validator::make($data, [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'score' => 'required|integer|min:0',
             ]);
 
-            // validate the username to trim whitespace, and remove any special characters, only allowing a-z (undercase), 0-9, dot, and underscore
-            $username = preg_replace('/[^a-z0-9._]/', '', strtolower(trim($request->input('username'))));
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Validation error on score data',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
 
-            // Check if the username is empty after sanitization
+            // 5. Sanitize username: only lowercase a-z, 0-9, dot, underscore
+            $username = preg_replace('/[^a-z0-9._]/', '', strtolower(trim($data['username'])));
             if (empty($username)) {
                 return response()->json([
-                    'message' => 'Invalid username provided',
+                    'message' => 'Invalid username provided after sanitization.',
                 ], 400);
             }
 
-            // // Check if the username already exists
-            // if (Score::where('username', $username)->exists()) {
-            //     return response()->json([
-            //         'message' => 'Username already exists',
-            //     ], 400);
-            // }
-
-            // Create a new score entry
+            // 6. Record score
             $score = Score::create([
                 'username' => $username,
-                'email' => $request->input('email'),
-                'score' => $request->input('score'),
+                'email' => $data['email'],
+                'score' => (int) $data['score'],
             ]);
 
-            // send a notification to the user via email
-            Notification::route('mail', $score->email)
-                ->notify(new \App\Notifications\NewScoreNotification($score));
+            // 7. Optional notification email (fail-safe so mail glitches don't break score saving)
+            try {
+                Notification::route('mail', $score->email)
+                    ->notify(new \App\Notifications\NewScoreNotification($score));
+            } catch (\Throwable $e) {
+                Log::warning('Score notification email failed: ' . $e->getMessage());
+            }
 
-            // get leaderbord scores in this week starting on monday at 10am
+            // 8. Weekly leaderboard scores (starting Monday 10am)
+            $weekStart = now()->startOfWeek()->addHours(10);
             $leaderboardScores = Score::orderBy('score', 'desc')
-                ->where('created_at', '>=', now()->startOfWeek()->addHours(10))
+                ->where('created_at', '>=', $weekStart)
                 ->take(10)
                 ->get(['username', 'score']);
 
-            // get the user's position in the leaderboard in this week
-            $userPosition = Score::where('created_at', '>=', now()->startOfWeek()->addHours(10))
+            // 9. User position
+            $userPosition = Score::where('created_at', '>=', $weekStart)
                 ->where('score', '>', $score->score)
                 ->count() + 1;
 
-            // Return a response with the created score
             return response()->json([
-                'message' => 'Score created successfully',
+                'message' => 'Score recorded successfully',
                 'data' => $score,
                 'leaderboard' => $leaderboardScores,
                 'position' => $userPosition,
             ], 201);
-        } catch (\Exception $e) {
-            // Handle any exceptions that occur
+        } catch (\Throwable $e) {
             return response()->json([
-                'message' => 'Error creating score',
+                'message' => 'Error recording score',
                 'error' => $e->getMessage(),
             ], 500);
         }
