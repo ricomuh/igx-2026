@@ -150,6 +150,58 @@ Merekam skor pemain ke leaderboard mingguan IGX.
 
 ---
 
+### Endpoint 3: Ambil Data Leaderboard
+
+Membaca daftar peringkat skor tertinggi. Dapat dipanggil kapan saja tanpa perlu enkripsi atau autentikasi (publik).
+
+- **URL:** `/api/v1/leaderboard` *(alias: `/api/v1/scores`)*
+- **Method:** `GET`
+- **Headers:**
+  ```http
+  Accept: application/json
+  ```
+- **Query Parameters:**
+  - `limit` (opsional, integer): Jumlah baris peringkat yang diambil (default: `10`, max: `100`).
+  - `period` (opsional, string):
+    - `weekly` (default): Hanya skor dalam periode minggu ini (dihitung mulai Senin pukul 10:00 WIB).
+    - `all` / `all_time`: Skor sepanjang masa (*all-time high scores*).
+
+#### Contoh Request:
+```http
+GET /api/v1/leaderboard?limit=10&period=weekly
+```
+
+#### Response Sukses (200 OK):
+```json
+{
+  "success": true,
+  "period": "weekly",
+  "count": 3,
+  "data": [
+    {
+      "rank": 1,
+      "username": "pro_gamer",
+      "score": 25000,
+      "created_at": "2026-10-04T18:20:00+00:00"
+    },
+    {
+      "rank": 2,
+      "username": "player_one",
+      "score": 12500,
+      "created_at": "2026-10-04T20:45:00+00:00"
+    },
+    {
+      "rank": 3,
+      "username": "rival_x",
+      "score": 9800,
+      "created_at": "2026-10-04T19:10:00+00:00"
+    }
+  ]
+}
+```
+
+---
+
 ## 4. Panduan Integrasi di Construct 3
 
 File SDK JavaScript sudah disediakan dan siap pakai:
@@ -235,6 +287,30 @@ Saat pemain selesai bermain dan memasukkan username serta email, panggil action 
 })();
 ```
 
+#### C. Membaca Leaderboard (Misal di Menu Utama / Tombol Leaderboard):
+Tambahkan action **Run JavaScript**:
+
+```javascript
+(async () => {
+    try {
+        const api = globalThis.IgxGameApi || window.IgxGameApi;
+        // Ambil 10 teratas minggu ini (default) atau all-time ('all')
+        const res = await api.getLeaderboard(10, 'weekly');
+
+        if (res.success) {
+            console.log("Leaderboard loaded:", res.data);
+            // Simpan JSON ke Global Variable Construct 3 untuk di-render di Text / List
+            runtime.globalVars.LeaderboardJson = JSON.stringify(res.data);
+            runtime.callFunction("OnLeaderboardLoaded");
+        } else {
+            console.error("Failed to load leaderboard:", res.message);
+        }
+    } catch (err) {
+        console.error("Leaderboard error:", err);
+    }
+})();
+```
+
 ---
 
 ## 5. Ringkasan Checklist untuk Game Programmer
@@ -243,4 +319,5 @@ Saat pemain selesai bermain dan memasukkan username serta email, panggil action 
 - [ ] Atur environment target (`'stage'` untuk testing, `'prod'` untuk rilis akhir).
 - [ ] Panggil `await IgxGameApi.init()` di layout awal.
 - [ ] Panggil `await IgxGameApi.sendScore(name, email, score)` di layout Game Over.
+- [ ] Panggil `await IgxGameApi.getLeaderboard()` saat menampilkan papan peringkat.
 - [ ] Tampilkan `result.position` (peringkat mingguan) dan `result.leaderboard` di UI game.

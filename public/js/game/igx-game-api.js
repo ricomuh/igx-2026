@@ -288,6 +288,47 @@
                 leaderboard: result.leaderboard || [],
             };
         },
+
+        /**
+         * Fetch leaderboard scores
+         * 
+         * @param {number} limit Number of top scores (default: 10, max: 100)
+         * @param {string} period 'weekly' (default, resets Monday 10:00) or 'all_time'
+         * @returns {Promise<object>} { success: true, period: 'weekly', count: 10, data: [{ rank, username, score, created_at }] }
+         */
+        getLeaderboard: async function (limit = 10, period = 'weekly') {
+            const params = new URLSearchParams({
+                limit: String(limit),
+                period: String(period),
+            });
+            const endpoint = `${this.getBaseUrl()}/api/v1/leaderboard?${params.toString()}`;
+
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
+
+            const result = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                return {
+                    success: false,
+                    status: response.status,
+                    message: result.message || 'Failed to fetch leaderboard',
+                    data: [],
+                };
+            }
+
+            return {
+                success: true,
+                status: response.status,
+                period: result.period || period,
+                count: result.count || (result.data ? result.data.length : 0),
+                data: result.data || [],
+            };
+        },
     };
 
     return IgxGameApi;

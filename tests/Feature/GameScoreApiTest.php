@@ -177,4 +177,53 @@ class GameScoreApiTest extends TestCase
         $response->assertSee('experience.igx.co.id');
         $response->assertSee('?param=');
     }
+
+    public function test_can_fetch_weekly_leaderboard(): void
+    {
+        // Setup scores
+        Score::create(['username' => 'player_top', 'email' => 'top@igx.co.id', 'score' => 9999, 'created_at' => now()]);
+        Score::create(['username' => 'player_mid', 'email' => 'mid@igx.co.id', 'score' => 5000, 'created_at' => now()]);
+        Score::create(['username' => 'player_low', 'email' => 'low@igx.co.id', 'score' => 1000, 'created_at' => now()]);
+
+        // Old score (last month)
+        $old = Score::create(['username' => 'old_player', 'email' => 'old@igx.co.id', 'score' => 99999]);
+        $old->created_at = now()->subWeeks(3);
+        $old->save();
+
+        $response = $this->getJson('/api/v1/scores?limit=5');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'success',
+                'period',
+                'count',
+                'data' => [
+                    '*' => ['rank', 'username', 'score', 'created_at'],
+                ],
+            ]);
+
+        $this->assertEquals(3, $response->json('count'));
+        $this->assertEquals('player_top', $response->json('data.0.username'));
+        $this->assertEquals(9999, $response->json('data.0.score'));
+        $this->assertEquals(1, $response->json('data.0.rank'));
+
+        // Also test /api/v1/leaderboard alias
+        $aliasResponse = $this->getJson('/api/v1/leaderboard');
+        $aliasResponse->assertStatus(200);
+        $this->assertEquals('player_top', $aliasResponse->json('data.0.username'));
+    }
+
+    public function test_can_fetch_all_time_leaderboard(): void
+    {
+        Score::create(['username' => 'current_champ', 'email' => 'c@igx.co.id', 'score' => 5000, 'created_at' => now()]);
+        Score::create(['username' => 'ancient_legend', 'email' => 'legend@igx.co.id', 'score' => 88888, 'created_at' => now()->subWeeks(4)]);
+
+        $response = $this->getJson('/api/v1/leaderboard?period=all');
+
+        $response->assertStatus(200);
+        $this->assertEquals('all_time', $response->json('period'));
+        $this->assertEquals(2, $response->json('count'));
+        $this->assertEquals('ancient_legend', $response->json('data.0.username'));
+        $this->assertEquals(88888, $response->json('data.0.score'));
+    }
 }

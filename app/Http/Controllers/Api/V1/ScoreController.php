@@ -12,6 +12,44 @@ use Illuminate\Support\Facades\Validator;
 
 class ScoreController extends Controller
 {
+    /**
+     * Get leaderboard scores (public endpoint).
+     */
+    public function index(Request $request)
+    {
+        $limit = min(max((int) $request->input('limit', 10), 1), 100);
+        $period = (string) $request->input('period', 'weekly');
+
+        $query = Score::query()->orderBy('score', 'desc')->orderBy('created_at', 'asc');
+
+        if ($period !== 'all' && $period !== 'all_time') {
+            $weekStart = now()->startOfWeek()->addHours(10);
+            if (now()->lt($weekStart)) {
+                $weekStart = $weekStart->subWeek();
+            }
+            $query->where('created_at', '>=', $weekStart);
+        }
+
+        $scores = $query->take($limit)->get(['username', 'score', 'created_at']);
+
+        $rank = 1;
+        $leaderboard = $scores->map(function ($item) use (&$rank) {
+            return [
+                'rank' => $rank++,
+                'username' => $item->username,
+                'score' => (int) $item->score,
+                'created_at' => $item->created_at?->toIso8601String(),
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'period' => in_array($period, ['all', 'all_time'], true) ? 'all_time' : 'weekly',
+            'count' => $leaderboard->count(),
+            'data' => $leaderboard,
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {
