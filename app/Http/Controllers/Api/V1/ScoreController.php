@@ -190,14 +190,24 @@ class ScoreController extends Controller
 
             // 8. Weekly leaderboard scores (starting Monday 10am)
             $weekStart = now()->startOfWeek()->addHours(10);
+            if (now()->lt($weekStart)) {
+                $weekStart = $weekStart->subWeek();
+            }
             $leaderboardScores = Score::orderBy('score', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->where('created_at', '>=', $weekStart)
                 ->take(10)
                 ->get(['username', 'score']);
 
-            // 9. User position
+            // 9. User position (with tie-breaker matching leaderboard sort order)
             $userPosition = Score::where('created_at', '>=', $weekStart)
-                ->where('score', '>', $score->score)
+                ->where(function ($q) use ($score) {
+                    $q->where('score', '>', $score->score)
+                      ->orWhere(function ($sub) use ($score) {
+                          $sub->where('score', '=', $score->score)
+                              ->where('created_at', '<', $score->created_at);
+                      });
+                })
                 ->count() + 1;
 
             return response()->json([
