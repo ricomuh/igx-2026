@@ -42,12 +42,55 @@ class ScoreController extends Controller
             ];
         });
 
-        return response()->json([
+        // Optional: query specific player rank (if username or email passed)
+        $playerData = null;
+        if ($target = $request->input('username') ?? $request->input('email')) {
+            $target = trim((string) $target);
+            $targetClean = preg_replace('/[^a-z0-9._]/', '', strtolower($target));
+
+            $playerScore = Score::query()
+                ->when($period !== 'all' && $period !== 'all_time', fn($q) => $q->where('created_at', '>=', $weekStart))
+                ->where(function ($q) use ($target, $targetClean) {
+                    $q->where('username', $targetClean)
+                      ->orWhere('email', $target);
+                })
+                ->orderBy('score', 'desc')
+                ->orderBy('created_at', 'asc')
+                ->first();
+
+            if ($playerScore) {
+                $playerRank = Score::query()
+                    ->when($period !== 'all' && $period !== 'all_time', fn($q) => $q->where('created_at', '>=', $weekStart))
+                    ->where(function ($q) use ($playerScore) {
+                        $q->where('score', '>', $playerScore->score)
+                          ->orWhere(function ($sub) use ($playerScore) {
+                              $sub->where('score', '=', $playerScore->score)
+                                  ->where('created_at', '<', $playerScore->created_at);
+                          });
+                    })
+                    ->count() + 1;
+
+                $playerData = [
+                    'rank' => $playerRank,
+                    'username' => $playerScore->username,
+                    'score' => (int) $playerScore->score,
+                    'created_at' => $playerScore->created_at?->toIso8601String(),
+                ];
+            }
+        }
+
+        $response = [
             'success' => true,
             'period' => in_array($period, ['all', 'all_time'], true) ? 'all_time' : 'weekly',
             'count' => $leaderboard->count(),
             'data' => $leaderboard,
-        ]);
+        ];
+
+        if ($playerData) {
+            $response['player'] = $playerData;
+        }
+
+        return response()->json($response);
     }
 
     public function store(Request $request)

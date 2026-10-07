@@ -294,13 +294,18 @@
          * 
          * @param {number} limit Number of top scores (default: 10, max: 100)
          * @param {string} period 'weekly' (default, resets Monday 10:00) or 'all_time'
-         * @returns {Promise<object>} { success: true, period: 'weekly', count: 10, data: [{ rank, username, score, created_at }] }
+         * @param {string|null} username Optional username to also fetch player personal rank
+         * @returns {Promise<object>} { success: true, period: 'weekly', count: 10, data: [{ rank, username, score, created_at }], player: { rank, username, score } | null }
          */
-        getLeaderboard: async function (limit = 10, period = 'weekly') {
-            const params = new URLSearchParams({
+        getLeaderboard: async function (limit = 10, period = 'weekly', username = null) {
+            const queryObj = {
                 limit: String(limit),
                 period: String(period),
-            });
+            };
+            if (username) {
+                queryObj.username = String(username).trim();
+            }
+            const params = new URLSearchParams(queryObj);
             const endpoint = `${this.getBaseUrl()}/api/v1/leaderboard?${params.toString()}`;
 
             const response = await fetch(endpoint, {
@@ -318,6 +323,7 @@
                     status: response.status,
                     message: result.message || 'Failed to fetch leaderboard',
                     data: [],
+                    player: null,
                 };
             }
 
@@ -327,6 +333,7 @@
                 period: result.period || period,
                 count: result.count || (result.data ? result.data.length : 0),
                 data: result.data || [],
+                player: result.player || null,
             };
         },
     };

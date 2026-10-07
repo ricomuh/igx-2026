@@ -207,10 +207,13 @@ class GameScoreApiTest extends TestCase
         $this->assertEquals(9999, $response->json('data.0.score'));
         $this->assertEquals(1, $response->json('data.0.rank'));
 
-        // Also test /api/v1/leaderboard alias
-        $aliasResponse = $this->getJson('/api/v1/leaderboard');
+        // Also test /api/v1/leaderboard alias with specific username
+        $aliasResponse = $this->getJson('/api/v1/leaderboard?username=player_mid');
         $aliasResponse->assertStatus(200);
         $this->assertEquals('player_top', $aliasResponse->json('data.0.username'));
+        $this->assertEquals(2, $aliasResponse->json('player.rank'));
+        $this->assertEquals('player_mid', $aliasResponse->json('player.username'));
+        $this->assertEquals(5000, $aliasResponse->json('player.score'));
     }
 
     public function test_can_fetch_all_time_leaderboard(): void

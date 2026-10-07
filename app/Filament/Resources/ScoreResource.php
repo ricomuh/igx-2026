@@ -26,6 +26,10 @@ class ScoreResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('index')
+                    ->rowIndex()
+                    ->label('#')
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable()
                     ->sortable(),
