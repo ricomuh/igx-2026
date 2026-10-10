@@ -19,7 +19,6 @@
     }
 
     #panzoom-target {
-        transform-origin: 0 0;
         cursor: grab;
     }
 
@@ -48,7 +47,7 @@
 
     <div class="container mx-auto px-4 sm:px-6 xl:px-12 pt-6 sm:pt-8 relative z-10">
         {{-- Page Header --}}
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5 sm:mb-6">
             <div>
                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                     <span class="bg-mint text-black border-2 border-black shadow-brutal-sm text-[10px] sm:text-xs font-black uppercase px-2.5 py-0.5 rotate-[-1deg]">
@@ -95,16 +94,16 @@
         {{-- Interactive Map Viewer Box --}}
         <div id="map-fullscreen-container"
              class="relative border-4 border-black shadow-brutal bg-[#1A1040] overflow-hidden"
-             style="height: calc(100vh - 270px); min-height: 520px; max-height: 820px;">
+             style="height: clamp(480px, 70vh, 840px);">
 
             {{-- Floating Controls Bar (Top Right) --}}
-            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex items-center gap-1.5 sm:gap-2 bg-surface/95 border-3 border-black shadow-brutal-sm p-1.5 sm:p-2">
+            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex items-center gap-1 sm:gap-2 bg-surface/95 border-3 border-black shadow-brutal-sm p-1.5 sm:p-2">
                 <button type="button" id="btn-zoom-in"
                         class="w-8 h-8 sm:w-9 sm:h-9 bg-primary hover:bg-highlight text-black border-2 border-black font-black text-lg flex items-center justify-center cursor-pointer transition-colors shadow-sm active:translate-y-0.5"
                         title="Zoom In (+)">
                     +
                 </button>
-                <div id="zoom-level" class="px-2 text-[11px] sm:text-xs font-black text-black min-w-[50px] text-center select-none">
+                <div id="zoom-level" class="px-1.5 sm:px-2 text-[11px] sm:text-xs font-black text-black min-w-[46px] sm:min-w-[50px] text-center select-none">
                     100%
                 </div>
                 <button type="button" id="btn-zoom-out"
@@ -115,7 +114,7 @@
                 <div class="w-[2px] h-6 bg-black/20 mx-0.5"></div>
                 <button type="button" id="btn-reset"
                         class="px-2 sm:px-2.5 h-8 sm:h-9 bg-highlight hover:bg-accent hover:text-white text-black border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center cursor-pointer transition-colors active:translate-y-0.5"
-                        title="Reset View">
+                        title="Reset & Center View">
                     ⟲ Reset
                 </button>
                 <button type="button" id="btn-fullscreen"
@@ -138,13 +137,12 @@
             </div>
 
             {{-- Panzoom Viewport Canvas --}}
-            <div id="panzoom-viewport" class="map-viewport w-full h-full flex items-center justify-center overflow-hidden">
-                <div id="panzoom-target" class="inline-block">
+            <div id="panzoom-viewport" class="map-viewport w-full h-full relative overflow-hidden select-none" style="touch-action: none;">
+                <div id="panzoom-target" class="absolute top-0 left-0" style="touch-action: none; transform-origin: 0 0; will-change: transform;">
                     <img id="map-image"
                          src="{{ asset('media/images/map/map.webp') }}"
                          alt="IGX 2026 Official Floor Plan"
-                         class="block max-w-none shadow-2xl"
-                         style="width: 1600px; height: auto;"
+                         class="block pointer-events-none select-none shadow-2xl"
                          draggable="false">
                 </div>
             </div>
@@ -200,62 +198,104 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnReset = document.getElementById('btn-reset');
     const btnFullscreen = document.getElementById('btn-fullscreen');
     const fsContainer = document.getElementById('map-fullscreen-container');
+    const img = document.getElementById('map-image');
 
     if (!panzoomTarget || typeof Panzoom === 'undefined') return;
 
-    // Initialize Panzoom
-    const panzoom = Panzoom(panzoomTarget, {
-        maxScale: 6,
-        minScale: 0.25,
-        step: 0.25,
-        canvas: true,
-        contain: 'outside'
-    });
+    let panzoomInstance = null;
+    let initialFitScale = 1;
 
-    // Initial scale calculation to fit the viewport nicely
-    function fitMapToViewport() {
+    function initOrResetMap() {
         const vw = viewport.clientWidth;
         const vh = viewport.clientHeight;
-        const img = document.getElementById('map-image');
-        const imgW = img.naturalWidth || 1600;
-        const imgH = img.naturalHeight || 1290;
+        if (!vw || !vh) return;
 
-        const scaleW = (vw * 0.92) / imgW;
-        const scaleH = (vh * 0.92) / imgH;
-        const initialScale = Math.min(scaleW, scaleH, 1.0);
+        // Map aspect ratio from natural image dimensions (4530 x 3655)
+        const natW = img.naturalWidth || 4530;
+        const natH = img.naturalHeight || 3655;
+        const aspect = natW / natH;
 
-        panzoom.zoom(initialScale, { animate: true });
-        panzoom.pan((vw - (imgW * initialScale)) / 2, (vh - (imgH * initialScale)) / 2, { animate: true });
+        // Base width coordinate space
+        const baseW = 2400;
+        const baseH = Math.round(baseW / aspect);
+
+        panzoomTarget.style.width = baseW + 'px';
+        panzoomTarget.style.height = baseH + 'px';
+        img.style.width = '100%';
+        img.style.height = '100%';
+
+        // Fit whole map inside the viewport with comfortable padding
+        const padX = vw < 640 ? 12 : 28;
+        const padY = vh < 640 ? 12 : 28;
+        const fitW = Math.max(80, vw - padX * 2);
+        const fitH = Math.max(80, vh - padY * 2);
+
+        const fitScale = Math.min(fitW / baseW, fitH / baseH);
+        initialFitScale = fitScale;
+
+        // Centered coordinates
+        const renderedW = baseW * fitScale;
+        const renderedH = baseH * fitScale;
+        // Panzoom renders `scale(s) translate(x, y)`, so the translate values are
+        // in pre-scale units: divide the screen offset by the scale.
+        const startX = (vw - renderedW) / 2 / fitScale;
+        const startY = (vh - renderedH) / 2 / fitScale;
+
+        if (!panzoomInstance) {
+            panzoomInstance = Panzoom(panzoomTarget, {
+                origin: '0 0',
+                maxScale: 6,
+                minScale: Math.max(0.05, fitScale * 0.4),
+                step: 0.3,
+                startX: startX,
+                startY: startY,
+                startScale: fitScale,
+                touchAction: 'none'
+            });
+
+            // Wheel zoom
+            viewport.addEventListener('wheel', function(event) {
+                event.preventDefault();
+                panzoomInstance.zoomWithWheel(event);
+            }, { passive: false });
+
+            // Update zoom indicator: 100% means the full overview fit
+            panzoomTarget.addEventListener('panzoomchange', function(e) {
+                const s = e.detail.scale;
+                const pct = Math.round((s / initialFitScale) * 100);
+                zoomLevelEl.textContent = pct + '%';
+            });
+
+            // Double click zoom in
+            viewport.addEventListener('dblclick', function(e) {
+                panzoomInstance.zoomIn({ animate: true });
+            });
+        } else {
+            panzoomInstance.setOptions({
+                minScale: Math.max(0.05, fitScale * 0.4),
+                startX: startX,
+                startY: startY,
+                startScale: fitScale
+            });
+            panzoomInstance.reset({ animate: true });
+        }
+
+        zoomLevelEl.textContent = '100%';
     }
-
-    // Attach mouse wheel zoom
-    viewport.addEventListener('wheel', function(event) {
-        event.preventDefault();
-        panzoom.zoomWithWheel(event);
-    }, { passive: false });
-
-    // Update zoom indicator on transform
-    panzoomTarget.addEventListener('panzoomchange', function(e) {
-        const scale = e.detail.scale;
-        zoomLevelEl.textContent = Math.round(scale * 100) + '%';
-    });
 
     // Control buttons
     btnZoomIn.addEventListener('click', function() {
-        panzoom.zoomIn({ animate: true });
+        if (panzoomInstance) panzoomInstance.zoomIn({ animate: true });
     });
 
     btnZoomOut.addEventListener('click', function() {
-        panzoom.zoomOut({ animate: true });
+        if (panzoomInstance) panzoomInstance.zoomOut({ animate: true });
     });
 
     btnReset.addEventListener('click', function() {
-        fitMapToViewport();
-    });
-
-    // Double click to zoom in
-    viewport.addEventListener('dblclick', function(e) {
-        panzoom.zoomIn({ animate: true });
+        if (panzoomInstance) {
+            initOrResetMap();
+        }
     });
 
     // Fullscreen toggle
@@ -267,15 +307,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Wait for map image load to set initial fit
-    const img = document.getElementById('map-image');
-    if (img.complete) {
-        fitMapToViewport();
+    // Fullscreen change listener to readjust fit if needed
+    document.addEventListener('fullscreenchange', function() {
+        setTimeout(initOrResetMap, 150);
+    });
+
+    if (img.complete && img.naturalWidth) {
+        initOrResetMap();
     } else {
-        img.addEventListener('load', fitMapToViewport);
+        img.addEventListener('load', initOrResetMap);
     }
 
-    window.addEventListener('resize', fitMapToViewport);
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initOrResetMap, 150);
+    });
 });
 
 // Modal functions
