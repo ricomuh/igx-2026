@@ -35,6 +35,7 @@ Route::get('/rundown', fn() => view('coming-soon'))->name('rundown');
 Route::get('/exhibitors', ExhibitorController::class)->name('exhibitors');
 Route::get('/promo', fn() => view('coming-soon'))->name('promo');
 Route::get('/gallery', GalleryController::class)->name('gallery');
+Route::get('/map', fn() => view('map.index'))->name('map');
 Route::as('news.')->prefix('news')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('show');

@@ -39,6 +39,8 @@
             </div>
         </main>
 
+        <x-card.map />
+
         @stack('scripts')
     </body>
 

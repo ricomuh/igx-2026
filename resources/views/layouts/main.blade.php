@@ -39,6 +39,8 @@
             @include('layouts.partials.footer')
         </main>
 
+        <x-card.map />
+
         @stack('scripts')
     </body>
 </html>
