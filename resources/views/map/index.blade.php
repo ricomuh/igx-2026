@@ -18,12 +18,10 @@
         -webkit-user-select: none;
     }
 
-    #panzoom-target {
-        cursor: grab;
-    }
-
-    #panzoom-target:active {
-        cursor: grabbing;
+    /* Panzoom sets the grab cursor inline on the viewport (canvas: true),
+       so overriding it while dragging needs to win against that inline style. */
+    #panzoom-viewport:active {
+        cursor: grabbing !important;
     }
 
     /* Modal transition */
@@ -138,7 +136,7 @@
 
             {{-- Panzoom Viewport Canvas --}}
             <div id="panzoom-viewport" class="map-viewport w-full h-full relative overflow-hidden select-none" style="touch-action: none;">
-                <div id="panzoom-target" class="absolute top-0 left-0" style="touch-action: none; transform-origin: 0 0; will-change: transform;">
+                <div id="panzoom-target" class="absolute top-0 left-0" style="touch-action: none; will-change: transform;">
                     <img id="map-image"
                          src="{{ asset('media/images/map/map.webp') }}"
                          alt="IGX 2026 Official Floor Plan"
@@ -204,6 +202,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let panzoomInstance = null;
     let initialFitScale = 1;
+    let baseW = 2400;
+    let baseH = 1937;
+    const ZOOM_STEP = 0.3;
+
+    // Animated zoom that keeps the map point under (clientX, clientY) in place.
+    // Mirrors Panzoom's own zoomToPoint, which can't animate.
+    function zoomAt(scale, clientX, clientY) {
+        const opts = panzoomInstance.getOptions();
+        const rect = viewport.getBoundingClientRect();
+        const to = Math.min(opts.maxScale, Math.max(opts.minScale, scale));
+        panzoomInstance.zoom(to, {
+            animate: true,
+            focal: {
+                x: (clientX - rect.left - baseW / 2) * to,
+                y: (clientY - rect.top - baseH / 2) * to
+            }
+        });
+    }
+
+    function zoomAtViewportCenter(factor) {
+        const rect = viewport.getBoundingClientRect();
+        zoomAt(panzoomInstance.getScale() * factor, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }
 
     function initOrResetMap() {
         const vw = viewport.clientWidth;
@@ -216,8 +237,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const aspect = natW / natH;
 
         // Base width coordinate space
-        const baseW = 2400;
-        const baseH = Math.round(baseW / aspect);
+        baseW = 2400;
+        baseH = Math.round(baseW / aspect);
 
         panzoomTarget.style.width = baseW + 'px';
         panzoomTarget.style.height = baseH + 'px';
@@ -233,20 +254,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const fitScale = Math.min(fitW / baseW, fitH / baseH);
         initialFitScale = fitScale;
 
-        // Centered coordinates
-        const renderedW = baseW * fitScale;
-        const renderedH = baseH * fitScale;
-        // Panzoom renders `scale(s) translate(x, y)`, so the translate values are
-        // in pre-scale units: divide the screen offset by the scale.
-        const startX = (vw - renderedW) / 2 / fitScale;
-        const startY = (vh - renderedH) / 2 / fitScale;
+        // Panzoom renders `scale(s) translate(x, y)` around a centered transform-origin,
+        // putting the element's top-left at `baseW / 2 * (1 - s) + s * x`. Solving that for a
+        // centered map gives the line below — note it uses the UNSCALED base width.
+        const startX = (vw - baseW) / 2 / fitScale;
+        const startY = (vh - baseH) / 2 / fitScale;
 
         if (!panzoomInstance) {
             panzoomInstance = Panzoom(panzoomTarget, {
-                origin: '0 0',
+                // Pointer input is handled by bindPointerGestures() below. Panzoom's own
+                // pinch adds scale linearly with finger distance (far too fast at our
+                // small fit scale) and re-zooms around a midpoint that wobbles as each
+                // finger reports separately, so the map drifts away from the fingers.
+                noBind: true,
+                // Still put the grab cursor on the viewport rather than the map.
+                canvas: true,
+                cursor: 'grab',
+                // Leave `origin` alone: zoomToPoint offsets the focal point by half the
+                // element's size, which only lines up with the default '50% 50%'. Setting
+                // it to '0 0' throws pinch and wheel zoom off by half the map.
                 maxScale: 6,
                 minScale: Math.max(0.05, fitScale * 0.4),
-                step: 0.3,
+                step: ZOOM_STEP,
                 startX: startX,
                 startY: startY,
                 startScale: fitScale,
@@ -266,10 +295,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 zoomLevelEl.textContent = pct + '%';
             });
 
-            // Double click zoom in
+            // Double click / double tap zooms in on that spot
             viewport.addEventListener('dblclick', function(e) {
-                panzoomInstance.zoomIn({ animate: true });
+                zoomAt(panzoomInstance.getScale() * Math.exp(ZOOM_STEP), e.clientX, e.clientY);
             });
+
+            bindPointerGestures();
         } else {
             panzoomInstance.setOptions({
                 minScale: Math.max(0.05, fitScale * 0.4),
@@ -283,13 +314,95 @@ document.addEventListener('DOMContentLoaded', function () {
         zoomLevelEl.textContent = '100%';
     }
 
+    // One-finger / mouse drag pans; two fingers pinch-zoom and pan together.
+    function bindPointerGestures() {
+        const pointers = new Map();
+        let gesture = null;
+
+        // Panzoom renders `scale(s) translate(x, y)` around the element's centre, so a
+        // viewport point v shows map point q (relative to that centre) where
+        // v = baseSize / 2 + s * (q + pan). Pinch keeps q fixed under the fingers.
+        function viewportPoint(clientX, clientY) {
+            const rect = viewport.getBoundingClientRect();
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function startGesture() {
+            const pts = Array.from(pointers.values());
+            const scale = panzoomInstance.getScale();
+            const pan = panzoomInstance.getPan();
+
+            if (pts.length >= 2) {
+                const mid = viewportPoint((pts[0].x + pts[1].x) / 2, (pts[0].y + pts[1].y) / 2);
+                gesture = {
+                    type: 'pinch',
+                    scale: scale,
+                    distance: Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) || 1,
+                    // The map point under the fingers' midpoint, which stays pinned there.
+                    anchorX: (mid.x - baseW / 2) / scale - pan.x,
+                    anchorY: (mid.y - baseH / 2) / scale - pan.y
+                };
+            } else if (pts.length === 1) {
+                gesture = { type: 'pan', clientX: pts[0].x, clientY: pts[0].y, panX: pan.x, panY: pan.y, scale: scale };
+            } else {
+                gesture = null;
+            }
+        }
+
+        function onPointerDown(e) {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            e.preventDefault();
+            // Keep receiving moves when a finger slides off the viewport. Throws if the
+            // pointer is already gone, which is harmless here.
+            try { viewport.setPointerCapture(e.pointerId); } catch (err) {}
+            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            startGesture();
+        }
+
+        function onPointerMove(e) {
+            if (!pointers.has(e.pointerId) || !gesture) return;
+            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            const pts = Array.from(pointers.values());
+
+            if (gesture.type === 'pinch' && pts.length >= 2) {
+                const opts = panzoomInstance.getOptions();
+                const distance = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+                const scale = Math.min(opts.maxScale, Math.max(opts.minScale, gesture.scale * distance / gesture.distance));
+                const mid = viewportPoint((pts[0].x + pts[1].x) / 2, (pts[0].y + pts[1].y) / 2);
+                panzoomInstance.zoom(scale, { animate: false });
+                panzoomInstance.pan(
+                    (mid.x - baseW / 2) / scale - gesture.anchorX,
+                    (mid.y - baseH / 2) / scale - gesture.anchorY,
+                    { animate: false }
+                );
+            } else if (gesture.type === 'pan') {
+                panzoomInstance.pan(
+                    gesture.panX + (e.clientX - gesture.clientX) / gesture.scale,
+                    gesture.panY + (e.clientY - gesture.clientY) / gesture.scale,
+                    { animate: false }
+                );
+            }
+        }
+
+        function onPointerUp(e) {
+            if (!pointers.delete(e.pointerId)) return;
+            // Re-baseline on the remaining finger so lifting one doesn't make the map jump.
+            startGesture();
+        }
+
+        viewport.addEventListener('pointerdown', onPointerDown);
+        viewport.addEventListener('pointermove', onPointerMove);
+        viewport.addEventListener('pointerup', onPointerUp);
+        viewport.addEventListener('pointercancel', onPointerUp);
+    }
+
     // Control buttons
     btnZoomIn.addEventListener('click', function() {
-        if (panzoomInstance) panzoomInstance.zoomIn({ animate: true });
+        if (panzoomInstance) zoomAtViewportCenter(Math.exp(ZOOM_STEP));
     });
 
     btnZoomOut.addEventListener('click', function() {
-        if (panzoomInstance) panzoomInstance.zoomOut({ animate: true });
+        if (panzoomInstance) zoomAtViewportCenter(Math.exp(-ZOOM_STEP));
     });
 
     btnReset.addEventListener('click', function() {
