@@ -65,7 +65,7 @@ jobs:
           # Locate the experience site's document root by the build already live there (3.4),
           # so the upload can never land in an unrelated folder.
           REMOTE_ROOT=$(sshpass -e ssh $SSH_OPTS "$USER@$HOST" '
-            for d in domains/experience.igx.co.id/public_html domains/igx.co.id/public_html/experience public_html/experience; do
+            for d in domains/igx.co.id/public_html/experience.igx.co.id domains/experience.igx.co.id/public_html domains/igx.co.id/public_html/experience public_html/experience; do
               if [ -f "$d/3.4/index.html" ]; then echo "$d"; exit 0; fi
             done
             echo "experience.igx.co.id document root not found. Domains on this account:" >&2
@@ -84,6 +84,17 @@ jobs:
             sleep 15
           done
 
+          # Post-upload setup on Hostinger: alias v$GAME_VERSION and update root index.html
+          echo "=== Post-upload aliases and root index update ==="
+          sshpass -e ssh $SSH_OPTS "$USER@$HOST" "
+            cd '$REMOTE_ROOT'
+            ln -sfn '$GAME_VERSION' 'v$GAME_VERSION'
+            if [ -f index.html ]; then
+              sed -i 's/const version = \".*\";/const version = \"$GAME_VERSION\";/' index.html
+              sed -i 's/\`https:\/\/experience.igx.co.id\/\${version}-mob\`;/\`https:\/\/experience.igx.co.id\/\${version}\/\`;/' index.html
+            fi
+          "
+
       - name: Verify live
         run: |
           set -euo pipefail
@@ -92,3 +103,6 @@ jobs:
             echo "https://experience.igx.co.id/$GAME_VERSION/$f -> $code"
             [ "$code" = 200 ]
           done
+          code_v=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "https://experience.igx.co.id/v$GAME_VERSION/index.html")
+          echo "https://experience.igx.co.id/v$GAME_VERSION/index.html -> $code_v"
+          [ "$code_v" = 200 ]

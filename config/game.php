@@ -49,9 +49,10 @@ return [
     | Experience Game Version
     |--------------------------------------------------------------------------
     |
-    | Version folder appended to the iframe base URL, e.g. "3.4" loads
-    | https://experience.igx.co.id/3.4/.
+    | Version folder appended to the iframe base URL, e.g. "2.0.4" loads
+    | https://experience.igx.co.id/2.0.4/. Builds are published there by
+    | .github/workflows/deploy-game.yml (see deploy/game/release.env).
     |
     */
-    'experience_version' => env('GAME_EXPERIENCE_VERSION', '3.4'),
+    'experience_version' => env('GAME_EXPERIENCE_VERSION', '2.0.4'),
 ];
