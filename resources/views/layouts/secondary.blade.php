@@ -33,7 +33,7 @@
     <body class="bg-bg">
         @include('layouts.partials.navbar')
         <!--begin::Content-->
-        <main id="content" class="pt-[72px] lg:pt-[76px]">
+        <main id="content" class="pt-[75px]">
             <div>
                 @yield('content')
             </div>

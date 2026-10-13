@@ -27,10 +27,10 @@
     /* Sidebar */
     .lb-sidebar {
         position: fixed;
-        top: 72px;
+        top: 75px;
         left: 0;
         bottom: 0;
-        z-index: 20;
+        z-index: 30;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
         width: 280px;
@@ -57,7 +57,7 @@
         position: fixed;
         inset: 0;
         background: rgba(0,0,0,0.6);
-        z-index: 15;
+        z-index: 25;
     }
     .lb-overlay.active {
         display: block;
@@ -70,7 +70,7 @@
 @endpush
 
 @section('content')
-<div class="game-bg flex flex-col md:flex-row relative" style="min-height: calc(100vh - 72px);" x-data="{ sidebarOpen: window.innerWidth >= 768, mobileOpen: false }" @resize.window="sidebarOpen = window.innerWidth >= 768">
+<div class="game-bg flex flex-col md:flex-row relative" style="min-height: calc(100vh - 75px);" x-data="{ sidebarOpen: window.innerWidth >= 768, mobileOpen: false }" @resize.window="sidebarOpen = window.innerWidth >= 768">
 
     {{-- Mobile overlay --}}
     <div class="lb-overlay" :class="mobileOpen ? 'active' : ''" @click="mobileOpen = false"></div>
@@ -88,7 +88,7 @@
              'open': mobileOpen,
              'collapsed': !sidebarOpen && window.innerWidth >= 768
          }"
-         style="min-height: calc(100vh - 72px); max-height: calc(100vh - 72px);">
+         style="min-height: calc(100vh - 75px); max-height: calc(100vh - 75px);">
 
         {{-- Toggle button (desktop only) --}}
         <button @click="sidebarOpen = !sidebarOpen"
@@ -112,7 +112,7 @@
         </div>
 
         {{-- Expanded view --}}
-        <div class="flex flex-col" style="max-height: calc(100vh - 72px);" x-show="sidebarOpen || window.innerWidth < 768">
+        <div class="flex flex-col" style="max-height: calc(100vh - 75px);" x-show="sidebarOpen || window.innerWidth < 768">
             {{-- Header --}}
             <div class="bg-accent border-b-3 border-black px-4 py-3 shrink-0">
                 <h3 class="text-sm font-extrabold uppercase text-black flex items-center gap-2">

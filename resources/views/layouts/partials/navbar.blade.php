@@ -1,5 +1,5 @@
 {{-- Navbar — Neo-Brutalism --}}
-<nav class="bg-bg fixed w-full top-0 z-20 border-b-3 border-black">
+<nav class="bg-bg fixed w-full top-0 z-50 border-b-3 border-black">
     <div class="mx-auto px-5 xl:px-12 py-4 lg:py-3 flex items-center justify-between">
         {{-- Brand --}}
         <div class="navbar-brand flex items-center">

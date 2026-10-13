@@ -149,7 +149,7 @@
 </div>
 
 {{-- QR Code Modal --}}
-<div id="qr-modal" class="qr-modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+<div id="qr-modal" class="qr-modal hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
     <div class="bg-surface border-4 border-black shadow-brutal max-w-sm w-full p-6 relative font-moon">
         <button type="button" onclick="closeQrModal()"
                 class="absolute top-3 right-3 w-8 h-8 bg-black text-white hover:bg-accent flex items-center justify-center font-black text-lg cursor-pointer border-2 border-black transition-colors"

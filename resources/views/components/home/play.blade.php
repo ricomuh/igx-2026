@@ -50,12 +50,12 @@
                     </h2>
 
                     <p class="text-xs sm:text-sm font-bold text-black/70 leading-relaxed mb-4">
-                        Play the game, climb the leaderboard, and win free IGX 2026 event tickets every Monday!
+                        Play the game, climb the leaderboard, and show your best score!
                     </p>
                 </div>
 
                 <a href="{{ route('experiences') }}" class="btn-brutal-yellow text-sm sm:text-base px-6 py-3.5 inline-flex items-center justify-center gap-2 group/btn w-full">
-                    PLAY & WIN TICKETS
+                    PLAY
                     <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                     </svg>
