@@ -1,0 +1,94 @@
+name: Deploy Game to experience.igx.co.id
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'deploy/game/release.env'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-game
+  cancel-in-progress: false
+
+jobs:
+  deploy-game:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read release manifest
+        run: |
+          set -euo pipefail
+          set -a; . deploy/game/release.env; set +a
+          for v in GAME_VERSION GAME_ARCHIVE_URL GAME_ARCHIVE_SHA256; do
+            if [ -z "${!v:-}" ]; then echo "$v is missing from deploy/game/release.env"; exit 1; fi
+          done
+          # The version becomes a folder name on the server: keep it to a plain path segment.
+          if ! [[ "$GAME_VERSION" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]; then
+            echo "GAME_VERSION '$GAME_VERSION' must be a single folder name"; exit 1
+          fi
+          {
+            echo "GAME_VERSION=$GAME_VERSION"
+            echo "GAME_ARCHIVE_URL=$GAME_ARCHIVE_URL"
+            echo "GAME_ARCHIVE_SHA256=$GAME_ARCHIVE_SHA256"
+          } >> "$GITHUB_ENV"
+
+      - name: Download and verify build
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 --retry-delay 10 -o game.tar.gz "$GAME_ARCHIVE_URL"
+          echo "$GAME_ARCHIVE_SHA256  game.tar.gz" | sha256sum -c -
+          mkdir build
+          tar -xzf game.tar.gz -C build
+          if [ ! -f "build/$GAME_VERSION/index.html" ]; then
+            echo "Archive must contain $GAME_VERSION/index.html; found:"; ls -la build
+            exit 1
+          fi
+          du -sh "build/$GAME_VERSION"
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Upload to Hostinger
+        env:
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+        run: |
+          set -euo pipefail
+          SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=10 -p $PORT"
+
+          # Locate the experience site's document root by the build already live there (3.4),
+          # so the upload can never land in an unrelated folder.
+          REMOTE_ROOT=$(sshpass -e ssh $SSH_OPTS "$USER@$HOST" '
+            for d in domains/experience.igx.co.id/public_html domains/igx.co.id/public_html/experience public_html/experience; do
+              if [ -f "$d/3.4/index.html" ]; then echo "$d"; exit 0; fi
+            done
+            echo "experience.igx.co.id document root not found. Domains on this account:" >&2
+            ls -1 domains >&2 || true
+            exit 1
+          ')
+          echo "Experience document root: $REMOTE_ROOT"
+
+          for i in 1 2 3; do
+            echo "=== Rsync attempt $i ==="
+            if sshpass -e rsync -az --stats -e "ssh $SSH_OPTS" \
+                "build/$GAME_VERSION/" "$USER@$HOST:$REMOTE_ROOT/$GAME_VERSION/"; then
+              break
+            fi
+            if [ "$i" = 3 ]; then echo "Rsync failed 3 times"; exit 1; fi
+            sleep 15
+          done
+
+      - name: Verify live
+        run: |
+          set -euo pipefail
+          for f in index.html game.html scripts/main.js; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "https://experience.igx.co.id/$GAME_VERSION/$f")
+            echo "https://experience.igx.co.id/$GAME_VERSION/$f -> $code"
+            [ "$code" = 200 ]
+          done
