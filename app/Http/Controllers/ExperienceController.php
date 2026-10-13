@@ -15,7 +15,7 @@ class ExperienceController extends Controller
             ->take(10)
             ->get();
 
-        $gameVersion = "3.4";
+        $gameVersion = config('game.experience_version');
 
         // Generate a new secure session token for this player embed
         $session = GameSession::createSession(

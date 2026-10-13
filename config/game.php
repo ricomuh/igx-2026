@@ -43,4 +43,15 @@ return [
     |
     */
     'experience_iframe_url' => env('GAME_EXPERIENCE_URL', 'https://experience.igx.co.id'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Experience Game Version
+    |--------------------------------------------------------------------------
+    |
+    | Version folder appended to the iframe base URL, e.g. "3.4" loads
+    | https://experience.igx.co.id/3.4/.
+    |
+    */
+    'experience_version' => env('GAME_EXPERIENCE_VERSION', '3.4'),
 ];

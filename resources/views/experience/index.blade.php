@@ -183,7 +183,7 @@
                 <div class="bg-accent border-2 border-black px-2 py-1">
                     <span class="text-[10px] sm:text-xs font-extrabold text-black uppercase">Stage 02 · Past</span>
                 </div>
-                <span class="text-[9px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ $gameVersion }}</span>
+                <span class="text-[9px] sm:text-xs font-extrabold text-white/40 uppercase">v{{ ltrim($gameVersion, 'vV') }}</span>
                 <button onclick="toggleFullscreen()"
                     class="bg-highlight border-2 border-black shadow-brutal-sm px-2 sm:px-3 py-1.5 cursor-pointer hover:bg-accent transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black">
