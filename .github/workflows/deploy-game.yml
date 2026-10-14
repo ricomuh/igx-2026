@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'deploy/game/release.env'
+      - 'deploy/game/media.htaccess'
   workflow_dispatch:
 
 concurrency:
@@ -47,6 +48,8 @@ jobs:
             echo "Archive must contain $GAME_VERSION/index.html; found:"; ls -la build
             exit 1
           fi
+          # Hosting fix that every build needs (see the comment inside the file).
+          cp deploy/game/media.htaccess "build/$GAME_VERSION/.htaccess"
           du -sh "build/$GAME_VERSION"
 
       - name: Install sshpass
@@ -103,6 +106,15 @@ jobs:
             echo "https://experience.igx.co.id/$GAME_VERSION/$f -> $code"
             [ "$code" = 200 ]
           done
+          # Music must come back as uncompressed audio, or Chrome's ranged streaming breaks.
+          media=$(cd "build/$GAME_VERSION" && ls media/*.webm 2>/dev/null | head -1 || true)
+          if [ -n "$media" ]; then
+            url="https://experience.igx.co.id/$GAME_VERSION/$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1]))' "$media")"
+            headers=$(curl -s -o /dev/null -D - --max-time 30 -H 'Accept-Encoding: gzip, deflate, br' "$url" | tr -d '\r')
+            echo "$headers" | grep -iE '^content-(type|encoding)' | sed "s|^|$media: |"
+            echo "$headers" | grep -qi '^content-type: audio/webm' || { echo "media is not served as audio/webm"; exit 1; }
+            if echo "$headers" | grep -qi '^content-encoding:'; then echo "media is served compressed"; exit 1; fi
+          fi
           code_v=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "https://experience.igx.co.id/v$GAME_VERSION/index.html")
           echo "https://experience.igx.co.id/v$GAME_VERSION/index.html -> $code_v"
           [ "$code_v" = 200 ]

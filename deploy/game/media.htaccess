@@ -1,0 +1,13 @@
+# Uploaded into every game version folder by .github/workflows/deploy-game.yml.
+#
+# Hostinger's LiteSpeed serves .webm as text/plain and Brotli-compresses it.
+# Chrome streams music with HTTP range requests; ranges over a compressed body
+# fail with ERR_CONTENT_DECODING_FAILED, the track stops partway and Construct's
+# "On ended" never fires, so minigames that wait for the music (Pitari Rhythm,
+# Pitari Fireworks) never advance. Safari is unaffected because Construct
+# downloads and decodes the whole file there.
+#
+# A real media type keeps LiteSpeed from compressing it.
+<IfModule mod_mime.c>
+    AddType audio/webm .webm
+</IfModule>
