@@ -1,7 +1,7 @@
 @unless(request()->routeIs('map') || ! config('features.map_widget'))
-<div id="mapWidgetContainer" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 font-moon" style="display: none;">
+<div id="mapWidgetContainer" class="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-40 font-moon" style="display: none;">
     {{-- Expanded Mini Map Preview Card --}}
-    <div id="mapWidgetExpanded" class="bg-surface border-3 border-black shadow-brutal w-48 sm:w-56 transition-transform duration-200 hover:-translate-x-1 hover:-translate-y-1">
+    <div id="mapWidgetExpanded" class="bg-surface border-3 border-black shadow-brutal w-44 sm:w-56 transition-transform duration-200 hover:-translate-x-1 hover:-translate-y-1">
         {{-- Header bar --}}
         <div class="bg-highlight border-b-3 border-black px-3 py-1.5 flex items-center justify-between">
             <div class="flex items-center gap-1.5">
@@ -47,10 +47,10 @@
     {{-- Minimized Pill Button --}}
     <div id="mapWidgetMinimized" style="display: none;">
         <button onclick="expandMapWidget()"
-                class="bg-highlight hover:bg-primary border-3 border-black shadow-brutal-sm hover:shadow-brutal px-3 py-2 flex items-center gap-2 cursor-pointer transition-all duration-150 group hover:-translate-x-0.5 hover:-translate-y-0.5"
+                class="bg-highlight hover:bg-primary border-3 border-black shadow-brutal-sm hover:shadow-brutal px-2.5 py-1.5 sm:px-3 sm:py-2 flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all duration-150 group hover:-translate-x-0.5 hover:-translate-y-0.5"
                 title="Buka Map IGX 2026">
-            <span class="text-base group-hover:scale-110 transition-transform">🗺️</span>
-            <span class="text-xs font-extrabold uppercase text-black tracking-wide">Floor Plan</span>
+            <span class="text-sm sm:text-base group-hover:scale-110 transition-transform">🗺️</span>
+            <span class="text-[11px] sm:text-xs font-extrabold uppercase text-black tracking-wide">Floor Plan</span>
         </button>
     </div>
 </div>
@@ -63,7 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!container) return;
 
-    const isMinimized = sessionStorage.getItem('igx_map_widget_minimized') === 'true';
+    // On phones the expanded card covers too much of the page, so it always starts as the
+    // small pill and only opens on demand. Desktop keeps the remembered choice.
+    let stored = null;
+    try { stored = sessionStorage.getItem('igx_map_widget_minimized'); } catch (e) {}
+    const isMinimized = isPhoneViewport() || stored === 'true';
 
     if (isMinimized) {
         expanded.style.display = 'none';
@@ -74,7 +78,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     container.style.display = 'block';
+
+    // Phones: a tap anywhere outside the open card folds it back into the pill.
+    document.addEventListener('click', function(e) {
+        if (isPhoneViewport() && expanded.style.display !== 'none' && !container.contains(e.target)) {
+            minimizeMapWidget();
+        }
+    });
 });
+
+function isPhoneViewport() {
+    return window.matchMedia('(max-width: 639px)').matches;
+}
 
 function minimizeMapWidget() {
     const expanded = document.getElementById('mapWidgetExpanded');
@@ -82,7 +97,7 @@ function minimizeMapWidget() {
     if (expanded && minimized) {
         expanded.style.display = 'none';
         minimized.style.display = 'block';
-        sessionStorage.setItem('igx_map_widget_minimized', 'true');
+        try { sessionStorage.setItem('igx_map_widget_minimized', 'true'); } catch (e) {}
     }
 }
 
@@ -92,7 +107,10 @@ function expandMapWidget() {
     if (expanded && minimized) {
         minimized.style.display = 'none';
         expanded.style.display = 'block';
-        sessionStorage.setItem('igx_map_widget_minimized', 'false');
+        // An open card on a phone is for this page only; don't carry it to the next one.
+        if (!isPhoneViewport()) {
+            try { sessionStorage.setItem('igx_map_widget_minimized', 'false'); } catch (e) {}
+        }
     }
 }
 </script>
