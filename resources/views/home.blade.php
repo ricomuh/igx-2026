@@ -173,6 +173,8 @@
         </div>
     </div>
 
+    @include('components.home.merch')
+
     {{-- ===== BOSS LOCATION: Map + How To Get Here ===== --}}
     <div id="map" class="bg-surface border-t-4 border-black relative overflow-hidden">
         <div class="container mx-auto px-5 xl:px-12 py-20 xl:py-28">
