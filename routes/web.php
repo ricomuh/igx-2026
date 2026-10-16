@@ -32,6 +32,7 @@ Route::get('/experiences', [ExperienceController::class, 'index'])->name('experi
 Route::get('/experiences/leaderboard', [ExperienceController::class, 'leaderboard'])->name('experiences.leaderboard');
 Route::get('/guests', GuestController::class)->name('guests');
 Route::get('/rundown', fn() => view('rundown.index'))->name('rundown');
+Route::get('/merchandise', fn() => view('merchandise.index'))->name('merchandise');
 Route::get('/exhibitors', ExhibitorController::class)->name('exhibitors');
 Route::get('/promo', fn() => view('coming-soon'))->name('promo');
 Route::get('/gallery', GalleryController::class)->name('gallery');
