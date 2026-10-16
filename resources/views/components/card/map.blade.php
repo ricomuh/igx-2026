@@ -1,4 +1,4 @@
-@unless(request()->routeIs('map'))
+@unless(request()->routeIs('map') || ! config('features.map_widget'))
 <div id="mapWidgetContainer" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 font-moon" style="display: none;">
     {{-- Expanded Mini Map Preview Card --}}
     <div id="mapWidgetExpanded" class="bg-surface border-3 border-black shadow-brutal w-48 sm:w-56 transition-transform duration-200 hover:-translate-x-1 hover:-translate-y-1">
