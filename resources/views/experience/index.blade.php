@@ -203,7 +203,8 @@
                 @endphp
                 <iframe src="{{ $iframeSrc }}"
                         style="width: 100%; height: 100%; min-height: 500px; border: none;"
-                        allow="autoplay; fullscreen"
+                        {{-- Each iframe level must pass permissions on: the game's own wrapper iframe asks for the microphone (NitariWakeUp). --}}
+                        allow="autoplay; fullscreen; microphone"
                         allowfullscreen
                         id="gameIframe"></iframe>
             </div>
