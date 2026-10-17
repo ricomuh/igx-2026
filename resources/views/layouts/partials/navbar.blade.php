@@ -15,9 +15,10 @@
 
         {{-- Menu List --}}
         <ul id="menu"
-            class="hidden flex-col gap-4 absolute top-full left-0 w-full bg-bg border-b-3 border-black pt-4 p-5 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-3 lg:p-0 lg:border-b-0">
+            class="hidden flex-col gap-4 absolute top-full left-0 w-full bg-bg border-b-3 border-black pt-4 p-5 lg:static lg:flex lg:flex-row lg:items-center lg:justify-end lg:gap-2 xl:gap-3 lg:p-0 lg:border-b-0">
             @foreach ([
                 'Home' => route("home"),
+                'Guests' => route("guests"),
                 'G.I.X Squad' =>  route("pals"),
                 'Experience' =>  route("experiences"),
                 'Rundown' =>  route("rundown"),
@@ -31,7 +32,7 @@
                 @endphp
                 <li>
                     <a href="{{ $link }}"
-                       class="font-extrabold uppercase block text-sm xl:text-base px-3 py-2 border-3 border-black transition-all duration-150
+                       class="font-extrabold uppercase block text-sm lg:text-[13px] xl:text-base px-3 lg:px-2.5 xl:px-3 py-2 border-3 border-black transition-all duration-150
                               {{ $isActive
                                   ? 'bg-highlight text-black shadow-brutal-sm'
                                   : 'bg-surface text-black hover:bg-highlight hover:shadow-brutal-sm' }}">
