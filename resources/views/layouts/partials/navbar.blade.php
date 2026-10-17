@@ -22,7 +22,7 @@
                 'G.I.X Squad' =>  route("pals"),
                 'Experience' =>  route("experiences"),
                 'Rundown' =>  route("rundown"),
-                'Promo' =>  route("promo"),
+                'Merchandise' => route("merchandise"),
                 'Ticket' => route("ticket.landing"),
                 'Gallery' =>  route("gallery"),
                 'News' => route("news.index")
