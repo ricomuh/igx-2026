@@ -125,7 +125,7 @@
                     </div>
                 </div>
 
-                {{-- CARD 4: RUNDOWN — COMING SOON --}}
+                {{-- CARD 4: RUNDOWN --}}
                 <div class="card-brutal bg-secondary group hover:shadow-brutal-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col">
                     <div class="bg-cyan border-b-3 border-black px-4 py-2.5 flex items-center justify-between">
                         <span class="text-xs font-extrabold uppercase text-black tracking-wider flex items-center gap-2">
@@ -133,19 +133,27 @@
                         </span>
                         <span class="text-[9px] font-bold text-black/60 uppercase">SCHEDULE</span>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between items-center text-center">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-surface mb-2">Event Rundown</h3>
-                            <div class="bg-highlight border-3 border-black inline-block px-4 py-2 shadow-brutal-sm rotate-[-1deg] mb-3">
-                                <span class="text-xl sm:text-2xl font-extrabold uppercase text-black">Coming Soon</span>
+                            <h3 class="text-lg sm:text-xl font-extrabold uppercase text-surface mb-3">Event Rundown</h3>
+                            <div class="flex flex-col gap-2 mb-3">
+                                <a href="{{ route('rundown') }}#day-1"
+                                   class="bg-accent border-2 border-black shadow-brutal-sm px-3 py-1.5 flex items-center justify-between gap-2 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform">
+                                    <span class="text-xs font-extrabold uppercase text-black">Day 1</span>
+                                    <span class="text-[10px] font-bold uppercase text-black/70">Sat · 24 Oct</span>
+                                </a>
+                                <a href="{{ route('rundown') }}#day-2"
+                                   class="bg-primary border-2 border-black shadow-brutal-sm px-3 py-1.5 flex items-center justify-between gap-2 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform">
+                                    <span class="text-xs font-extrabold uppercase text-black">Day 2</span>
+                                    <span class="text-[10px] font-bold uppercase text-black/70">Sun · 25 Oct</span>
+                                </a>
                             </div>
-                            <p class="text-[10px] font-bold text-surface/50 uppercase">2026</p>
+                            <p class="text-[10px] font-bold text-surface/50 uppercase">IGX Main Stage · mulai 10.00 WIB</p>
                         </div>
-                        <div class="flex items-center gap-2 mt-3">
-                            <div class="w-2 h-2 bg-highlight border-2 border-black animate-pulse"></div>
-                            <div class="w-2 h-2 bg-accent border-2 border-black animate-pulse" style="animation-delay: 0.2s"></div>
-                            <div class="w-2 h-2 bg-primary border-2 border-black animate-pulse" style="animation-delay: 0.4s"></div>
-                        </div>
+                        <a href="{{ route('rundown') }}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-cyan hover:text-highlight transition-colors group/link">
+                            VIEW RUNDOWN
+                            <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
                     </div>
                 </div>
 
