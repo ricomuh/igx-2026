@@ -231,9 +231,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const vh = viewport.clientHeight;
         if (!vw || !vh) return;
 
-        // Map aspect ratio from natural image dimensions (4530 x 3655)
-        const natW = img.naturalWidth || 4530;
-        const natH = img.naturalHeight || 3655;
+        // Map aspect ratio from natural image dimensions (6702 x 3634)
+        const natW = img.naturalWidth || 6702;
+        const natH = img.naturalHeight || 3634;
         const aspect = natW / natH;
 
         // Base width coordinate space
