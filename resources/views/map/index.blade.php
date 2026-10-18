@@ -79,7 +79,7 @@
                 </button>
 
                 {{-- Download Map Button --}}
-                <a href="{{ asset('media/images/map/map.webp') }}" download="IGX-2026-Event-Map.webp"
+                <a href="{{ asset('media/images/map/map.webp') . '?v=' . filemtime(public_path('media/images/map/map.webp')) }}" download="IGX-2026-Event-Map.webp"
                    class="bg-cyan hover:bg-cyan/90 text-black border-3 border-black shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 px-3 sm:px-4 py-2 font-black uppercase text-xs sm:text-sm flex items-center gap-2 cursor-pointer transition-all">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
@@ -138,7 +138,7 @@
             <div id="panzoom-viewport" class="map-viewport w-full h-full relative overflow-hidden select-none" style="touch-action: none;">
                 <div id="panzoom-target" class="absolute top-0 left-0" style="touch-action: none; will-change: transform;">
                     <img id="map-image"
-                         src="{{ asset('media/images/map/map.webp') }}"
+                         src="{{ asset('media/images/map/map.webp') . '?v=' . filemtime(public_path('media/images/map/map.webp')) }}"
                          alt="IGX 2026 Official Floor Plan"
                          class="block pointer-events-none select-none shadow-2xl"
                          draggable="false">

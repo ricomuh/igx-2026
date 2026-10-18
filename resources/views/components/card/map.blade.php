@@ -18,7 +18,7 @@
 
         {{-- Preview Image linking to Full Map --}}
         <a href="{{ route('map') }}" class="block relative group overflow-hidden bg-black/10">
-            <img src="{{ asset('media/images/map/map-thumb.webp') }}"
+            <img src="{{ asset('media/images/map/map-thumb.webp') . '?v=' . filemtime(public_path('media/images/map/map-thumb.webp')) }}"
                  alt="IGX 2026 Event Floor Plan"
                  class="w-full h-auto block object-cover group-hover:scale-105 transition-transform duration-300"
                  loading="lazy">
