@@ -92,6 +92,7 @@ jobs:
           sshpass -e ssh $SSH_OPTS "$USER@$HOST" "
             cd '$REMOTE_ROOT'
             ln -sfn '$GAME_VERSION' 'v$GAME_VERSION'
+            rm -f '$GAME_VERSION'/fonts/TT*Rounds*
             if [ -f index.html ]; then
               sed -i 's/const version = \".*\";/const version = \"$GAME_VERSION\";/' index.html
               sed -i 's/\`https:\/\/experience.igx.co.id\/\${version}-mob\`;/\`https:\/\/experience.igx.co.id\/\${version}\/\`;/' index.html
