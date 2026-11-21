@@ -7,7 +7,7 @@
 @source '../**/*.js';
 
 @theme {
-    --font-moon: "TT Rounds Neue", sans-serif;
+    --font-moon: "Nunito", ui-sans-serif, system-ui, sans-serif;
 
     /* IGX Stage 03 — Neo-Brutalism Palette */
     --color-primary: #F88832;

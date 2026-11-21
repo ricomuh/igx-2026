@@ -192,7 +192,7 @@ body { background-color: #322366 !important; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <script>
 // ─── Font Load ────────────────────────────────────────────
-const ttFont = new FontFace('TT Rounds Neue', 'url(/fonts/TT Rounds Neue Trial ExtraBold.ttf)');
+const ttFont = new FontFace('Nunito', 'url(/fonts/Nunito-Variable.woff2)', { weight: '200 1000' });
 ttFont.load().then(f => {
     document.fonts.add(f);
     renderCard();
@@ -281,7 +281,7 @@ function drawText(ctx, name, desc) {
         const len = name.length;
         const size = Math.round(68 - (len - 1) * (32 / 19)); // 68..36px
         ctx.save();
-        ctx.font = `800 ${size}px "TT Rounds Neue", Arial, sans-serif`;
+        ctx.font = `800 ${size}px "Nunito", Arial, sans-serif`;
         ctx.fillStyle = '#4750d0';
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
@@ -293,7 +293,7 @@ function drawText(ctx, name, desc) {
     // Desc box canvas: x=314, y=1056, w=632, h=142 → pad 16px inside
     if (desc) {
         ctx.save();
-        ctx.font = '800 22px "TT Rounds Neue", Arial, sans-serif';
+        ctx.font = '800 22px "Nunito", Arial, sans-serif';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
