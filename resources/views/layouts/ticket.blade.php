@@ -16,6 +16,7 @@
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         @stack('style')
+        @include("layouts.partials.analytics")
     </head>
     <body class="bg-secondary min-h-screen flex flex-col antialiased font-moon"
           x-data="{

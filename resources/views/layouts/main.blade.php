@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
         @stack('style')
+        @include("layouts.partials.analytics")
     </head>
 
     <body class="bg-bg">
